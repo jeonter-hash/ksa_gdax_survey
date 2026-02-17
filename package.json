@@ -1,0 +1,23 @@
+{
+  "name": "gdax-diagnostic",
+  "version": "1.0.0",
+  "description": "G-DAX 산업일자리전환 준비도 진단 웹서비스",
+  "main": "index.js",
+  "scripts": {
+    "dev": "wrangler pages dev public --compatibility-date=2024-12-01",
+    "deploy": "wrangler pages deploy public",
+    "db:init": "wrangler d1 execute gdax-db --local --file=./schema.sql",
+    "db:init:remote": "wrangler d1 execute gdax-db --remote --file=./schema.sql"
+  },
+  "keywords": [
+    "gdax",
+    "diagnostic",
+    "cloudflare",
+    "d1"
+  ],
+  "author": "KSA",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.22.0"
+  }
+}

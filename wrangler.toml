@@ -1,0 +1,12 @@
+name = "gdax-diagnostic"
+compatibility_date = "2024-12-01"
+pages_build_output_dir = "./public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "gdax-db"
+database_id = "placeholder_will_be_replaced_after_creation"
+
+[vars]
+JWT_SECRET = "your_secret_key_change_this_in_production"
+ADMIN_USERNAME = "admin"
