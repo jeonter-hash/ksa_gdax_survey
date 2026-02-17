@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>관리자 로그인 | G-DAX</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans KR',-apple-system,sans-serif; background:linear-gradient(135deg,#1e3a5f,#1e40af); min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .login-card { background:#fff; border-radius:16px; box-shadow:0 8px 32px rgba(0,0,0,.3); width:100%; max-width:420px; padding:40px; margin:20px; }
+  .login-header { text-align:center; margin-bottom:30px; }
+  .login-header h1 { font-size:24px; font-weight:900; color:#1e3a5f; margin-bottom:6px; }
+  .login-header p { font-size:14px; color:#6b7280; }
+  .form-group { margin-bottom:20px; }
+  .label { display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:8px; }
+  .input { width:100%; padding:14px; border:2px solid #e5e7eb; border-radius:10px; font-size:15px; font-family:inherit; transition:border .2s; }
+  .input:focus { outline:none; border-color:#2563eb; }
+  .btn { width:100%; padding:16px; background:linear-gradient(135deg,#1e3a5f,#2563eb); color:#fff; border:none; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; transition:all .3s; margin-top:10px; }
+  .btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(37,99,235,.4); }
+  .btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+  .error { background:#fee2e2; color:#991b1b; padding:12px; border-radius:8px; font-size:13px; margin-bottom:16px; display:none; }
+  .back-link { text-align:center; margin-top:20px; }
+  .back-link a { color:#6b7280; font-size:13px; text-decoration:none; }
+  .back-link a:hover { color:#2563eb; }
+</style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="login-header">
+    <h1>🔐 관리자 로그인</h1>
+    <p>G-DAX 진단 시스템 관리</p>
+  </div>
+  
+  <div id="errorMsg" class="error"></div>
+  
+  <form id="loginForm" onsubmit="handleLogin(event)">
+    <div class="form-group">
+      <label class="label">아이디</label>
+      <input type="text" id="username" class="input" placeholder="admin" required autofocus />
+    </div>
+    <div class="form-group">
+      <label class="label">비밀번호</label>
+      <input type="password" id="password" class="input" placeholder="비밀번호 입력" required />
+    </div>
+    <button type="submit" id="loginBtn" class="btn">로그인</button>
+  </form>
+  
+  <div class="back-link">
+    <a href="/">← 메인으로 돌아가기</a>
+  </div>
+</div>
+
+<script>
+async function handleLogin(event) {
+  event.preventDefault();
+  
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const btn = document.getElementById('loginBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  
+  errorMsg.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = '⏳ 로그인 중...';
+  
+  try {
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    
+    const data = await res.json();
+    
+    if (res.ok && data.token) {
+      localStorage.setItem('adminToken', data.token);
+      localStorage.setItem('adminUsername', data.username);
+      window.location.href = '/admin/index.html';
+    } else {
+      errorMsg.textContent = data.error || '로그인에 실패했습니다.';
+      errorMsg.style.display = 'block';
+    }
+  } catch (error) {
+    errorMsg.textContent = '네트워크 오류가 발생했습니다.';
+    errorMsg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '로그인';
+  }
+}
+
+// Enter 키 처리는 form의 submit 이벤트로 자동 처리됨
+</script>
+
+</body>
+</html>
