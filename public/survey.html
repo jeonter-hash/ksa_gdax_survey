@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G-DAX 산업일자리전환 준비도 진단</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
+  :root {
+    --green:#16a34a; --green-l:#dcfce7; --green-bg:#f0fdf4;
+    --digi:#2563eb; --digi-l:#dbeafe; --digi-bg:#eff6ff;
+    --ai:#7c3aed; --ai-l:#ede9fe; --ai-bg:#f5f3ff;
+    --trans:#dc2626; --trans-l:#fee2e2; --trans-bg:#fef2f2;
+    --navy:#1e3a5f; --g50:#f9fafb; --g100:#f3f4f6; --g200:#e5e7eb;
+    --g300:#d1d5db; --g500:#6b7280; --g700:#374151; --g900:#111827;
+    --shadow:0 4px 24px rgba(0,0,0,.06); --r:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--g50);color:var(--g900);line-height:1.6}
+
+  /* ── Hero ── */
+  .hero{background:linear-gradient(135deg,var(--navy) 0%,#1e40af 45%,#16a34a 100%);color:#fff;text-align:center;padding:36px 24px 32px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23fff' fill-opacity='.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+  .hero-c{position:relative;z-index:1;max-width:720px;margin:0 auto}
+  .hero h1{font-size:32px;font-weight:900;letter-spacing:-.5px;margin-bottom:8px}
+  .hero p{font-size:14px;font-weight:300;opacity:.9;margin-bottom:18px;line-height:1.7}
+  .hero-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .hero-chip{padding:5px 14px;border-radius:8px;font-size:12px;font-weight:600;background:rgba(255,255,255,.12)}
+  .hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:16px;font-size:13px;opacity:.8}
+
+  /* ── Progress ── */
+  .prog-wrap{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--g200)}
+  .prog-inner{max-width:840px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:14px}
+  .prog-bg{flex:1;height:6px;background:var(--g200);border-radius:3px;overflow:hidden}
+  .prog-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--digi),var(--ai),var(--trans));border-radius:3px;transition:width .4s;width:0%}
+  .prog-txt{font-size:13px;font-weight:600;color:var(--g700);min-width:44px;text-align:right}
+
+  .container{max-width:840px;margin:0 auto;padding:24px}
+
+  /* ── Section Card ── */
+  .sec{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:26px;overflow:hidden;border:1px solid var(--g200);opacity:0;transform:translateY(16px);animation:fadeUp .5s ease forwards}
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+  .sec-hd{padding:18px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--g100)}
+  .sec-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .sec-hd h2{font-size:17px;font-weight:700}
+  .sec-hd .sec-sub{font-size:12px;color:var(--g500);margin-top:2px}
+  .sec-bd{padding:24px}
+  .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.3px;margin-left:auto}
+
+  /* Domain theming */
+  .dm-info .sec-icon{background:#f0f9ff;color:var(--navy)}
+  .dm-G .sec-icon{background:var(--green-l);color:var(--green)} .dm-G .sec-hd{background:var(--green-bg)}
+  .dm-D .sec-icon{background:var(--digi-l);color:var(--digi)} .dm-D .sec-hd{background:var(--digi-bg)}
+  .dm-A .sec-icon{background:var(--ai-l);color:var(--ai)} .dm-A .sec-hd{background:var(--ai-bg)}
+  .dm-X .sec-icon{background:var(--trans-l);color:var(--trans)} .dm-X .sec-hd{background:var(--trans-bg)}
+  .bd-G{background:var(--green-l);color:var(--green)} .bd-D{background:var(--digi-l);color:var(--digi)}
+  .bd-A{background:var(--ai-l);color:var(--ai)} .bd-X{background:var(--trans-l);color:var(--trans)}
+
+  /* ── Form ── */
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  @media(max-width:640px){.frow{grid-template-columns:1fr}}
+  .fg{margin-bottom:14px} .fg:last-child{margin-bottom:0}
+  .fl{display:block;font-size:13px;font-weight:600;color:var(--g700);margin-bottom:5px}
+  .fl .req{color:#dc2626;margin-left:2px}
+  .fi,.fs{width:100%;padding:10px 14px;border:1.5px solid var(--g200);border-radius:10px;font-size:14px;font-family:inherit;transition:border .2s,box-shadow .2s;background:#fff}
+  .fi:focus,.fs:focus{outline:none;border-color:var(--digi);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+
+  /* ── Question Group Label ── */
+  .q-group{display:flex;align-items:center;gap:8px;margin:18px 0 4px;padding:0}
+  .q-group:first-child{margin-top:0}
+  .q-group-tag{font-size:11px;font-weight:700;color:#fff;padding:3px 10px;border-radius:4px;display:inline-block}
+  .q-group-tag.qg-pressure{background:#ef4444}
+  .q-group-tag.qg-infra{background:#2563eb}
+  .q-group-tag.qg-drive{background:#16a34a}
+  .q-group-desc{font-size:11px;color:var(--g500);font-weight:500}
+
+  /* ── Likert ── */
+  .qi{padding:16px 0;border-bottom:1px solid var(--g100)} .qi:last-child{border-bottom:none;padding-bottom:0}
+  .qt{font-size:14px;font-weight:500;color:var(--g900);margin-bottom:12px;line-height:1.65}
+  .qn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:700;margin-right:8px;flex-shrink:0}
+  .dm-G .qn{background:var(--green-l);color:var(--green)} .dm-D .qn{background:var(--digi-l);color:var(--digi)}
+  .dm-A .qn{background:var(--ai-l);color:var(--ai)} .dm-X .qn{background:var(--trans-l);color:var(--trans)}
+
+  /* dimension tag */
+  .dtag{display:inline-block;font-size:10px;font-weight:600;padding:1px 7px;border-radius:4px;margin-left:6px;vertical-align:middle;opacity:.8}
+
+  .lk{display:flex;gap:0;border-radius:10px;overflow:hidden;border:1.5px solid var(--g200)}
+  .lo{flex:1;position:relative;text-align:center;cursor:pointer;transition:all .2s}
+  .lo input{position:absolute;opacity:0;width:0;height:0}
+  .lo label{display:block;padding:10px 4px;font-size:12px;font-weight:500;color:var(--g500);cursor:pointer;transition:all .2s;user-select:none;border-right:1px solid var(--g200)}
+  .lo:last-child label{border-right:none}
+  .lo label .ls{display:block;font-size:16px;font-weight:700;margin-bottom:1px}
+  .lo input:checked+label{color:#fff;font-weight:700}
+  .dm-G .lo input:checked+label{background:var(--green)} .dm-D .lo input:checked+label{background:var(--digi)}
+  .dm-A .lo input:checked+label{background:var(--ai)} .dm-X .lo input:checked+label{background:var(--trans)}
+  .lo:hover label{background:var(--g50)} .lo input:checked:hover+label{opacity:.9}
+
+  /* ── BTJR mini-indicator ── */
+  .btjr-hint{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+  .btjr-tag{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600}
+  .btjr-B{background:#dbeafe;color:#1e40af} .btjr-T{background:#dcfce7;color:#166534}
+  .btjr-J{background:#fef3c7;color:#92400e} .btjr-R{background:#fee2e2;color:#991b1b}
+
+  /* ── Checkbox ── */
+  .ck-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:640px){.ck-grid{grid-template-columns:1fr}}
+  .ck-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid var(--g200);border-radius:10px;cursor:pointer;transition:all .2s;background:#fff}
+  .ck-item:hover{border-color:var(--digi);background:#fafbff}
+  .ck-item.ckd{border-color:var(--digi);background:var(--digi-bg)}
+  .ck-item input{margin-top:2px;accent-color:var(--digi);cursor:pointer;width:16px;height:16px}
+  .ck-item .cl{font-size:13px;font-weight:500;color:var(--g700)} .ck-item .cd{font-size:11px;color:var(--g500);margin-top:2px}
+
+  /* ── Radio Card ── */
+  .rc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .rc{padding:18px;border:2px solid var(--g200);border-radius:12px;cursor:pointer;transition:all .2s;text-align:center}
+  .rc:hover{border-color:var(--digi)} .rc.sel{border-color:var(--green);background:var(--green-bg)}
+  .rc input{display:none} .rc .rci{font-size:28px;margin-bottom:6px}
+  .rc .rct{font-size:14px;font-weight:700} .rc .rcd{font-size:12px;color:var(--g500);margin-top:4px}
+
+  /* ── Callout ── */
+  .co{padding:14px 18px;border-radius:10px;font-size:13px;line-height:1.6;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
+  .co-info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af}
+  .co-framework{background:#f5f3ff;border:1px solid #c4b5fd;color:#5b21b6}
+
+  /* ── Submit ── */
+  .submit-sec{text-align:center;margin:32px 0 56px}
+  .btn-sub{display:inline-flex;align-items:center;gap:8px;padding:16px 48px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--navy),var(--digi));color:#fff;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .3s;box-shadow:0 4px 16px rgba(37,99,235,.25)}
+  .btn-sub:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,.35)}
+  .submit-note{font-size:12px;color:var(--g500);margin-top:12px}
+
+  .footer{text-align:center;padding:28px 24px;font-size:12px;color:var(--g500);border-top:1px solid var(--g200);background:#fff;line-height:1.7}
+  .footer strong{color:var(--g700)}
+  .footer-link{color:var(--digi);text-decoration:none;font-weight:600;margin:0 8px}
+  .footer-link:hover{text-decoration:underline}
+
+  /* delay */
+  .sec:nth-child(1){animation-delay:.05s} .sec:nth-child(2){animation-delay:.1s} .sec:nth-child(3){animation-delay:.15s}
+  .sec:nth-child(4){animation-delay:.2s} .sec:nth-child(5){animation-delay:.25s} .sec:nth-child(6){animation-delay:.3s}
+  .sec:nth-child(7){animation-delay:.35s} .sec:nth-child(8){animation-delay:.4s} .sec:nth-child(9){animation-delay:.45s}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-c">
+    <h1>산업일자리전환 준비도 진단</h1>
+    <p>FABRIC × G-DAX 이중 진단 프레임워크 기반으로 귀사의 전환 준비 수준을 진단합니다.<br>결과는 <strong>맞춤형 G-DAX 진단 리포트</strong>로 제공되며, BTJR 전환 영향 경로 분석이 포함됩니다.</p>
+    <div class="hero-chips">
+      <span class="hero-chip">🌱 G 친환경전환</span>
+      <span class="hero-chip">💻 D 디지털전환</span>
+      <span class="hero-chip">🤖 A AI전환</span>
+      <span class="hero-chip">🔄 X 고용전환</span>
+    </div>
+    <div class="hero-meta">
+      <span>⏱ 소요시간 약 7분</span>
+      <span>📋 총 20개 진단 문항</span>
+      <span>📊 BTJR 경로 분석 포함</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROGRESS ═══ -->
+<div class="prog-wrap">
+  <div class="prog-inner">
+    <div style="font-size:12px;font-weight:600;color:var(--g500)">진행률</div>
+    <div class="prog-bg"><div class="prog-fill" id="progBar"></div></div>
+    <div class="prog-txt" id="progTxt">0%</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══ SEC 1: 기업 기본 정보 ═══ -->
+<div class="sec dm-info">
+  <div class="sec-hd">
+    <div class="sec-icon">🏢</div>
+    <div><h2>기업 기본 정보</h2><div class="sec-sub">FABRIC 사전 프로파일링을 위한 기본 정보</div></div>
+  </div>
+  <div class="sec-bd">
+    <div class="frow">
+      <div class="fg"><label class="fl">회사명 <span class="req">*</span></label><input type="text" class="fi" id="companyName" placeholder="예: (주)한빛테크" data-required></div>
+      <div class="fg"><label class="fl">대표자명 <span class="req">*</span></label><input type="text" class="fi" id="ceoName" placeholder="예: 이한빛" data-required></div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label class="fl">소재지 <span class="req">*</span></label><input type="text" class="fi" id="location" placeholder="예: 경기도 안산시" data-required></div>
+      <div class="fg"><label class="fl">업종 (주생산품) <span class="req">*</span></label><input type="text" class="fi" id="industry" placeholder="예: 자동차부품 제조" data-required></div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label class="fl">업종 유형 <span class="req">*</span></label>
+        <select class="fs" id="indType" data-required>
+          <option value="">선택하세요</option>
+          <option value="제조형">제조형 (제조·생산 중심)</option>
+          <option value="서비스형">서비스형 (서비스·유통 중심)</option>
+          <option value="기술형">기술형 (R&D·IT·기술 중심)</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">상시 근로자 수 <span class="req">*</span></label>
+        <select class="fs" id="employees" data-required>
+          <option value="">선택하세요</option>
+          <option value="10미만">10인 미만</option><option value="10~29">10~29인</option>
+          <option value="30~49">30~49인</option><option value="50~99">50~99인</option>
+          <option value="100~299">100~299인</option><option value="300이상">300인 이상</option>
+        </select>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label class="fl">지난해 매출액 (억원)</label><input type="text" class="fi" id="revenue" placeholder="예: 150"></div>
+      <div class="fg"><label class="fl">설립연도</label><input type="text" class="fi" id="founded" placeholder="예: 2005"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEC 2: G — 친환경전환 (G1~G5) ═══ -->
+<div class="sec dm-G">
+  <div class="sec-hd">
+    <div class="sec-icon">🌱</div>
+    <div><h2>G — 친환경전환 (Green Transition)</h2><div class="sec-sub">탄소중립·ESG·에너지 전환이 귀사 사업에 미치는 영향</div></div>
+    <span class="badge bd-G">5문항</span>
+  </div>
+  <div class="sec-bd">
+    <div class="co co-framework"><span>🔗</span><div><strong>산업전환환경 연결:</strong> 이 영역의 응답은 G-DAX 진단 Ch.3.2의 친환경전환 산업전환환경(전환압력 高/中/低) 사전 평가에 활용됩니다.</div></div>
+
+    <div class="q-group"><span class="q-group-tag qg-pressure">전환 압력</span><span class="q-group-desc">탄소규제·공급망·에너지 전환 외부 압력</span></div>
+    <div class="qi"><div class="qt"><span class="qn">1</span>우리 회사의 주력 제품·서비스가 탄소 감축 정책(탄소중립기본법, EU CBAM 등)에 따라 시장 축소 또는 사업 재편이 필요한 상황이다. <span class="dtag bd-G">G1 탄소 리스크</span></div>
+      <div class="lk" data-name="G1"><div class="lo"><input type="radio" name="G1" id="G1_1" value="1"><label for="G1_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="G1" id="G1_2" value="2"><label for="G1_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="G1" id="G1_3" value="3"><label for="G1_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="G1" id="G1_4" value="4"><label for="G1_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="G1" id="G1_5" value="5"><label for="G1_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-B">→ B 사업구조</span></div>
+    </div>
+
+    <div class="qi"><div class="qt"><span class="qn">2</span>원청사·바이어로부터 ESG 경영, 탄소 배출량 보고, RE100 이행 등을 요구받고 있거나 가까운 시일 내 요구가 예상된다. <span class="dtag bd-G">G2 공급망 압력</span></div>
+      <div class="lk" data-name="G2"><div class="lo"><input type="radio" name="G2" id="G2_1" value="1"><label for="G2_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="G2" id="G2_2" value="2"><label for="G2_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="G2" id="G2_3" value="3"><label for="G2_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="G2" id="G2_4" value="4"><label for="G2_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="G2" id="G2_5" value="5"><label for="G2_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-B">→ B 사업구조</span><span class="btjr-tag btjr-T">→ T 기술운영</span></div>
+    </div>
+
+    <div class="qi"><div class="qt"><span class="qn">3</span>에너지 비용(전기료·연료비)이 제조원가·운영비의 상당 부분을 차지하며, 친환경 에너지 전환(태양광·ESS 등)을 검토 중이다. <span class="dtag bd-G">G3 에너지 전환</span></div>
+      <div class="lk" data-name="G3"><div class="lo"><input type="radio" name="G3" id="G3_1" value="1"><label for="G3_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="G3" id="G3_2" value="2"><label for="G3_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="G3" id="G3_3" value="3"><label for="G3_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="G3" id="G3_4" value="4"><label for="G3_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="G3" id="G3_5" value="5"><label for="G3_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-T">→ T 기술운영</span></div>
+    </div>
+
+    <div class="q-group"><span class="q-group-tag qg-infra">실행 기반</span><span class="q-group-desc">환경 규제 대응 인력·관리 체계</span></div>
+    <div class="qi"><div class="qt"><span class="qn">4</span>환경 규제(배출권거래제, 폐기물 규제, 유해물질 관리 등) 대응을 위한 사내 전담 인력이나 관리 체계가 마련되어 있다. <span class="dtag bd-G">G4 환경관리 체계</span></div>
+      <div class="lk" data-name="G4"><div class="lo"><input type="radio" name="G4" id="G4_1" value="1"><label for="G4_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="G4" id="G4_2" value="2"><label for="G4_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="G4" id="G4_3" value="3"><label for="G4_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="G4" id="G4_4" value="4"><label for="G4_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="G4" id="G4_5" value="5"><label for="G4_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-J">→ J 직무역량</span><span class="btjr-tag btjr-R">→ R 노사관계</span></div>
+    </div>
+
+    <div class="q-group"><span class="q-group-tag" style="background:#b45309">성장 동력</span><span class="q-group-desc">친환경 사업 기회 인식 및 추진 의지</span></div>
+    <div class="qi"><div class="qt"><span class="qn">5</span>친환경 전환(저탄소 공정, 친환경 소재, 순환경제 등)이 새로운 매출원이나 사업 기회가 될 수 있다고 판단한다. <span class="dtag bd-G">G5 Green 기회</span></div>
+      <div class="lk" data-name="G5"><div class="lo"><input type="radio" name="G5" id="G5_1" value="1"><label for="G5_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="G5" id="G5_2" value="2"><label for="G5_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="G5" id="G5_3" value="3"><label for="G5_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="G5" id="G5_4" value="4"><label for="G5_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="G5" id="G5_5" value="5"><label for="G5_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-B">→ B 사업구조</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEC 3: D — 디지털전환 (D1~D5) ═══ -->
+<div class="sec dm-D">
+  <div class="sec-hd">
+    <div class="sec-icon">💻</div>
+    <div><h2>D — 디지털전환 (Digital Transformation)</h2><div class="sec-sub">디지털 인프라 수준, DX 시급성, 데이터 기반 운영 역량</div></div>
+    <span class="badge bd-D">5문항</span>
+  </div>
+  <div class="sec-bd">
+    <div class="co co-framework"><span>🔗</span><div><strong>FABRIC 연결:</strong> D영역 응답은 FABRIC의 F(운영인프라)·F5(정보시스템)와 직접 연결되어 Ch.2 내부현황 분석에 반영됩니다.</div></div>
+
+    <div class="q-group"><span class="q-group-tag qg-pressure">전환 압력</span><span class="q-group-desc">경쟁 격차·투자 필요성</span></div>
+    <div class="qi"><div class="qt"><span class="qn">1</span>경쟁사 대비 우리 회사의 디지털화 수준(ERP/MES/SCM 등)이 뒤처져 있어 생산성·품질 경쟁력이 약화되고 있다. <span class="dtag bd-D">D1 DX 격차</span></div>
+      <div class="lk" data-name="D1"><div class="lo"><input type="radio" name="D1" id="D1_1" value="1"><label for="D1_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="D1" id="D1_2" value="2"><label for="D1_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="D1" id="D1_3" value="3"><label for="D1_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="D1" id="D1_4" value="4"><label for="D1_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="D1" id="D1_5" value="5"><label for="D1_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-T">→ T 기술운영</span></div>
+    </div>
+
+    <div class="qi"><div class="qt"><span class="qn">2</span>스마트공장·IoT·클라우드 등 디지털 인프라 도입 계획이 있고, 이를 위한 예산 또는 정부지원 연계를 준비 중이다. <span class="dtag bd-D">D2 DX 투자 계획</span></div>
+      <div class="lk" data-name="D2"><div class="lo"><input type="radio" name="D2" id="D2_1" value="1"><label for="D2_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="D2" id="D2_2" value="2"><label for="D2_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="D2" id="D2_3" value="3"><label for="D2_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="D2" id="D2_4" value="4"><label for="D2_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="D2" id="D2_5" value="5"><label for="D2_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-B">→ B 사업구조</span><span class="btjr-tag btjr-T">→ T 기술운영</span></div>
+    </div>
+
+    <div class="q-group"><span class="q-group-tag qg-infra">실행 기반</span><span class="q-group-desc">시스템 통합·데이터 활용 인프라</span></div>
+    <div class="qi"><div class="qt"><span class="qn">3</span>핵심 업무(생산·재고·고객·회계)를 전산 시스템으로 통합 관리하고 있으며, 부서 간 데이터 연동이 원활하다. <span class="dtag bd-D">D3 시스템 통합도</span></div>
+      <div class="lk" data-name="D3"><div class="lo"><input type="radio" name="D3" id="D3_1" value="1"><label for="D3_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="D3" id="D3_2" value="2"><label for="D3_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="D3" id="D3_3" value="3"><label for="D3_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="D3" id="D3_4" value="4"><label for="D3_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="D3" id="D3_5" value="5"><label for="D3_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-T">→ T 기술운영</span></div>
+    </div>
+
+    <div class="qi"><div class="qt"><span class="qn">4</span>데이터 기반 의사결정(품질 분석, 수요 예측, 원가 관리 등)의 필요성을 느끼지만, 데이터 수집·분석 체계가 미흡하다. <span class="dtag bd-D">D4 데이터 활용</span></div>
+      <div class="lk" data-name="D4"><div class="lo"><input type="radio" name="D4" id="D4_1" value="1"><label for="D4_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="D4" id="D4_2" value="2"><label for="D4_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="D4" id="D4_3" value="3"><label for="D4_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="D4" id="D4_4" value="4"><label for="D4_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="D4" id="D4_5" value="5"><label for="D4_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-T">→ T 기술운영</span><span class="btjr-tag btjr-J">→ J 직무역량</span></div>
+    </div>
+
+    <div class="q-group"><span class="q-group-tag" style="background:#7c3aed">인재 역량</span><span class="q-group-desc">디지털 리터러시·직원 역량</span></div>
+    <div class="qi"><div class="qt"><span class="qn">5</span>직원들이 디지털 기기·SW 활용에 어려움을 느끼고 있어, DX 추진 시 체계적인 디지털 리터러시 교육이 필요하다. <span class="dtag bd-D">D5 디지털 역량</span></div>
+      <div class="lk" data-name="D5"><div class="lo"><input type="radio" name="D5" id="D5_1" value="1"><label for="D5_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="D5" id="D5_2" value="2"><label for="D5_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="D5" id="D5_3" value="3"><label for="D5_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="D5" id="D5_4" value="4"><label for="D5_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="D5" id="D5_5" value="5"><label for="D5_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-J">→ J 직무역량</span><span class="btjr-tag btjr-R">→ R 노사관계</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEC 4: A — AI전환 (A1~A5) ═══ -->
+<div class="sec dm-A">
+  <div class="sec-hd">
+    <div class="sec-icon">🤖</div>
+    <div><h2>A — AI전환 (AI Transformation)</h2><div class="sec-sub">인공지능·자동화 도입 가능성과 직무 영향 평가</div></div>
+    <span class="badge bd-A">5문항</span>
+  </div>
+  <div class="sec-bd">
+    <div class="co co-framework"><span>🔗</span><div><strong>BTJR 경로:</strong> AI 도입은 T(기술운영) → J(직무역량) → R(노사관계)의 연쇄 전환을 촉발합니다. 이 영역은 Cross-SWOT의 WO·ST 전략 도출에 핵심 근거가 됩니다.</div></div>
+
+    <div class="q-group"><span class="q-group-tag qg-pressure">전환 압력</span><span class="q-group-desc">AI 도입 필요성·자동화 효과</span></div>
+    <div class="qi"><div class="qt"><span class="qn">1</span>우리 업종에서 AI 기반 품질검사·예지보전·공정최적화 등의 사례가 등장하고 있어, 도입 검토가 필요한 상황이다. <span class="dtag bd-A">A1 AI 적용 가능성</span></div>
+      <div class="lk" data-name="A1"><div class="lo"><input type="radio" name="A1" id="A1_1" value="1"><label for="A1_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="A1" id="A1_2" value="2"><label for="A1_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="A1" id="A1_3" value="3"><label for="A1_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="A1" id="A1_4" value="4"><label for="A1_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="A1" id="A1_5" value="5"><label for="A1_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-T">→ T 기술운영</span></div>
+    </div>
+
+    <div class="qi"><div class="qt"><span class="qn">2</span>반복·단순 업무(데이터 입력, 검수, 분류, 고객응대 등)에 상당한 인력이 투입되고 있어, AI·로봇 자동화의 효과가 클 것으로 예상된다. <span class="dtag bd-A">A2 자동화 효과</span></div>
+      <div class="lk" data-name="A2"><div class="lo"><input type="radio" name="A2" id="A2_1" value="1"><label for="A2_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="A2" id="A2_2" value="2"><label for="A2_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="A2" id="A2_3" value="3"><label for="A2_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="A2" id="A2_4" value="4"><label for="A2_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="A2" id="A2_5" value="5"><label for="A2_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-T">→ T 기술운영</span><span class="btjr-tag btjr-J">→ J 직무역량</span></div>
+    </div>
+
+    <div class="q-group"><span class="q-group-tag qg-infra">실행 기반</span><span class="q-group-desc">AI 도입을 위한 데이터 인프라</span></div>
+    <div class="qi"><div class="qt"><span class="qn">3</span>AI 도입에 필요한 데이터(생산 이력, 품질 데이터, 고객 데이터 등)가 체계적으로 축적·관리되고 있다. <span class="dtag bd-A">A3 데이터 축적</span></div>
+      <div class="lk" data-name="A3"><div class="lo"><input type="radio" name="A3" id="A3_1" value="1"><label for="A3_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="A3" id="A3_2" value="2"><label for="A3_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="A3" id="A3_3" value="3"><label for="A3_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="A3" id="A3_4" value="4"><label for="A3_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="A3" id="A3_5" value="5"><label for="A3_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-T">→ T 기술운영</span></div>
+    </div>
+
+    <div class="q-group"><span class="q-group-tag" style="background:#7c3aed">인재 역량</span><span class="q-group-desc">AI·자동화 대응 직무전환 역량</span></div>
+    <div class="qi"><div class="qt"><span class="qn">4</span>AI·자동화 도입 시 기존 직원의 직무 전환(재배치, 역할 변화)에 대한 구체적 계획이나 전환 교육 프로그램이 마련되어 있다. <span class="dtag bd-A">A4 직무전환 대응</span></div>
+      <div class="lk" data-name="A4"><div class="lo"><input type="radio" name="A4" id="A4_1" value="1"><label for="A4_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="A4" id="A4_2" value="2"><label for="A4_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="A4" id="A4_3" value="3"><label for="A4_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="A4" id="A4_4" value="4"><label for="A4_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="A4" id="A4_5" value="5"><label for="A4_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-J">→ J 직무역량</span><span class="btjr-tag btjr-R">→ R 노사관계</span></div>
+    </div>
+
+    <div class="qi"><div class="qt"><span class="qn">5</span>생성형 AI(ChatGPT 등)를 업무에 활용하거나, 도입을 검토한 경험이 있다. <span class="dtag bd-A">A5 생성형 AI 활용</span></div>
+      <div class="lk" data-name="A5"><div class="lo"><input type="radio" name="A5" id="A5_1" value="1"><label for="A5_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="A5" id="A5_2" value="2"><label for="A5_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="A5" id="A5_3" value="3"><label for="A5_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="A5" id="A5_4" value="4"><label for="A5_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="A5" id="A5_5" value="5"><label for="A5_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-J">→ J 직무역량</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEC 5: X — 고용전환 (X1~X5) ═══ -->
+<div class="sec dm-X">
+  <div class="sec-hd">
+    <div class="sec-icon">🔄</div>
+    <div><h2>X — 고용전환 (eXployment Transformation)</h2><div class="sec-sub">고용구조 전환 압력 및 실행 기반(직무재편, 노사소통, 교육체계, 경영진 의지) 종합 평가</div></div>
+    <span class="badge bd-X">5문항</span>
+  </div>
+  <div class="sec-bd">
+    <div class="co co-framework"><span>🔗</span><div><strong>전환 유형 결정 핵심:</strong> X영역은 G영역과 함께 전환 유형 4분류(구조전환형/공정혁신형/가치창출형/강소기반형) 판정의 핵심 변수(Y축: 고용전환 압력)입니다.</div></div>
+
+    <div class="q-group"><span class="q-group-tag qg-pressure">전환 압력</span><span class="q-group-desc">고용구조 변동의 시급성과 압력 수준</span></div>
+    <div class="qi"><div class="qt"><span class="qn">1</span>현재 심각한 구인난을 겪고 있거나, 핵심 기술 인력의 고령화·퇴직으로 기술 전수가 시급하다. <span class="dtag bd-X">X1 인력 리스크</span></div>
+      <div class="lk" data-name="X1"><div class="lo"><input type="radio" name="X1" id="X1_1" value="1"><label for="X1_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="X1" id="X1_2" value="2"><label for="X1_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="X1" id="X1_3" value="3"><label for="X1_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="X1" id="X1_4" value="4"><label for="X1_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="X1" id="X1_5" value="5"><label for="X1_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-J">→ J 직무역량</span><span class="btjr-tag btjr-R">→ R 노사관계</span></div>
+    </div>
+
+    <div class="qi"><div class="qt"><span class="qn">2</span>기술 변화(자동화·AI·친환경 전환)에 따라 기존 직원의 직무가 축소되거나 새로운 역할을 부여해야 할 필요성이 높다. <span class="dtag bd-X">X2 직무재편 필요</span></div>
+      <div class="lk" data-name="X2"><div class="lo"><input type="radio" name="X2" id="X2_1" value="1"><label for="X2_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="X2" id="X2_2" value="2"><label for="X2_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="X2" id="X2_3" value="3"><label for="X2_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="X2" id="X2_4" value="4"><label for="X2_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="X2" id="X2_5" value="5"><label for="X2_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-J">→ J 직무역량</span></div>
+    </div>
+
+    <div class="q-group"><span class="q-group-tag qg-infra">실행 기반</span><span class="q-group-desc">전환을 실행할 소통·교육 인프라 수준</span></div>
+    <div class="qi"><div class="qt"><span class="qn">3</span>직무 전환·근로 조건 변경과 관련하여 노사 간 소통 채널(노사협의회, 전환 TF 등)이 운영되고 있으며, 노사 공감대가 형성되어 있다. <span class="dtag bd-X">X3 노사 소통</span></div>
+      <div class="lk" data-name="X3"><div class="lo"><input type="radio" name="X3" id="X3_1" value="1"><label for="X3_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="X3" id="X3_2" value="2"><label for="X3_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="X3" id="X3_3" value="3"><label for="X3_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="X3" id="X3_4" value="4"><label for="X3_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="X3" id="X3_5" value="5"><label for="X3_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-R">→ R 노사관계</span></div>
+    </div>
+
+    <div class="qi"><div class="qt"><span class="qn">4</span>재직자를 위한 직무 전환 교육훈련(OJT, 사내대학, 외부 위탁 등) 체계가 마련되어 있거나 구축 계획이 있다. <span class="dtag bd-X">X4 전환 교육체계</span></div>
+      <div class="lk" data-name="X4"><div class="lo"><input type="radio" name="X4" id="X4_1" value="1"><label for="X4_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="X4" id="X4_2" value="2"><label for="X4_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="X4" id="X4_3" value="3"><label for="X4_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="X4" id="X4_4" value="4"><label for="X4_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="X4" id="X4_5" value="5"><label for="X4_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-J">→ J 직무역량</span><span class="btjr-tag btjr-R">→ R 노사관계</span></div>
+    </div>
+
+    <div class="q-group"><span class="q-group-tag qg-drive">추진 동력</span><span class="q-group-desc">전환을 밀고 갈 경영진 리더십과 의지</span></div>
+    <div class="qi"><div class="qt"><span class="qn">5</span>경영진이 고용구조 전환(직무재편, 인력재배치, 전환교육 등)을 핵심 경영과제로 인식하고 전사적 추진 의지를 갖고 있다. <span class="dtag bd-X">X5 경영진 전환 의지</span></div>
+      <div class="lk" data-name="X5"><div class="lo"><input type="radio" name="X5" id="X5_1" value="1"><label for="X5_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="X5" id="X5_2" value="2"><label for="X5_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="X5" id="X5_3" value="3"><label for="X5_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="X5" id="X5_4" value="4"><label for="X5_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="X5" id="X5_5" value="5"><label for="X5_5"><span class="ls">5</span>매우 그렇다</label></div></div>
+      <div class="btjr-hint"><span class="btjr-tag btjr-B">→ B 사업구조</span><span class="btjr-tag btjr-R">→ R 노사관계</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEC 6: 지원 니즈 ═══ -->
+<div class="sec">
+  <div class="sec-hd" style="background:#fffbeb">
+    <div class="sec-icon" style="background:#fef3c7;color:#b45309">🎯</div>
+    <div><h2>지원 분야 선택</h2><div class="sec-sub">가장 시급한 지원 분야를 선택해 주세요 (중복 선택 가능) — Ch.5 정부지원 연계 사전 매칭에 활용</div></div>
+  </div>
+  <div class="sec-bd">
+    <div class="ck-grid">
+      <label class="ck-item" onclick="toggleCk(this)"><input type="checkbox" name="needs" value="사업재편"><div><div class="cl">사업재편 전략 수립</div><div class="cd">신사업 발굴, 사업구조 전환 → BTJR B영역</div></div></label>
+      <label class="ck-item" onclick="toggleCk(this)"><input type="checkbox" name="needs" value="스마트공장"><div><div class="cl">스마트공장/디지털 인프라</div><div class="cd">설비 자동화, DX 투자 연계 → BTJR T영역</div></div></label>
+      <label class="ck-item" onclick="toggleCk(this)"><input type="checkbox" name="needs" value="직무분석"><div><div class="cl">직무 분석 및 인력 재배치</div><div class="cd">직무전환 설계, 인력운영 최적화 → BTJR J영역</div></div></label>
+      <label class="ck-item" onclick="toggleCk(this)"><input type="checkbox" name="needs" value="교육훈련"><div><div class="cl">재직자 직무 전환 교육훈련</div><div class="cd">AI·디지털·친환경 역량 교육 → BTJR J영역</div></div></label>
+      <label class="ck-item" onclick="toggleCk(this)"><input type="checkbox" name="needs" value="노사상생"><div><div class="cl">노사 상생 및 변화관리</div><div class="cd">소통 채널 구축, 조직문화 개선 → BTJR R영역</div></div></label>
+      <label class="ck-item" onclick="toggleCk(this)"><input type="checkbox" name="needs" value="고용안정"><div><div class="cl">고용안정·인건비 지원</div><div class="cd">고용유지 장려금, 전직지원 → 정부지원 연계</div></div></label>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEC 7: 담당자 정보 ═══ -->
+<div class="sec">
+  <div class="sec-hd">
+    <div class="sec-icon" style="background:var(--g100);color:var(--g700)">👤</div>
+    <div><h2>담당자 정보</h2><div class="sec-sub">진단 리포트를 받으실 담당자 정보</div></div>
+  </div>
+  <div class="sec-bd">
+    <div class="frow">
+      <div class="fg"><label class="fl">담당자 성함 <span class="req">*</span></label><input type="text" class="fi" id="contactName" placeholder="예: 김철수" data-required></div>
+      <div class="fg"><label class="fl">직함</label><input type="text" class="fi" id="contactTitle" placeholder="예: 경영지원팀장"></div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label class="fl">이메일 주소 <span class="req">*</span></label><input type="email" class="fi" id="contactEmail" placeholder="예: hong@company.com" data-required></div>
+      <div class="fg"><label class="fl">전화번호 <span class="req">*</span></label><input type="tel" class="fi" id="contactPhone" placeholder="예: 010-1234-5678" data-required></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SUBMIT ═══ -->
+<div class="submit-sec">
+  <button class="btn-sub" id="submitBtn" onclick="submitSurvey()">📊 진단 제출 및 결과 리포트 받기</button>
+  <div class="submit-note">🔒 입력 정보는 진단 목적으로만 사용되며 안전하게 보호됩니다</div>
+</div>
+
+</div>
+
+<div class="footer">
+  <strong>위탁기관</strong> 고용노동부 &nbsp;|&nbsp; <strong>운영기관</strong> 한국표준협회 산업일자리전환지원센터<br>
+  G-DAX 준비도 진단 v2.0 &nbsp;|&nbsp; FABRIC × G-DAX × BTJR 통합 프레임워크<br>
+  <div style="margin-top:12px">
+    <a href="/myreport.html" class="footer-link">🔍 이전 진단 결과 확인하기</a> |
+    <a href="/guide.html" target="_blank" class="footer-link">📖 보고서 보는 법 가이드</a>
+  </div>
+</div>
+
+<script>
+/* ── Progress ── */
+const DOMAINS=['G','D','A','X'], ITEMS_PER=5, TOTAL_Q=20;
+function updateProg(){
+  let ans=0;
+  DOMAINS.forEach(d=>{for(let i=1;i<=ITEMS_PER;i++){if(document.querySelector(`input[name="${d}${i}"]:checked`))ans++}});
+  const p=Math.round(ans/TOTAL_Q*100);
+  document.getElementById('progBar').style.width=p+'%';
+  document.getElementById('progTxt').textContent=p+'%';
+}
+document.querySelectorAll('input[type="radio"]').forEach(r=>r.addEventListener('change',updateProg));
+
+function toggleCk(el){setTimeout(()=>{const c=el.querySelector('input[type="checkbox"]');c.checked?el.classList.add('ckd'):el.classList.remove('ckd')},10)}
+function selRC(el){el.parentElement.querySelectorAll('.rc').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');el.querySelector('input').checked=true}
+
+/* ── Submit ── */
+async function submitSurvey(){
+  const reqs=document.querySelectorAll('[data-required]');
+  let ok=true;
+  reqs.forEach(inp=>{if(!inp.value.trim()){inp.style.borderColor='#dc2626';ok=false}else{inp.style.borderColor=''}});
+  let allAns=true;
+  DOMAINS.forEach(d=>{for(let i=1;i<=ITEMS_PER;i++){if(!document.querySelector(`input[name="${d}${i}"]:checked`))allAns=false}});
+  if(!ok||!allAns){alert('모든 필수 항목과 진단 문항에 응답해 주세요.');return}
+
+  const data={
+    company:{name:document.getElementById('companyName').value,ceo:document.getElementById('ceoName').value,
+      location:document.getElementById('location').value,industry:document.getElementById('industry').value,
+      indType:document.getElementById('indType').value,employees:document.getElementById('employees').value,
+      revenue:document.getElementById('revenue').value,founded:document.getElementById('founded').value},
+    scores:{},needs:[],
+    contact:{name:document.getElementById('contactName').value,title:document.getElementById('contactTitle').value,
+      email:document.getElementById('contactEmail').value,phone:document.getElementById('contactPhone').value}
+  };
+  DOMAINS.forEach(d=>{data.scores[d]=[];for(let i=1;i<=ITEMS_PER;i++){data.scores[d].push(parseInt(document.querySelector(`input[name="${d}${i}"]:checked`).value))}});
+  document.querySelectorAll('input[name="needs"]:checked').forEach(cb=>{data.needs.push(cb.value)});
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ 제출 중...';
+
+  try {
+    const res = await fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.success) {
+      window.location.href = '/report.html?id=' + result.assessmentId;
+    } else {
+      alert('저장에 실패했습니다: ' + (result.error || '다시 시도해 주세요.'));
+    }
+  } catch (e) {
+    alert('네트워크 오류가 발생했습니다. 다시 시도해 주세요.');
+    console.error('Submit error:', e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '📊 진단 제출 및 결과 리포트 받기';
+  }
+}
+</script>
+</body>
+</html>

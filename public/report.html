@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G-DAX 준비도 진단 결과 리포트</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
+
+  :root {
+    --green: #16a34a; --green-light: #dcfce7; --green-bg: #f0fdf4;
+    --digital: #2563eb; --digital-light: #dbeafe; --digital-bg: #eff6ff;
+    --ai: #7c3aed; --ai-light: #ede9fe; --ai-bg: #f5f3ff;
+    --trans: #dc2626; --trans-light: #fee2e2; --trans-bg: #fef2f2;
+    --navy: #1e3a5f; --gray-50: #f9fafb; --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb; --gray-300: #d1d5db; --gray-500: #6b7280;
+    --gray-700: #374151; --gray-900: #111827;
+    --btjr-B: #2563eb; --btjr-T: #16a34a; --btjr-J: #b45309; --btjr-R: #dc2626;
+    --shadow: 0 4px 24px rgba(0,0,0,0.06);
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--gray-50); color: var(--gray-900); line-height: 1.6;
+  }
+
+  /* ── Cover ── */
+  .cover {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e40af 40%, #7c3aed 70%, #dc2626 100%);
+    color: #fff; padding: 36px 24px 32px; text-align: center; position: relative; overflow: hidden;
+  }
+  .cover::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2l3 3.5-3 3z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .cover-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .cover h1 { font-size: 30px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 6px; }
+  .cover .company-name { font-size: 22px; font-weight: 300; opacity: 0.9; margin-bottom: 16px; }
+  .cover-date { font-size: 13px; opacity: 0.7; }
+  .cover-gdax { display: flex; gap: 8px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
+  .cover-gdax .gd-chip { padding: 6px 16px; border-radius: 10px; font-size: 13px; font-weight: 700; background: rgba(255,255,255,0.12); backdrop-filter: blur(4px); }
+  .cover-type { display: inline-block; margin-top: 14px; padding: 6px 20px; border-radius: 8px; font-size: 14px; font-weight: 700; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); }
+
+  /* ── Container ── */
+  .page { max-width: 960px; margin: 0 auto; padding: 30px 24px; }
+
+  /* ── Cards ── */
+  .card {
+    background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+    margin-bottom: 24px; overflow: hidden; border: 1px solid var(--gray-200);
+  }
+  .card-header {
+    padding: 16px 24px; display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .card-header .ch-icon { font-size: 20px; }
+  .card-header h2 { font-size: 17px; font-weight: 700; }
+  .card-header .ch-tag { margin-left: auto; font-size: 11px; color: var(--gray-500); }
+  .card-body { padding: 24px; }
+
+  /* ── Framework Callout ── */
+  .fw-callout {
+    padding: 12px 16px; border-radius: 10px; margin-bottom: 20px;
+    font-size: 12px; line-height: 1.7; display: flex; gap: 10px; align-items: flex-start;
+  }
+  .fw-callout .fw-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .fw-callout-navy { background: #f0f4f8; border: 1px solid #cbd5e1; color: #334155; }
+  .fw-callout-green { background: var(--green-bg); border: 1px solid #bbf7d0; color: #166534; }
+  .fw-callout-blue { background: var(--digital-bg); border: 1px solid #bfdbfe; color: #1e40af; }
+  .fw-callout-purple { background: var(--ai-bg); border: 1px solid #c4b5fd; color: #5b21b6; }
+  .fw-callout-red { background: var(--trans-bg); border: 1px solid #fca5a5; color: #991b1b; }
+
+  /* ── Overall Score Hero ── */
+  .score-hero {
+    display: grid; grid-template-columns: 200px 1fr; gap: 30px; align-items: center;
+  }
+  @media(max-width:700px) { .score-hero { grid-template-columns: 1fr; } }
+  .score-circle-wrap { text-align: center; }
+  .score-circle {
+    width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .score-circle .big-num { font-size: 48px; font-weight: 900; }
+  .score-circle .max-label { font-size: 13px; opacity: 0.9; font-weight: 500; }
+  .score-level { font-size: 15px; font-weight: 700; text-align: center; }
+
+  .score-bars { display: flex; flex-direction: column; gap: 14px; }
+  .sbar-item { display: flex; align-items: center; gap: 12px; }
+  .sbar-label { width: 130px; font-size: 11.5px; font-weight: 600; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .sbar-label .sbar-icon { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  .sbar-track { flex: 1; height: 28px; background: var(--gray-100); border-radius: 8px; overflow: hidden; position: relative; }
+  .sbar-fill { height: 100%; border-radius: 8px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size: 13px; font-weight: 700; color: #fff; transition: width 1.2s ease; min-width: 40px; }
+  .sbar-score { width: 50px; text-align: right; font-size: 14px; font-weight: 700; }
+
+  /* ── Radar Chart ── */
+  .radar-wrap { display: flex; justify-content: center; padding: 10px 0; }
+  .radar-wrap canvas { max-width: 520px; width: 100%; }
+
+  /* ── Domain Detail Card ── */
+  .domain-detail { margin-bottom: 20px; padding: 20px; border-radius: 12px; border: 1px solid var(--gray-200); }
+  .domain-detail:last-child { margin-bottom: 0; }
+  .dd-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .dd-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .dd-title { font-size: 16px; font-weight: 700; }
+  .dd-score { margin-left: auto; font-size: 24px; font-weight: 900; }
+  .dd-level { font-size: 11px; padding: 3px 10px; border-radius: 6px; font-weight: 600; margin-left: 8px; }
+
+  .dd-group-label { font-size: 11px; font-weight: 700; color: #fff; padding: 3px 10px; border-radius: 4px; margin: 10px 0 6px; display: inline-flex; align-items: center; gap: 8px; }
+  .dd-group-label:first-child { margin-top: 0; }
+  .dd-group-label.dg-pressure { background: #ef4444; }
+  .dd-group-label.dg-infra { background: #2563eb; }
+  .dd-group-label.dg-drive { background: #16a34a; }
+  .dd-group-label.dg-growth { background: #b45309; }
+  .dd-group-label.dg-talent { background: #7c3aed; }
+  .dd-group-avg { font-size: 10px; font-weight: 600; background: rgba(255,255,255,0.3); padding: 1px 6px; border-radius: 3px; }
+
+  /* ── Group Sub-score Matrix ── */
+  .gsm-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .gsm-table th, .gsm-table td { padding: 8px 10px; text-align: center; border: 1px solid var(--gray-200); }
+  .gsm-table thead th { background: var(--gray-50); font-weight: 700; font-size: 11px; color: var(--gray-700); }
+  .gsm-table tbody th { font-weight: 600; text-align: left; padding-left: 12px; white-space: nowrap; }
+  .gsm-table .gsm-row-label { display: inline-flex; align-items: center; gap: 6px; }
+  .gsm-table .gsm-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .gsm-table td { font-weight: 700; font-size: 13px; }
+  .gsm-table td.gsm-high { color: #dc2626; background: #fef2f2; }
+  .gsm-table td.gsm-mid  { color: #b45309; background: #fffbeb; }
+  .gsm-table td.gsm-low  { color: #16a34a; background: #f0fdf4; }
+  .gsm-table td.gsm-na   { color: var(--gray-300); font-size: 11px; font-weight: 400; }
+  .gsm-insight { margin-top: 12px; padding: 10px 14px; border-radius: 8px; background: #fffbeb; border: 1px solid #fde68a; font-size: 11px; line-height: 1.6; color: #92400e; }
+  .gsm-insight strong { font-weight: 700; }
+
+  .dd-questions { margin-top: 12px; }
+  .dd-q { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--gray-50); font-size: 13px; }
+  .dd-q:last-child { border-bottom: none; }
+  .dd-q .q-code { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .dd-q .q-text { flex: 1; color: var(--gray-700); }
+  .dd-q .q-dots { display: flex; gap: 4px; }
+  .dd-q .q-dot { width: 20px; height: 20px; border-radius: 50%; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .dd-q .q-dot.filled { color: #fff; }
+  .dd-q .q-dot.empty { background: var(--gray-100); color: var(--gray-300); }
+  .dd-q .btjr-tags { display: flex; gap: 3px; flex-shrink: 0; }
+  .dd-q .btag { font-size: 9px; padding: 1px 5px; border-radius: 3px; font-weight: 700; }
+  .btag-B { background: #dbeafe; color: #1e40af; }
+  .btag-T { background: #dcfce7; color: #166534; }
+  .btag-J { background: #fef3c7; color: #92400e; }
+  .btag-R { background: #fee2e2; color: #991b1b; }
+
+  .dd-G { border-left: 4px solid var(--green); }
+  .dd-G .dd-icon { background: var(--green-light); color: var(--green); }
+  .dd-G .dd-score { color: var(--green); }
+  .dd-G .dd-level { background: var(--green-light); color: var(--green); }
+  .dd-G .q-dot.filled { background: var(--green); }
+  .dd-G .q-code { background: var(--green-light); color: var(--green); }
+
+  .dd-D { border-left: 4px solid var(--digital); }
+  .dd-D .dd-icon { background: var(--digital-light); color: var(--digital); }
+  .dd-D .dd-score { color: var(--digital); }
+  .dd-D .dd-level { background: var(--digital-light); color: var(--digital); }
+  .dd-D .q-dot.filled { background: var(--digital); }
+  .dd-D .q-code { background: var(--digital-light); color: var(--digital); }
+
+  .dd-A { border-left: 4px solid var(--ai); }
+  .dd-A .dd-icon { background: var(--ai-light); color: var(--ai); }
+  .dd-A .dd-score { color: var(--ai); }
+  .dd-A .dd-level { background: var(--ai-light); color: var(--ai); }
+  .dd-A .q-dot.filled { background: var(--ai); }
+  .dd-A .q-code { background: var(--ai-light); color: var(--ai); }
+
+  .dd-X { border-left: 4px solid var(--trans); }
+  .dd-X .dd-icon { background: var(--trans-light); color: var(--trans); }
+  .dd-X .dd-score { color: var(--trans); }
+  .dd-X .dd-level { background: var(--trans-light); color: var(--trans); }
+  .dd-X .q-dot.filled { background: var(--trans); }
+  .dd-X .q-code { background: var(--trans-light); color: var(--trans); }
+
+  /* ── 4분면 Matrix Chart ── */
+  .quadrant-wrap { display: flex; justify-content: center; padding: 10px 0; }
+  .quadrant-wrap canvas { max-width: 480px; width: 100%; }
+
+  /* ── Type Classification Cards ── */
+  .type-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media(max-width:600px) { .type-grid { grid-template-columns: 1fr; } }
+  .type-card { padding: 18px; border-radius: 12px; text-align: center; border: 2px solid var(--gray-200); opacity: 0.45; transition: all 0.3s; }
+  .type-card.active { opacity: 1; border-width: 3px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: scale(1.02); }
+  .type-card .tc-icon { font-size: 32px; margin-bottom: 8px; }
+  .type-card .tc-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .type-card .tc-desc { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
+  .type-card .tc-condition { font-size: 11px; margin-top: 6px; padding: 3px 10px; border-radius: 6px; display: inline-block; }
+
+  .tc-struct.active { border-color: #dc2626; background: #fef2f2; }
+  .tc-struct.active .tc-condition { background: #fee2e2; color: #991b1b; }
+  .tc-process.active { border-color: #7c3aed; background: #f5f3ff; }
+  .tc-process.active .tc-condition { background: #ede9fe; color: #5b21b6; }
+  .tc-value.active { border-color: #16a34a; background: #f0fdf4; }
+  .tc-value.active .tc-condition { background: #dcfce7; color: #166534; }
+  .tc-strong.active { border-color: #2563eb; background: #eff6ff; }
+  .tc-strong.active .tc-condition { background: #dbeafe; color: #1e40af; }
+
+  /* ── BTJR Impact ── */
+  .btjr-flow { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; margin: 20px 0; }
+  .btjr-box { padding: 16px 20px; border-radius: 12px; text-align: center; min-width: 140px; color: #fff; position: relative; }
+  .btjr-box .b-initial { font-size: 28px; font-weight: 900; }
+  .btjr-box .b-kr { font-size: 13px; font-weight: 600; margin-top: 2px; }
+  .btjr-box .b-score { font-size: 12px; opacity: 0.9; margin-top: 4px; }
+  .btjr-box .b-level { font-size: 10px; opacity: 0.8; margin-top: 2px; }
+  .btjr-arrow { font-size: 24px; color: var(--gray-300); padding: 0 8px; }
+  .btjr-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  @media(max-width:600px) { .btjr-split { grid-template-columns: 1fr; } }
+  .btjr-split-card { border-radius: 10px; padding: 14px; border: 1px solid var(--gray-200); }
+  .btjr-split-card h4 { font-size: 12px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .btjr-split-card h4 .bsc-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .btjr-mini-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 11px; }
+  .btjr-mini-bar .bmb-label { width: 60px; font-weight: 600; }
+  .btjr-mini-bar .bmb-track { flex: 1; height: 16px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+  .btjr-mini-bar .bmb-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; font-size: 10px; font-weight: 700; color: #fff; min-width: 28px; }
+  .btjr-split-insight { margin-top: 8px; font-size: 10px; color: var(--gray-500); line-height: 1.5; }
+  .btjr-B { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+  .btjr-T { background: linear-gradient(135deg, #16a34a, #22c55e); }
+  .btjr-J { background: linear-gradient(135deg, #b45309, #d97706); }
+  .btjr-R { background: linear-gradient(135deg, #dc2626, #ef4444); }
+
+  /* ── Pressure × Readiness Matrix ── */
+  .matrix-wrap { overflow-x: auto; }
+  .matrix { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix th { padding: 10px 14px; background: var(--navy); color: #fff; font-weight: 600; text-align: center; }
+  .matrix td { padding: 10px 14px; border: 1px solid var(--gray-200); text-align: center; }
+  .matrix .cell-high { background: #fef2f2; color: #991b1b; font-weight: 700; }
+  .matrix .cell-med { background: #fffbeb; color: #92400e; font-weight: 600; }
+  .matrix .cell-low { background: #f0fdf4; color: #166534; font-weight: 500; }
+
+  /* ── Cross-SWOT ── */
+  .swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 2px solid var(--gray-300); border-radius: 12px; overflow: hidden; }
+  .swot-cell { padding: 16px; }
+  .swot-cell h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .swot-cell ul { list-style: none; padding: 0; margin: 0; }
+  .swot-cell li { font-size: 12px; line-height: 1.7; padding: 3px 0; color: var(--gray-700); }
+  .swot-cell li::before { content: '▸ '; font-weight: 700; }
+  .swot-s { background: #eff6ff; border-right: 1px solid var(--gray-300); border-bottom: 1px solid var(--gray-300); }
+  .swot-w { background: #fef2f2; border-bottom: 1px solid var(--gray-300); }
+  .swot-o { background: #f0fdf4; border-right: 1px solid var(--gray-300); }
+  .swot-t { background: #fffbeb; }
+  .swot-s h4 { color: #1e40af; } .swot-w h4 { color: #991b1b; }
+  .swot-o h4 { color: #166534; } .swot-t h4 { color: #92400e; }
+
+  /* ── Task Pool Recommendations ── */
+  .task-pool { margin-top: 16px; }
+  .tp-direction { margin-bottom: 16px; padding: 16px; border-radius: 12px; border: 1px solid var(--gray-200); }
+  .tp-direction .tp-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .tp-direction .tp-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .tp-direction .tp-title { font-size: 14px; font-weight: 700; }
+  .tp-tasks { display: flex; flex-direction: column; gap: 6px; margin-left: 38px; }
+  .tp-task { font-size: 12px; line-height: 1.6; color: var(--gray-700); padding: 4px 0; }
+  .tp-task .tp-gdax { font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 4px; background: var(--gray-100); color: var(--gray-500); margin-left: 6px; }
+  .tp-task-header { display: inline; }
+  .tp-desc { font-size: 11px; line-height: 1.5; color: var(--gray-500); margin: 2px 0 8px 14px; padding-left: 8px; border-left: 2px solid var(--gray-200); }
+  .tp-badge { font-size: 10px; font-weight: 600; padding: 1px 8px; border-radius: 10px; margin-left: 6px; white-space: nowrap; }
+  .tp-badge-priority { background: #fef3c7; color: #92400e; }
+  .tp-badge-urgent { background: #fee2e2; color: #991b1b; }
+  .tp-weak { border-left: 3px solid #f59e0b; padding-left: 8px; margin-left: -11px; }
+  .tp-urgent { border-left: 3px solid #ef4444; padding-left: 8px; margin-left: -11px; background: #fef2f2; border-radius: 4px; }
+
+  /* ── Recommendations ── */
+  .rec-list { display: flex; flex-direction: column; gap: 12px; }
+  .rec-item { display: flex; gap: 14px; padding: 16px; border-radius: 12px; border: 1px solid var(--gray-200); background: #fff; }
+  .rec-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .rec-content { flex: 1; }
+  .rec-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .rec-desc { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
+  .rec-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+  .rec-tags .rtag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+
+  /* ── Info Table ── */
+  .info-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .info-table th { text-align: left; padding: 8px 12px; background: var(--gray-50); color: var(--gray-500); font-weight: 600; width: 110px; border-bottom: 1px solid var(--gray-200); }
+  .info-table td { padding: 8px 12px; border-bottom: 1px solid var(--gray-100); font-weight: 500; }
+
+  /* ── CTA ── */
+  .cta-section { text-align: center; padding: 40px 24px; margin-top: 20px; background: linear-gradient(135deg, var(--navy), #2563eb); border-radius: var(--radius); color: #fff; }
+  .cta-section h3 { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+  .cta-section p { font-size: 14px; opacity: 0.85; margin-bottom: 20px; line-height: 1.7; }
+  .cta-btn { display: inline-block; padding: 14px 40px; background: #fff; color: var(--navy); font-size: 15px; font-weight: 700; border-radius: 10px; text-decoration: none; transition: all 0.2s; }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+  /* ── Footer ── */
+  .footer { text-align: center; padding: 24px; font-size: 12px; color: var(--gray-500); border-top: 1px solid var(--gray-200); margin-top: 30px; line-height: 1.7; }
+  .footer strong { color: var(--gray-700); }
+
+  /* ── Print: 아래 PDF 섹션에 통합 ── */
+
+  /* ── Demo Banner ── */
+  .demo-banner {
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: 12px;
+    padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
+    font-size: 13px; color: #92400e;
+  }
+  .demo-banner .db-icon { font-size: 20px; }
+  .demo-banner strong { font-weight: 700; }
+
+  /* ── PDF 다운로드 바 공간 확보 ── */
+  body { padding-bottom: 70px; }
+
+  /* ══ 인쇄(PDF) 전용 스타일 — 최대 압축 ══ */
+  @media print {
+    @page { size: A4 portrait; margin: 8mm 7mm 8mm 7mm; }
+
+    * { box-shadow: none !important; }
+
+    body {
+      background: #fff !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      padding-bottom: 0 !important;
+      font-size: 9.5px;
+      line-height: 1.35;
+    }
+
+    #pdfBar, .demo-banner { display: none !important; }
+
+    /* ── 커버: 다음 콘텐츠와 같은 페이지 ── */
+    .cover { break-after: auto; page-break-after: auto; padding: 30px 20px 16px; margin-bottom: 0; }
+    .cover h1 { font-size: 24px; margin-bottom: 4px; }
+    .cover .company-name { font-size: 18px; margin-bottom: 10px; }
+    .cover-date { font-size: 11px; }
+    .cover-gdax { margin-top: 12px; gap: 6px; }
+    .cover-gdax .gd-chip { padding: 4px 12px; font-size: 11px; }
+    .cover-type { margin-top: 10px; padding: 4px 14px; font-size: 12px; }
+
+    /* ── 본문 ── */
+    .page { max-width: 100%; padding: 0; }
+
+    /* ── 주요 섹션 페이지 바꿈 ── */
+    .card.print-break { break-before: page; page-break-before: always; }
+
+    /* ── 카드 ── */
+    .card { border: 1px solid #ccc; margin-bottom: 4px; border-radius: 6px; overflow: hidden; }
+    .card-header { padding: 5px 10px; break-inside: avoid; border-bottom: 1px solid #eee; }
+    .card-header h2 { font-size: 12px; }
+    .card-header .ch-icon { font-size: 15px; }
+    .card-header .ch-tag { font-size: 9px; }
+    .card-body { padding: 8px 10px; }
+
+    /* ── 잘림 방지: 소단위만 ── */
+    .info-table, .score-hero, .btjr-flow, .type-grid,
+    .swot-grid, table, canvas, img.chart-img { break-inside: avoid; page-break-inside: avoid; }
+    .domain-detail { break-inside: avoid; page-break-inside: avoid; margin-bottom: 4px; padding: 6px 8px; }
+    .rec-item { break-inside: avoid; page-break-inside: avoid; padding: 6px 8px; margin-bottom: 2px; gap: 8px; }
+    .tp-direction { break-inside: avoid; page-break-inside: avoid; margin-bottom: 4px; padding: 8px; }
+    .fw-callout { break-inside: avoid; page-break-inside: avoid; padding: 5px 8px; margin-bottom: 6px; font-size: 9px; gap: 6px; }
+    .fw-callout .fw-icon { font-size: 13px; }
+
+    /* ── 종합 진단 결과 ── */
+    .score-hero { gap: 16px; }
+    .score-circle-wrap { text-align: center; }
+    .score-circle { width: 100px; height: 100px; }
+    .score-circle .big-num { font-size: 30px; }
+    .score-circle .max-label { font-size: 10px; }
+    .score-level { font-size: 11px; }
+    .sbar-item { gap: 6px; }
+    .sbar-track { height: 18px; }
+    .sbar-fill { font-size: 10px; padding-right: 6px; }
+    .sbar-label { font-size: 9px; width: 90px; white-space: nowrap; }
+    .sbar-label .sbar-icon { width: 8px; height: 8px; }
+    .sbar-score { font-size: 11px; width: 40px; }
+    .score-bars { gap: 6px; }
+
+    /* ── 차트 ── */
+    .radar-wrap { padding: 0; }
+    .quadrant-wrap { padding: 4px 0; }
+    .radar-wrap canvas, .radar-wrap img.chart-img { max-width: 280px; }
+    .quadrant-wrap canvas, .quadrant-wrap img.chart-img { max-width: 320px; }
+
+    /* ── 영역별 상세 (구조별 소계와 같은 흐름 → 컴팩트화) ── */
+    .dd-header { margin-bottom: 2px; }
+    .dd-icon { width: 24px; height: 24px; font-size: 12px; border-radius: 5px; }
+    .dd-title { font-size: 11px; }
+    .dd-score { font-size: 16px; }
+    .dd-level { font-size: 8px; padding: 1px 5px; }
+    .dd-q { padding: 1px 0; font-size: 9px; }
+    .dd-q .q-dot { width: 12px; height: 12px; font-size: 7px; }
+    .dd-q .q-code { font-size: 8px; padding: 1px 3px; }
+    .dd-q .btag { font-size: 7px; padding: 0px 3px; }
+    .dd-group-label { font-size: 7px; padding: 1px 5px; margin: 2px 0 1px; gap: 3px; }
+    .dd-group-avg { font-size: 6px; padding: 0px 3px; }
+    .domain-detail { margin-bottom: 2px; padding: 4px 6px; }
+    .domain-detail:last-child { margin-bottom: 0; }
+
+    /* ── BTJR ── */
+    .btjr-flow { margin: 8px 0; }
+    .btjr-box { padding: 8px 10px; min-width: 80px; border-radius: 8px; }
+    .btjr-box .b-initial { font-size: 18px; }
+    .btjr-box .b-kr { font-size: 9px; }
+    .btjr-box .b-score { font-size: 9px; }
+    .btjr-box .b-level { font-size: 8px; }
+    .btjr-arrow { font-size: 16px; padding: 0 3px; }
+    .btjr-split { gap: 6px; margin-top: 8px; }
+    .btjr-split-card { padding: 8px; }
+    .btjr-split-card h4 { font-size: 10px; margin-bottom: 6px; }
+    .btjr-mini-bar { margin-bottom: 3px; font-size: 9px; }
+    .btjr-mini-bar .bmb-track { height: 12px; }
+    .btjr-mini-bar .bmb-fill { font-size: 8px; }
+    .btjr-split-insight { font-size: 8px; }
+
+    /* ── 매트릭스 (구조별 소계 + 영역별 상세 연속 출력 최적화) ── */
+    .matrix th, .matrix td { padding: 3px 5px; font-size: 9px; }
+    .gsm-table { font-size: 9px; }
+    .gsm-table th, .gsm-table td { padding: 4px 5px; }
+    .gsm-table td { font-size: 10px; }
+    .gsm-insight { font-size: 8px; padding: 4px 8px; margin-top: 4px; }
+    .matrix-wrap { margin-top: 2px; }
+
+    /* ── 유형 분류 ── */
+    .type-grid { gap: 6px; }
+    .type-card { padding: 8px; border-width: 1px; }
+    .type-card.active { border-width: 2px; transform: none; }
+    .type-card .tc-icon { font-size: 20px; margin-bottom: 2px; }
+    .type-card .tc-title { font-size: 11px; margin-bottom: 2px; }
+    .type-card .tc-desc { font-size: 9px; line-height: 1.3; }
+    .type-card .tc-condition { font-size: 9px; margin-top: 3px; padding: 2px 6px; }
+
+    /* ── SWOT ── */
+    .swot-cell { padding: 8px; }
+    .swot-cell h4 { font-size: 10px; margin-bottom: 3px; }
+    .swot-cell li { font-size: 9px; line-height: 1.4; padding: 1px 0; }
+
+    /* ── Task Pool ── */
+    .tp-direction .tp-head { margin-bottom: 4px; gap: 6px; }
+    .tp-direction .tp-num { width: 20px; height: 20px; font-size: 10px; }
+    .tp-direction .tp-title { font-size: 11px; }
+    .tp-tasks { margin-left: 26px; gap: 2px; }
+    .tp-task { font-size: 10px; line-height: 1.4; padding: 2px 0; }
+    .tp-task .tp-gdax { font-size: 8px; }
+    .tp-desc { font-size: 9px; line-height: 1.3; margin: 1px 0 4px 14px; }
+    .tp-badge { font-size: 8px; padding: 0 4px; }
+    .tp-weak, .tp-urgent { border-left-width: 2px; }
+
+    /* ── 추천 과제 ── */
+    .rec-list { gap: 4px; }
+    .rec-num { width: 20px; height: 20px; font-size: 10px; }
+    .rec-title { font-size: 11px; margin-bottom: 1px; }
+    .rec-desc { font-size: 9px; line-height: 1.4; }
+    .rec-tags { margin-top: 3px; gap: 3px; }
+    .rec-tags .rtag { font-size: 8px; padding: 1px 5px; }
+
+    /* ── 기업정보 테이블 ── */
+    .info-table th, .info-table td { padding: 4px 8px; font-size: 10px; }
+    .info-table th { width: 80px; }
+
+    /* ── 푸터 ── */
+    .footer { border-top: 1px solid #ccc; margin-top: 4px; padding: 6px; font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   G-DAX 준비도 진단 결과 리포트 v2.0
+   프레임워크 기반 전면 재설계
+   ═══════════════════════════════════════════════════════ */
+
+const ITEMS_PER = 5;
+const TOTAL_Q = 20;
+
+/* ── G-DAX 영역 설정 (5문항 × 4영역) ── */
+const DOMAIN_CONFIG = {
+  G: { name: '친환경전환', en: 'Green Transition', icon: '\u{1F331}', color: '#16a34a',
+    questions: [
+      { code: 'G1', label: '탄소 리스크', text: '탄소 감축 정책으로 인한 매출 감소 우려', btjr: ['B'], group: '전환 압력' },
+      { code: 'G2', label: '공급망 압력', text: '원청사/바이어의 RE100·탄소배출 요구 수준', btjr: ['B','T'], group: '전환 압력' },
+      { code: 'G3', label: '에너지 전환', text: '에너지 비용 비중 및 친환경 에너지 전환 필요성', btjr: ['T'], group: '전환 압력' },
+      { code: 'G4', label: '환경관리체계', text: '환경 규제 대응 전담 인력·체계 구축 수준', btjr: ['J','R'], reverse: true, group: '실행 기반' },
+      { code: 'G5', label: 'Green 기회', text: '탄소중립 관련 신규 사업기회 인식 및 추진 의지', btjr: ['B'], group: '성장 동력' }
+    ]},
+  D: { name: '디지털전환', en: 'Digital Transformation', icon: '\u{1F4BB}', color: '#2563eb',
+    questions: [
+      { code: 'D1', label: 'DX 격차', text: '경쟁사 대비 자동화·디지털 시스템 경쟁력 우려', btjr: ['T'], group: '전환 압력' },
+      { code: 'D2', label: 'DX 투자계획', text: '스마트공장·IoT·클라우드 도입 계획 및 예산 확보', btjr: ['B','T'], group: '전환 압력' },
+      { code: 'D3', label: '시스템통합도', text: 'ERP/MES 등 전산 시스템 실시간 관리 수준', btjr: ['T'], reverse: true, group: '실행 기반' },
+      { code: 'D4', label: '데이터 활용', text: '데이터 기반 의사결정 체계 구축 여부', btjr: ['T','J'], group: '실행 기반' },
+      { code: 'D5', label: '디지털역량', text: '디지털 기술 활용 직원 역량 및 교육 수준', btjr: ['J','R'], group: '인재 역량' }
+    ]},
+  A: { name: 'AI전환', en: 'AI Transformation', icon: '\u{1F916}', color: '#7c3aed',
+    questions: [
+      { code: 'A1', label: 'AI 적용가능성', text: '업종 내 AI 활용 사례 등장 및 도입 검토 필요성', btjr: ['T'], group: '전환 압력' },
+      { code: 'A2', label: '자동화 효과', text: '반복·단순 업무에 AI/로봇 자동화 효과 예상', btjr: ['T','J'], group: '전환 압력' },
+      { code: 'A3', label: '데이터 축적', text: 'AI 도입을 위한 데이터 축적 체계 수준', btjr: ['T'], reverse: true, group: '실행 기반' },
+      { code: 'A4', label: '직무전환대응', text: 'AI·자동화 도입 시 직무 변화 대응 계획 여부', btjr: ['J','R'], group: '인재 역량' },
+      { code: 'A5', label: '생성형AI활용', text: '생성형 AI(ChatGPT 등) 업무 활용 가능성 인식', btjr: ['J'], group: '인재 역량' }
+    ]},
+  X: { name: '고용전환', en: 'eXployment Transformation', icon: '\u{1F504}', color: '#dc2626',
+    questions: [
+      { code: 'X1', label: '인력 리스크', text: '구인난·핵심인력 고령화로 인한 기술전수 시급성', btjr: ['J','R'], group: '전환 압력' },
+      { code: 'X2', label: '직무재편필요', text: '신기술 도입에 따른 직원 직무 변화 필요 정도', btjr: ['J'], group: '전환 압력' },
+      { code: 'X3', label: '노사 소통', text: '직무전환·근로조건 변경 시 노사 소통 수준', btjr: ['R'], reverse: true, group: '실행 기반' },
+      { code: 'X4', label: '전환교육체계', text: '체계적 전환 교육훈련 프로그램 운영 수준', btjr: ['J','R'], reverse: true, group: '실행 기반' },
+      { code: 'X5', label: '경영진의지', text: '경영진의 고용구조 전환 핵심 과제 인식 및 추진 의지', btjr: ['B','R'], group: '추진 동력' }
+    ]}
+};
+
+/* ── BTJR 전환 영향 경로 ── */
+const BTJR_CONFIG = {
+  B: { name: '사업구조', en: 'Business Structure', color: '#2563eb' },
+  T: { name: '기술운영', en: 'Technology & Operations', color: '#16a34a' },
+  J: { name: '직무역량', en: 'Job & Competency', color: '#b45309' },
+  R: { name: '노사관계', en: 'Labor Relations', color: '#dc2626' }
+};
+
+/* ── 전환 유형 4분류 (G × D+A 모델) ── */
+/* 원래 설계 의도:
+   X축: G평균 (환경전환 압력 = 탄소 리스크)
+   Y축: (D평균 + A평균) / 2 (기술전환 압력 = Digital+AI)
+   → G와 D+A는 모두 "외부 전환 압력"의 두 축
+   → X(고용전환)는 분류 축이 아닌 "고용전환 강도 조절자"로 재배치
+   → 업종별 D/A 가중치 차등 적용 가능 */
+const TYPE_CONFIG = {
+  struct:  { name: '구조전환형', icon: '\u{1F3ED}', desc: 'Green+Digital/AI 동시 전환 + 대규모 인력 재편', condition: '환경압력 高 + 기술압력 高', cssClass: 'tc-struct' },
+  process: { name: '공정혁신형', icon: '\u{2699}\u{FE0F}', desc: 'Digital/AI 전환 집중 + 운영 고도화', condition: '환경압력 低 + 기술압력 高', cssClass: 'tc-process' },
+  value:   { name: '가치창출형', icon: '\u{1F331}', desc: 'Green 전환 집중 + 친환경 가치 혁신', condition: '환경압력 高 + 기술압력 低', cssClass: 'tc-value' },
+  strong:  { name: '강소기반형', icon: '\u{1F680}', desc: '선택적 고도화 + 미래 경쟁력 확보', condition: '환경압력 低 + 기술압력 低', cssClass: 'tc-strong' }
+};
+
+/* ── 업종별 D/A 가중치 ── */
+const DA_WEIGHTS = {
+  '제조형':  { D: 0.55, A: 0.45 },   // 제조업: 스마트팩토리(D) 비중 약간 높음
+  '서비스형': { D: 0.50, A: 0.50 },   // 서비스업: D/A 균등
+  '기술형':  { D: 0.35, A: 0.65 }    // 기술업: AI(A) 비중 높음
+};
+
+/* ── 고용전환 강도 등급 (X영역 기반) ── */
+const INTENSITY_CONFIG = {
+  high:   { name: '대규모 고용전환', icon: '\u{1F525}', desc: '인력구조 재편·노사협력 필수', color: '#dc2626' },
+  medium: { name: '중규모 고용전환', icon: '\u{26A1}', desc: '단계적 인력 전환·교육 강화', color: '#b45309' },
+  low:    { name: '소규모 고용전환', icon: '\u{2705}', desc: '점진적 역량 개발 중심', color: '#16a34a' }
+};
+
+/* ── 전환 유형별 Task Pool (report_structure.md Ch.4 기반) ── */
+const TASK_POOL = {
+  struct: [
+    { direction: '친환경·디지털 이중전환', tasks: [
+      { name: '친환경 운영 체계 전환', gdax: 'G1~G5',
+        desc: '탄소배출 모니터링 시스템 도입, 에너지 효율화 설비 교체, 친환경 원자재 전환 등 운영 전반의 그린 전환을 추진합니다. 환경규제 대응과 ESG 경영 기반을 동시에 구축하는 과제입니다.' },
+      { name: '디지털 운영 플랫폼 구축', gdax: 'D1~D5',
+        desc: 'ERP·MES·SCM 등 핵심 운영 시스템의 클라우드 전환과 데이터 통합 플랫폼을 구축합니다. 실시간 의사결정 지원 체계와 디지털 워크플로우 자동화를 포함합니다.' },
+      { name: 'AI 도입 기반 조성', gdax: 'A1~A5',
+        desc: 'AI 활용 전략 수립, 데이터 거버넌스 체계 구축, 파일럿 프로젝트 추진을 통해 AI 도입의 조직적 기반을 마련합니다. 현장 수용성 확보와 단계적 확산 로드맵을 포함합니다.' }
+    ]},
+    { direction: '대규모 인력구조 전환', tasks: [
+      { name: '직무 재설계 및 전환배치', gdax: 'X2, X4',
+        desc: '이중전환으로 변화하는 직무를 분석하여 직무기술서를 재설계하고, 영향받는 인력의 전환배치 경로를 설계합니다. 직무 매칭 시스템과 내부 공모제 등을 활용한 체계적 재배치를 추진합니다.' },
+      { name: '전환 교육훈련 체계 구축', gdax: 'X4, X5',
+        desc: '그린·디지털·AI 3대 영역의 직무전환 교육과정을 설계하고, 단계별 역량 인증 체계를 구축합니다. OJT·멘토링·이러닝 등 다양한 학습 경로를 제공합니다.' }
+    ]},
+    { direction: '노사협력 기반 변화관리', tasks: [
+      { name: '노사 공동 전환 거버넌스', gdax: 'X1, X3',
+        desc: '노사 공동 전환위원회를 구성하고, 전환 과정의 의사결정에 근로자 대표가 참여하는 거버넌스 체계를 수립합니다. 정기 소통 채널과 갈등 조정 메커니즘을 포함합니다.' },
+      { name: '심리 안정 및 변화 수용', gdax: 'X3, X5',
+        desc: '대규모 전환에 따른 구성원 불안을 관리하는 심리 지원 프로그램을 운영합니다. 변화관리 커뮤니케이션, EAP(근로자 지원 프로그램), 전환 성공 사례 공유 등을 포함합니다.' }
+    ]}
+  ],
+  process: [
+    { direction: '디지털 기반 스마트 오퍼레이션', tasks: [
+      { name: '핵심 운영 시스템 통합', gdax: 'D2~D5',
+        desc: '분산된 레거시 시스템을 통합하여 실시간 데이터 흐름을 확보합니다. API 기반 시스템 연동, 마스터 데이터 관리(MDM), 통합 대시보드 구축을 통해 운영 가시성을 확보합니다.' },
+      { name: 'AI 기반 운영 최적화', gdax: 'A1~A5',
+        desc: '예측 정비, 수요 예측, 품질 자동 검사 등 AI를 활용한 운영 프로세스 최적화를 추진합니다. 현장 데이터 수집 → 모델 학습 → 의사결정 지원의 순환 체계를 구축합니다.' },
+      { name: '프로세스 디지털 재설계', gdax: 'D1, D3',
+        desc: '수작업·문서 기반 업무 프로세스를 디지털 워크플로우로 재설계합니다. RPA 도입, 전자결재 고도화, 비대면 협업 환경 구축 등을 통해 업무 효율성을 극대화합니다.' }
+    ]},
+    { direction: '디지털 인력 역량 전환', tasks: [
+      { name: '디지털 직무 역량 체계', gdax: 'X1, X2',
+        desc: '디지털 전환에 필요한 직무별 역량 프레임워크를 수립하고, 현재 수준 진단 → 갭 분석 → 맞춤형 교육의 체계를 운영합니다. 데이터 리터러시부터 전문 기술까지 단계별 역량 경로를 제공합니다.' },
+      { name: 'DX 전담 조직 구축', gdax: 'X4, X5',
+        desc: '디지털 전환을 주도하는 전담 조직(CoE)을 신설하고, 내부 DX 전문 인력을 양성합니다. 현업 부서와의 협업 체계, 애자일 운영 방식, 성과 측정 KPI를 포함합니다.' }
+    ]},
+    { direction: '기반 유지·보완 (Green)', tasks: [
+      { name: '친환경 관리 기본 체계 정비', gdax: 'G1~G3',
+        desc: '환경 법규 준수를 위한 기본 관리 체계를 정비합니다. 폐기물 관리, 에너지 사용량 모니터링, 환경 인허가 관리 등 규제 대응 최소 요건을 충족하는 데 초점을 둡니다.' }
+    ]}
+  ],
+  value: [
+    { direction: '친환경 가치 전환', tasks: [
+      { name: '탄소중립 로드맵', gdax: 'G1~G5',
+        desc: '2030·2050 탄소중립 목표에 맞춘 단계별 감축 로드맵을 수립합니다. Scope 1·2·3 배출량 산정, 감축 목표 설정, 이행 과제 도출, 모니터링 체계를 포함합니다.' },
+      { name: '친환경 운영 체계', gdax: 'G3, G4',
+        desc: '생산·물류·조달 전 과정에 친환경 운영 원칙을 적용합니다. 순환경제 원칙 기반 자원 효율화, 친환경 공급망 관리, 녹색구매 정책 등을 체계적으로 도입합니다.' },
+      { name: 'ESG 경영 체계', gdax: 'G5',
+        desc: 'ESG 전략 수립, 공시 체계 구축, 이해관계자 소통 전략을 포함한 ESG 경영 체계를 수립합니다. K-ESG, GRI, TCFD 등 주요 프레임워크에 대응하는 관리 체계를 포함합니다.' }
+    ]},
+    { direction: '그린 인력 역량 전환', tasks: [
+      { name: '그린 직무 역량 개발', gdax: 'X2, X4',
+        desc: '친환경 전환에 필요한 직무별 그린 역량을 정의하고, 맞춤형 교육 프로그램을 개발합니다. 환경 관리사, 에너지 진단사 등 전문 자격 취득 지원을 포함합니다.' },
+      { name: '친환경 변화관리', gdax: 'X3, X5',
+        desc: '그린 전환에 대한 구성원 인식 제고와 행동 변화를 유도하는 프로그램을 운영합니다. 친환경 캠페인, 그린 오피스 운동, 환경 성과 인센티브 등 참여형 프로그램을 포함합니다.' }
+    ]},
+    { direction: '기반 유지·보완 (Digital)', tasks: [
+      { name: '디지털 기초 역량 확보', gdax: 'D1, D4',
+        desc: '디지털 기본 인프라와 구성원 디지털 리터러시를 확보합니다. 클라우드 기반 협업 도구 도입, 정보보안 기본 체계, 전 직원 디지털 기초 교육 등 최소 기반을 구축합니다.' }
+    ]}
+  ],
+  strong: [
+    { direction: '미래 경쟁력 선제 확보', tasks: [
+      { name: 'AI·데이터 고도화', gdax: 'A1~A5',
+        desc: '이미 구축된 AI 기반을 고도화하여 자율 의사결정, 생성형 AI 활용, 데이터 기반 신규 비즈니스 모델을 추진합니다. AI 윤리 가이드라인과 거버넌스 체계 고도화를 포함합니다.' },
+      { name: '차세대 운영 모델 설계', gdax: 'D2~D5',
+        desc: '디지털 트윈, IoT 기반 스마트 팩토리, 자율 운영 시스템 등 차세대 운영 모델을 설계합니다. 기존 디지털 인프라를 활용한 혁신적 운영 방식의 선제적 도입을 추진합니다.' }
+    ]},
+    { direction: '핵심 인력 유지·강화', tasks: [
+      { name: '핵심 인재 리텐션', gdax: 'X1, X5',
+        desc: '전환 과정에서 핵심 인재의 이탈을 방지하는 리텐션 전략을 수립합니다. 경력 개발 경로 설계, 핵심 인재 보상 체계, 조직 몰입도 관리 프로그램을 포함합니다.' },
+      { name: '선제적 역량 개발', gdax: 'X2, X4',
+        desc: '미래 직무 변화를 예측하여 선제적으로 역량을 개발합니다. 기술 트렌드 기반 역량 예측, 사내 벤처·학습 조직 활성화, 외부 전문기관 협력 교육 등을 포함합니다.' }
+    ]},
+    { direction: '친환경 기초 체계', tasks: [
+      { name: '환경 규제 기본 대응', gdax: 'G1, G4',
+        desc: '현행 환경 규제 요건을 충족하는 기본 대응 체계를 정비합니다. 환경 법규 모니터링, 배출 기준 준수 관리, 환경 사고 예방 및 비상 대응 체계를 포함합니다.' }
+    ]}
+  ]
+};
+
+/* ── Parse URL Data or Use Demo ── */
+async function getData() {
+  const params = new URLSearchParams(window.location.search);
+
+  // 방법1: DB 조회 (id 파라미터)
+  const id = params.get('id');
+  if (id) {
+    try {
+      const res = await fetch('/api/assessments/' + id);
+      if (!res.ok) throw new Error('Not found');
+      const json = await res.json();
+      return {
+        data: {
+          company: json.company,
+          scores: json.scores,
+          needs: json.needs,
+          contact: json.contact
+        },
+        isDemo: false,
+        meta: json.meta
+      };
+    } catch (e) { console.error('API fetch error:', e); /* fall through */ }
+  }
+
+  // 방법2: 하위호환 (base64 파라미터)
+  const raw = params.get('data');
+  if (raw) {
+    try {
+      return { data: JSON.parse(decodeURIComponent(escape(atob(raw)))), isDemo: false };
+    } catch(e) { /* fall through */ }
+  }
+
+  // 방법3: 데모 데이터
+  return {
+    data: {
+      company: { name: '(주)한빛테크', ceo: '이한빛', location: '경기도 안산시',
+        industry: '자동차부품 제조', indType: '제조형', employees: '50~99',
+        revenue: '180', founded: '2005' },
+      scores: { G: [4,3,4,2,3], D: [4,2,3,3,2], A: [3,4,2,1,3], X: [4,3,2,2,4] },
+      needs: ['사업재편','교육훈련','스마트공장'],
+      contact: { name: '김철수', title: '경영지원팀장', email: 'kim@hanbit.co.kr', phone: '010-1234-5678' }
+    },
+    isDemo: true
+  };
+}
+
+/* ── Score Helpers ── */
+function domainAvg(scores) { return scores.reduce((a,b) => a+b, 0) / scores.length; }
+function totalScore(allScores) {
+  const all = [...allScores.G, ...allScores.D, ...allScores.A, ...allScores.X];
+  return all.reduce((a,b) => a+b, 0);
+}
+function maxPossible() { return TOTAL_Q * 5; }
+function getLevel(avg) {
+  if (avg >= 4.0) return { text: '매우 높음', grade: 'A', color: '#dc2626' };
+  if (avg >= 3.0) return { text: '높음', grade: 'B', color: '#b45309' };
+  if (avg >= 2.0) return { text: '보통', grade: 'C', color: '#2563eb' };
+  return { text: '낮음', grade: 'D', color: '#16a34a' };
+}
+function getPressure(avg) {
+  if (avg >= 3.5) return '\u9AD8';
+  if (avg >= 2.5) return '\u4E2D';
+  return '\u4F4E';
+}
+
+/* ── 전환 유형 4분류 (G × D+A 모델) ── */
+/* X축 = G평균 (환경전환 압력 = 탄소 리스크)
+   Y축 = techPressure (기술전환 압력 = D+A 가중평균)
+   업종별 가중치: 제조형(D55:A45), 서비스형(D50:A50), 기술형(D35:A65)
+   X영역 = 고용전환 강도 조절자 (분류 후 Task Pool 강도 조절) */
+function getTechPressure(scores, indType) {
+  const dAvg = domainAvg(scores.D);
+  const aAvg = domainAvg(scores.A);
+  const w = DA_WEIGHTS[indType] || DA_WEIGHTS['제조형'];
+  return dAvg * w.D + aAvg * w.A;
+}
+
+function getTypeClassification(scores, indType) {
+  const gAvg = domainAvg(scores.G);
+  const techAvg = getTechPressure(scores, indType);
+  const threshold = 3.0;
+
+  const highGreen = gAvg >= threshold;
+  const highTech = techAvg >= threshold;
+
+  if (highGreen && highTech) return 'struct';   // 구조전환형
+  if (!highGreen && highTech) return 'process';  // 공정혁신형
+  if (highGreen && !highTech) return 'value';    // 가치창출형
+  return 'strong';                                // 강소기반형
+}
+
+/* ── 고용전환 강도 판정 (X영역 기반) ── */
+function getTransitionIntensity(scores) {
+  const xAvg = domainAvg(scores.X);
+  if (xAvg >= 3.5) return 'high';
+  if (xAvg >= 2.5) return 'medium';
+  return 'low';
+}
+
+/* ── BTJR 가중 점수 계산 (문항별 BTJR 매핑 가중치) ── */
+function btjrScores(scores) {
+  const sums = { B: 0, T: 0, J: 0, R: 0 };
+  const cnts = { B: 0, T: 0, J: 0, R: 0 };
+
+  Object.keys(DOMAIN_CONFIG).forEach(dk => {
+    DOMAIN_CONFIG[dk].questions.forEach((q, i) => {
+      const val = scores[dk][i];
+      q.btjr.forEach(bk => {
+        sums[bk] += val;
+        cnts[bk]++;
+      });
+    });
+  });
+
+  const result = {};
+  Object.keys(sums).forEach(k => {
+    result[k] = cnts[k] > 0 ? (sums[k] / cnts[k]).toFixed(1) : '0.0';
+  });
+  return result;
+}
+
+/* ── 그룹별 BTJR 분리 계산 (전환 압력 문항 vs 실행 기반/역량 문항) ── */
+function btjrByGroup(scores) {
+  const pressure = { B: { s: 0, c: 0 }, T: { s: 0, c: 0 }, J: { s: 0, c: 0 }, R: { s: 0, c: 0 } };
+  const readiness = { B: { s: 0, c: 0 }, T: { s: 0, c: 0 }, J: { s: 0, c: 0 }, R: { s: 0, c: 0 } };
+
+  Object.keys(DOMAIN_CONFIG).forEach(dk => {
+    DOMAIN_CONFIG[dk].questions.forEach((q, i) => {
+      const val = scores[dk][i];
+      const target = q.group === '전환 압력' ? pressure : readiness;
+      q.btjr.forEach(bk => { target[bk].s += val; target[bk].c++; });
+    });
+  });
+
+  const calc = obj => {
+    const r = {};
+    Object.keys(obj).forEach(k => { r[k] = obj[k].c > 0 ? (obj[k].s / obj[k].c).toFixed(1) : '0.0'; });
+    return r;
+  };
+  return { pressure: calc(pressure), readiness: calc(readiness) };
+}
+
+/* ── 역방향 문항 준비도 계산 ── */
+function getReadiness(domain, scores) {
+  const questions = DOMAIN_CONFIG[domain].questions;
+  let sum = 0, cnt = 0;
+  questions.forEach((q, i) => {
+    if (q.reverse) { sum += scores[domain][i]; cnt++; }
+  });
+  return cnt > 0 ? sum / cnt : 0;
+}
+
+/* ── Cross-SWOT 예비 분석 ── */
+function generateSWOT(scores, domainAvgs) {
+  const strengths = [], weaknesses = [], opportunities = [], threats = [];
+
+  // S/W: 내부 역량 (역방향 문항 기반)
+  Object.keys(DOMAIN_CONFIG).forEach(dk => {
+    const cfg = DOMAIN_CONFIG[dk];
+    cfg.questions.forEach((q, i) => {
+      if (q.reverse) {
+        if (scores[dk][i] >= 4) strengths.push(`${q.code} ${q.label}: ${cfg.name} 영역 내부 역량 우수`);
+        else if (scores[dk][i] <= 2) weaknesses.push(`${q.code} ${q.label}: ${cfg.name} 영역 내부 역량 미흡`);
+      }
+    });
+  });
+
+  // 영역 평균 기반 S/W 보완
+  if (domainAvgs.D >= 3.0 && getReadiness('D', scores) >= 3) strengths.push('디지털 시스템 기반 일정 수준 구축');
+  if (domainAvgs.A <= 2.0) weaknesses.push('AI 전환 준비 전반 미흡');
+  if (getReadiness('X', scores) >= 3.5) strengths.push('노사 소통 및 전환 교육 체계 양호');
+  if (getReadiness('X', scores) <= 2.0) weaknesses.push('전환 교육·노사 소통 체계 미구축');
+
+  // O/T: 산업전환환경 (전환압력 기반)
+  Object.keys(DOMAIN_CONFIG).forEach(dk => {
+    const cfg = DOMAIN_CONFIG[dk];
+    const avg = domainAvgs[dk];
+    const pressure = getPressure(avg);
+    if (pressure === '\u9AD8') {
+      threats.push(`${cfg.icon} ${cfg.name}: 전환압력 高 — 시급한 대응 필요`);
+    }
+    // 역방향 문항 점수 높은 영역은 기회
+    const readiness = getReadiness(dk, scores);
+    if (readiness >= 3.5 && avg >= 3.0) {
+      opportunities.push(`${cfg.icon} ${cfg.name}: 높은 압력이나 내부 준비도 양호 → 선제 대응 가능`);
+    }
+  });
+
+  // 기본 O/T 보완
+  if (domainAvgs.G >= 3.0) opportunities.push('정부 탄소중립·그린뉴딜 지원사업 활용 가능');
+  if (domainAvgs.D >= 3.0) opportunities.push('정부 스마트제조·DX 지원사업 연계 가능');
+  if (domainAvgs.X >= 3.5) threats.push('핵심인력 이탈·기술전수 단절 리스크');
+
+  return {
+    S: strengths.length > 0 ? strengths.slice(0, 3) : ['역방향 문항 기준 내부 역량 평가 필요'],
+    W: weaknesses.length > 0 ? weaknesses.slice(0, 3) : ['정밀 진단을 통한 약점 식별 필요'],
+    O: opportunities.length > 0 ? opportunities.slice(0, 3) : ['정부 산업전환 지원사업 활용 기회'],
+    T: threats.length > 0 ? threats.slice(0, 3) : ['산업 전환 가속화에 따른 잠재적 위협 존재']
+  };
+}
+
+/* ── Draw Radar Chart ── */
+function drawRadar(canvasId, scores) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width = 580;
+  const H = canvas.height = 440;
+  const cx = W/2, cy = H/2 - 16, R = 130;
+
+  /* ── 반응형 폰트 스케일 (캔버스 렌더 크기 기준) ── */
+  const displayW = canvas.getBoundingClientRect().width || W;
+  const fScale = Math.max(0.7, Math.min(1, displayW / W));
+  const fs = (px) => Math.round(px * fScale) + 'px';
+
+  const domains = ['G','D','A','X'];
+  const avgs = domains.map(d => domainAvg(scores[d]));
+  const colors = domains.map(d => DOMAIN_CONFIG[d].color);
+  const labels = domains.map(d => `${d} ${DOMAIN_CONFIG[d].name}`);
+  const angles = domains.map((_, i) => (Math.PI * 2 * i / 4) - Math.PI/2);
+
+  /* ── 3단 구조별 소점수 계산 ── */
+  const TIER_NAMES = ['전환 압력', '실행 기반'];
+  const TIER3_MAP = { G: '성장 동력', D: '인재 역량', A: '인재 역량', X: '인재 역량' };
+  const tierScores = {};
+  domains.forEach(dk => {
+    const qs = DOMAIN_CONFIG[dk].questions;
+    const tiers = {};
+    qs.forEach((q, qi) => {
+      const g = q.group;
+      if (!tiers[g]) tiers[g] = { s: 0, c: 0 };
+      tiers[g].s += scores[dk][qi];
+      tiers[g].c++;
+    });
+    const t3Name = TIER3_MAP[dk];
+    tierScores[dk] = [
+      { name: '압력', avg: tiers['전환 압력'] ? tiers['전환 압력'].s / tiers['전환 압력'].c : 0 },
+      { name: '기반', avg: tiers['실행 기반'] ? tiers['실행 기반'].s / tiers['실행 기반'].c : 0 },
+      { name: dk === 'G' ? '동력' : '역량', avg: tiers[t3Name] ? tiers[t3Name].s / tiers[t3Name].c : 0 }
+    ];
+  });
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid
+  for (let ring = 1; ring <= 5; ring++) {
+    const r = R * ring / 5;
+    ctx.beginPath();
+    for (let i = 0; i <= 4; i++) {
+      const a = angles[i % 4];
+      const x = cx + r * Math.cos(a);
+      const y = cy + r * Math.sin(a);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = ring === 5 ? '#d1d5db' : '#e5e7eb';
+    ctx.lineWidth = ring === 5 ? 1.5 : 0.8;
+    ctx.stroke();
+    ctx.fillStyle = '#9ca3af'; ctx.font = fs(10) + ' Noto Sans KR';
+    ctx.fillText(ring.toString(), cx + 4, cy - r + 12);
+  }
+
+  // Axes
+  angles.forEach(a => {
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + R * Math.cos(a), cy + R * Math.sin(a));
+    ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 0.8; ctx.stroke();
+  });
+
+  // Data polygon
+  ctx.beginPath();
+  avgs.forEach((v, i) => {
+    const r = R * v / 5;
+    const x = cx + r * Math.cos(angles[i]);
+    const y = cy + r * Math.sin(angles[i]);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(37, 99, 235, 0.12)'; ctx.fill();
+  ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 2.5; ctx.stroke();
+
+  // Data points, Labels & 3단 구조 서브 마커
+  const tierColors = ['#ef4444', '#f59e0b', '#3b82f6'];
+  const tierShapes = ['diamond', 'square', 'triangle'];
+
+  avgs.forEach((v, i) => {
+    const dk = domains[i];
+    const r = R * v / 5;
+    const x = cx + r * Math.cos(angles[i]);
+    const y = cy + r * Math.sin(angles[i]);
+
+    // 메인 데이터 포인트
+    ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = colors[i]; ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+    // 3단 구조 서브 마커 (축 위에 작은 마커 3개)
+    tierScores[dk].forEach((tier, ti) => {
+      const tr = R * tier.avg / 5;
+      const tx = cx + tr * Math.cos(angles[i]);
+      const ty = cy + tr * Math.sin(angles[i]);
+      const sz = 3.5;
+      ctx.fillStyle = tierColors[ti];
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1;
+      if (tierShapes[ti] === 'diamond') {
+        ctx.beginPath();
+        ctx.moveTo(tx, ty - sz); ctx.lineTo(tx + sz, ty);
+        ctx.lineTo(tx, ty + sz); ctx.lineTo(tx - sz, ty);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+      } else if (tierShapes[ti] === 'square') {
+        ctx.beginPath();
+        ctx.rect(tx - sz, ty - sz, sz * 2, sz * 2);
+        ctx.fill(); ctx.stroke();
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(tx, ty - sz); ctx.lineTo(tx + sz, ty + sz);
+        ctx.lineTo(tx - sz, ty + sz);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+      }
+    });
+
+    // 라벨 위치
+    const lx = cx + (R + 40) * Math.cos(angles[i]);
+    const ly = cy + (R + 40) * Math.sin(angles[i]);
+
+    const cosA = Math.cos(angles[i]);
+    let align = 'center';
+    if (cosA > 0.3) align = 'left';
+    else if (cosA < -0.3) align = 'right';
+
+    // 도메인 라벨
+    ctx.font = '700 ' + fs(13) + ' Noto Sans KR'; ctx.fillStyle = colors[i];
+    ctx.textAlign = align; ctx.textBaseline = 'middle';
+    ctx.fillText(labels[i], lx, ly - 10);
+    ctx.font = '600 ' + fs(12) + ' Noto Sans KR'; ctx.fillStyle = '#374151';
+    ctx.fillText(v.toFixed(1) + ' / 5.0', lx, ly + 7);
+
+    // 3단 소점수 라벨 (measureText 기반 동적 배치)
+    const subY = ly + 22;
+    ctx.font = fs(9) + ' Noto Sans KR';
+    const tierLabels = tierScores[dk].map((t, ti) => {
+      return { text: t.name + ' ' + t.avg.toFixed(1), color: tierColors[ti] };
+    });
+    const gap = 4;
+    const totalW = tierLabels.reduce((sum, tl) => sum + ctx.measureText(tl.text).width, 0) + gap * (tierLabels.length - 1);
+    let sx;
+    if (align === 'center') {
+      sx = lx - totalW / 2;
+    } else if (align === 'right') {
+      sx = lx - totalW;
+    } else {
+      sx = lx;
+    }
+    sx = Math.max(4, Math.min(sx, W - totalW - 4));
+    tierLabels.forEach(tl => {
+      ctx.fillStyle = tl.color;
+      ctx.textAlign = 'left';
+      ctx.fillText(tl.text, sx, subY);
+      sx += ctx.measureText(tl.text).width + gap;
+    });
+  });
+
+  /* ── 범례 (하단) ── */
+  const legendY = H - 14;
+  const legendItems = [
+    { shape: 'diamond', color: tierColors[0], label: '전환 압력' },
+    { shape: 'square', color: tierColors[1], label: '실행 기반' },
+    { shape: 'triangle', color: tierColors[2], label: '동력/역량' },
+    { shape: 'circle', color: '#2563eb', label: '영역 평균' }
+  ];
+  ctx.font = fs(10) + ' Noto Sans KR'; ctx.textBaseline = 'middle';
+  const totalLegendW = legendItems.reduce((s, li) => s + ctx.measureText(li.label).width + 24, 0);
+  let lxPos = cx - totalLegendW / 2;
+  legendItems.forEach(li => {
+    const sz = 4;
+    ctx.fillStyle = li.color; ctx.strokeStyle = '#fff'; ctx.lineWidth = 0.5;
+    if (li.shape === 'diamond') {
+      ctx.beginPath(); ctx.moveTo(lxPos, legendY - sz); ctx.lineTo(lxPos + sz, legendY);
+      ctx.lineTo(lxPos, legendY + sz); ctx.lineTo(lxPos - sz, legendY);
+      ctx.closePath(); ctx.fill();
+    } else if (li.shape === 'square') {
+      ctx.fillRect(lxPos - sz, legendY - sz, sz * 2, sz * 2);
+    } else if (li.shape === 'triangle') {
+      ctx.beginPath(); ctx.moveTo(lxPos, legendY - sz); ctx.lineTo(lxPos + sz, legendY + sz);
+      ctx.lineTo(lxPos - sz, legendY + sz); ctx.closePath(); ctx.fill();
+    } else {
+      ctx.beginPath(); ctx.arc(lxPos, legendY, sz + 1, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.fillStyle = '#6b7280'; ctx.textAlign = 'left';
+    ctx.fillText(li.label, lxPos + 8, legendY);
+    lxPos += ctx.measureText(li.label).width + 24;
+  });
+}
+
+/* ── Draw 4분면 Matrix Chart (G × D+A 모델) ── */
+function drawQuadrant(canvasId, scores, indType) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width = 480;
+  const H = canvas.height = 480;
+  const margin = { top: 50, right: 50, bottom: 60, left: 70 };
+  const plotW = W - margin.left - margin.right;
+  const plotH = H - margin.top - margin.bottom;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const midX = margin.left + plotW * (3.0 - 1) / 4;
+  const midY = margin.top + plotH * (1 - (3.0 - 1) / 4);
+
+  // Quadrant backgrounds
+  // 구조전환형 (top-right): high G + high D+A
+  ctx.fillStyle = '#fef2f2'; ctx.fillRect(midX, margin.top, margin.left + plotW - midX, midY - margin.top);
+  // 공정혁신형 (top-left): low G + high D+A
+  ctx.fillStyle = '#f5f3ff'; ctx.fillRect(margin.left, margin.top, midX - margin.left, midY - margin.top);
+  // 가치창출형 (bottom-right): high G + low D+A
+  ctx.fillStyle = '#f0fdf4'; ctx.fillRect(midX, midY, margin.left + plotW - midX, margin.top + plotH - midY);
+  // 강소기반형 (bottom-left): low G + low D+A
+  ctx.fillStyle = '#eff6ff'; ctx.fillRect(margin.left, midY, midX - margin.left, margin.top + plotH - midY);
+
+  // Grid
+  ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 0.5;
+  for (let v = 1; v <= 5; v++) {
+    const x = margin.left + plotW * (v - 1) / 4;
+    const y = margin.top + plotH * (1 - (v - 1) / 4);
+    ctx.beginPath(); ctx.moveTo(x, margin.top); ctx.lineTo(x, margin.top + plotH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(margin.left, y); ctx.lineTo(margin.left + plotW, y); ctx.stroke();
+    ctx.fillStyle = '#9ca3af'; ctx.font = '11px Noto Sans KR'; ctx.textAlign = 'center';
+    ctx.fillText(v.toString(), x, margin.top + plotH + 16);
+    ctx.textAlign = 'right';
+    ctx.fillText(v.toString(), margin.left - 8, y + 4);
+  }
+
+  // Threshold lines
+  ctx.strokeStyle = '#6b7280'; ctx.lineWidth = 1.5; ctx.setLineDash([5, 3]);
+  ctx.beginPath(); ctx.moveTo(midX, margin.top); ctx.lineTo(midX, margin.top + plotH); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(margin.left, midY); ctx.lineTo(margin.left + plotW, midY); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Quadrant labels
+  ctx.font = '600 12px Noto Sans KR'; ctx.textAlign = 'center';
+  const qLabels = [
+    { text: '\u{1F3ED} \uAD6C\uC870\uC804\uD658\uD615', x: (midX + margin.left + plotW) / 2, y: (margin.top + midY) / 2, color: '#991b1b' },
+    { text: '\u{2699}\u{FE0F} \uACF5\uC815\uD601\uC2E0\uD615', x: (margin.left + midX) / 2, y: (margin.top + midY) / 2, color: '#5b21b6' },
+    { text: '\u{1F331} \uAC00\uCE58\uCC3D\uCD9C\uD615', x: (midX + margin.left + plotW) / 2, y: (midY + margin.top + plotH) / 2, color: '#166534' },
+    { text: '\u{1F680} \uAC15\uC18C\uAE30\uBC18\uD615', x: (margin.left + midX) / 2, y: (midY + margin.top + plotH) / 2, color: '#1e40af' }
+  ];
+  qLabels.forEach(ql => { ctx.fillStyle = ql.color; ctx.fillText(ql.text, ql.x, ql.y); });
+
+  // Plot company point (G × D+A)
+  const gAvg = domainAvg(scores.G);
+  const techAvg = getTechPressure(scores, indType);
+  const px = margin.left + plotW * (gAvg - 1) / 4;
+  const py = margin.top + plotH * (1 - (techAvg - 1) / 4);
+
+  // Shadow + Point
+  ctx.beginPath(); ctx.arc(px, py, 14, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(30, 58, 95, 0.15)'; ctx.fill();
+  ctx.beginPath(); ctx.arc(px, py, 10, 0, Math.PI * 2);
+  ctx.fillStyle = '#1e3a5f'; ctx.fill();
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.stroke();
+  ctx.font = '700 11px Noto Sans KR'; ctx.fillStyle = '#1e3a5f'; ctx.textAlign = 'center';
+  ctx.fillText('\uC6B0\uB9AC \uAE30\uC5C5', px, py - 20);
+
+  // Axis labels
+  ctx.font = '700 13px Noto Sans KR'; ctx.fillStyle = '#374151'; ctx.textAlign = 'center';
+  ctx.fillText('X\uCD95: \uD658\uACBD\uC804\uD658 \uC555\uB825 (G\uC601\uC5ED) \u2192', W / 2, H - 10);
+  ctx.save(); ctx.translate(16, H / 2); ctx.rotate(-Math.PI / 2);
+  ctx.fillText('Y\uCD95: \uAE30\uC220\uC804\uD658 \uC555\uB825 (D+A \uAC00\uC911\uD3C9\uADE0) \u2192', 0, 0);
+  ctx.restore();
+
+  // Coordinates
+  const w = DA_WEIGHTS[indType] || DA_WEIGHTS['제조형'];
+  ctx.font = '600 11px Noto Sans KR'; ctx.fillStyle = '#6b7280'; ctx.textAlign = 'center';
+  ctx.fillText(`G ${gAvg.toFixed(1)} / D+A ${techAvg.toFixed(1)} (D\u00D7${w.D}+A\u00D7${w.A})`, px, py + 26);
+}
+
+/* ── Render Report ── */
+async function render() {
+  const { data, isDemo } = await getData();
+  const d = data;
+  const sc = d.scores;
+  const total = totalScore(sc);
+  const maxP = maxPossible();
+  const overallAvg = total / TOTAL_Q;
+  const level = getLevel(overallAvg);
+  const indType = d.company.indType || '제조형';
+  const tType = getTypeClassification(sc, indType);
+  const typeCfg = TYPE_CONFIG[tType];
+  const techAvg = getTechPressure(sc, indType);
+  const intensity = getTransitionIntensity(sc);
+  const intensityCfg = INTENSITY_CONFIG[intensity];
+  const btjr = btjrScores(sc);
+  const btjrGrp = btjrByGroup(sc);
+  const swot = generateSWOT(sc, {});
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+
+  const domainAvgs = {};
+  Object.keys(sc).forEach(k => domainAvgs[k] = domainAvg(sc[k]));
+
+  // Regenerate SWOT with proper avgs
+  const swotData = generateSWOT(sc, domainAvgs);
+
+  const indTypeLabel = d.company.indType || '-';
+  const foundedLabel = d.company.founded ? d.company.founded + '\uB144' : '-';
+
+  document.getElementById('app').innerHTML = `
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-inner">
+      <h1>\uC0B0\uC5C5\uC77C\uC790\uB9AC\uC804\uD658 \uC900\uBE44\uB3C4 \uC9C4\uB2E8</h1>
+      <div class="company-name">${d.company.name}</div>
+      <div class="cover-date">\uC9C4\uB2E8\uC77C: ${dateStr}</div>
+      <div class="cover-gdax">
+        <span class="gd-chip">\u{1F331} G ${domainAvgs.G.toFixed(1)}</span>
+        <span class="gd-chip">\u{1F4BB} D ${domainAvgs.D.toFixed(1)}</span>
+        <span class="gd-chip">\u{1F916} A ${domainAvgs.A.toFixed(1)}</span>
+        <span class="gd-chip">\u{1F504} X ${domainAvgs.X.toFixed(1)}</span>
+      </div>
+      <div class="cover-type">\uC804\uD658 \uC720\uD615: ${typeCfg.icon} ${typeCfg.name} \u00B7 ${intensityCfg.icon} ${intensityCfg.name}</div>
+    </div>
+  </div>
+
+  <div class="page">
+
+  ${isDemo ? '<div class="demo-banner"><span class="db-icon">\u26A0\uFE0F</span><div><strong>\uB370\uBAA8 \uB370\uC774\uD130</strong>\uB85C \uD45C\uC2DC \uC911\uC785\uB2C8\uB2E4. \uC124\uBB38\uC9C0\uC5D0\uC11C \uC81C\uCD9C\uD558\uC2DC\uBA74 \uC2E4\uC81C \uB370\uC774\uD130\uAC00 \uBC18\uC601\uB429\uB2C8\uB2E4.</div></div>' : ''}
+
+  <!-- 1. \uAE30\uC5C5 \uC815\uBCF4 \uC694\uC57D -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F3E2}</span>
+      <h2>\uAE30\uC5C5 \uC815\uBCF4 \uC694\uC57D</h2>
+      <span class="ch-tag">Ch.1 \uAE30\uC5C5\uAC1C\uC694 \uC5F0\uACC4</span>
+    </div>
+    <div class="card-body">
+      <table class="info-table">
+        <tr><th>\uD68C\uC0AC\uBA85</th><td>${d.company.name}</td><th>\uB300\uD45C\uC790</th><td>${d.company.ceo}</td></tr>
+        <tr><th>\uC18C\uC7AC\uC9C0</th><td>${d.company.location}</td><th>\uC5C5\uC885</th><td>${d.company.industry}</td></tr>
+        <tr><th>\uC5C5\uC885 \uC720\uD615</th><td>${indTypeLabel}</td><th>\uC124\uB9BD\uB144\uB3C4</th><td>${foundedLabel}</td></tr>
+        <tr><th>\uADFC\uB85C\uC790 \uC218</th><td>${d.company.employees}\uC778</td><th>\uB9E4\uCD9C\uC561</th><td>${d.company.revenue ? d.company.revenue + '\uC5B5\uC6D0' : '-'}</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2. \uC885\uD569 \uC9C4\uB2E8 \uACB0\uACFC -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F4CA}</span>
+      <h2>\uC885\uD569 \uC9C4\uB2E8 \uACB0\uACFC</h2>
+      <span class="ch-tag">G-DAX 4\uB300 \uC601\uC5ED \xD7 5\uBB38\uD56D = 20\uBB38\uD56D \uD1B5\uD569</span>
+    </div>
+    <div class="card-body">
+      <div class="fw-callout fw-callout-navy">
+        <span class="fw-icon">\u{1F4D0}</span>
+        <div><strong>\uD504\uB808\uC784\uC6CC\uD06C \uC5F0\uACC4:</strong> G-DAX \uC804\uD658 \uC900\uBE44\uB3C4 \uC9C4\uB2E8 (Ch.3) \u2014 \uC810\uC218\uAC00 \uB192\uC744\uC218\uB85D \uC804\uD658 \uC555\uB825\uC774 \uB192\uC74C\uC744 \uC758\uBBF8\uD569\uB2C8\uB2E4. \uC5ED\uBC29\uD5A5 \uBB38\uD56D(G4,D3,A3,X3,X4)\uC740 \uC810\uC218\uAC00 \uB192\uC744\uC218\uB85D \uC900\uBE44\uB3C4\uAC00 \uB192\uC74C\uC744 \uB098\uD0C0\uB0C5\uB2C8\uB2E4.</div>
+      </div>
+      <div class="score-hero">
+        <div class="score-circle-wrap">
+          <div class="score-circle" style="background:linear-gradient(135deg, ${level.color}22, ${level.color}11); border: 3px solid ${level.color};">
+            <div class="big-num" style="color:${level.color}">${total}</div>
+            <div class="max-label" style="color:${level.color}">/ ${maxP}\uC810</div>
+          </div>
+          <div class="score-level" style="color:${level.color};">\uC804\uD658 \uC555\uB825: ${level.text} (${level.grade})</div>
+        </div>
+        <div class="score-bars">
+          ${['G','D','A','X'].map(k => {
+            const avg = domainAvgs[k];
+            const pct = (avg / 5 * 100).toFixed(0);
+            const cfg = DOMAIN_CONFIG[k];
+            return `<div class="sbar-item">
+              <div class="sbar-label"><span class="sbar-icon" style="background:${cfg.color}"></span>${cfg.icon} ${k} ${cfg.name}</div>
+              <div class="sbar-track"><div class="sbar-fill" style="width:${pct}%;background:${cfg.color}">${avg.toFixed(1)}</div></div>
+              <div class="sbar-score" style="color:${cfg.color}">${getPressure(avg)}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Radar Chart -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F578}</span>
+      <h2>G-DAX \uC601\uC5ED\uBCC4 \uC9C4\uB2E8 \uB808\uC774\uB354</h2>
+      <span class="ch-tag">Ch.3.3 \uB808\uC774\uB354 \uCC28\uD2B8 \uC5F0\uACC4</span>
+    </div>
+    <div class="card-body">
+      <div class="radar-wrap"><canvas id="radarChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- 3.5 구조별 소계 매트릭스 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F4CA}</span>
+      <h2>\uAD6C\uC870\uBCC4 \uC18C\uACC4 \uBD84\uC11D</h2>
+      <span class="ch-tag">\uC601\uC5ED \u00D7 3\uB2E8 \uAD6C\uC870 \uAD50\uCC28 \uBD84\uC11D</span>
+    </div>
+    <div class="card-body">
+      <div class="fw-callout fw-callout-navy">
+        <span class="fw-icon">\u{1F4D0}</span>
+        <div><strong>\uD574\uC11D \uAC00\uC774\uB4DC:</strong> \uAC01 \uC601\uC5ED\uC744 \uC804\uD658 \uC555\uB825 \u00B7 \uC2E4\uD589 \uAE30\uBC18 \u00B7 \uB3D9\uB825/\uC5ED\uB7C9\uC73C\uB85C \uBD84\uD574\uD558\uC5EC, \u201C\uC555\uB825\uC774 \uB192\uC740\uB370 \uAE30\uBC18\uC774 \uBD80\uC871\uD55C\u201D \uC601\uC5ED\uC744 \uC6B0\uC120 \uAC1C\uC120 \uB300\uC0C1\uC73C\uB85C \uC2DD\uBCC4\uD569\uB2C8\uB2E4. \uC810\uC218\uAC00 \uB192\uC744\uC218\uB85D \uC804\uD658 \uC555\uB825/\uC5ED\uB7C9\uC774 \uB192\uC74C\uC744 \uC758\uBBF8\uD569\uB2C8\uB2E4.</div>
+      </div>
+      ${(() => {
+        /* 그룹 유형 정의 */
+        const groupTypes = ['전환 압력', '실행 기반'];
+        const thirdGroup = { G: '성장 동력', D: '인재 역량', A: '인재 역량', X: '추진 동력' };
+        const groupColors = { '전환 압력': '#ef4444', '실행 기반': '#2563eb', '성장 동력': '#b45309', '인재 역량': '#7c3aed', '추진 동력': '#16a34a' };
+
+        /* 각 영역별 그룹 소계 계산 */
+        const matrix = {};
+        ['G','D','A','X'].forEach(k => {
+          matrix[k] = {};
+          const cfg = DOMAIN_CONFIG[k];
+          cfg.questions.forEach((q, i) => {
+            if (!q.group) return;
+            if (!matrix[k][q.group]) matrix[k][q.group] = { sum: 0, cnt: 0 };
+            matrix[k][q.group].sum += sc[k][i];
+            matrix[k][q.group].cnt++;
+          });
+        });
+
+        /* 셀 클래스 결정 */
+        const cellCls = v => v >= 3.5 ? 'gsm-high' : v >= 2.5 ? 'gsm-mid' : 'gsm-low';
+
+        /* 모든 그룹 유형 수집 (순서 유지) */
+        const allGroups = [...groupTypes];
+        Object.values(thirdGroup).forEach(g => { if (!allGroups.includes(g)) allGroups.push(g); });
+
+        /* 최대 압력-기반 갭 영역 찾기 */
+        let maxGap = 0, gapDomain = '';
+        ['G','D','A','X'].forEach(k => {
+          const pAvg = matrix[k]['전환 압력'] ? (matrix[k]['전환 압력'].sum / matrix[k]['전환 압력'].cnt) : 0;
+          const iAvg = matrix[k]['실행 기반'] ? (matrix[k]['실행 기반'].sum / matrix[k]['실행 기반'].cnt) : 0;
+          const gap = pAvg - iAvg;
+          if (gap > maxGap) { maxGap = gap; gapDomain = k; }
+        });
+
+        /* 역량/동력 부족 영역 찾기 (3번째 그룹 ≤ 2.5) */
+        const weakCapDomains = [];
+        ['G','D','A','X'].forEach(k => {
+          const tg = thirdGroup[k];
+          const d3 = matrix[k][tg];
+          if (d3 && (d3.sum / d3.cnt) <= 2.5) {
+            weakCapDomains.push({ domain: k, group: tg, avg: (d3.sum / d3.cnt).toFixed(1) });
+          }
+        });
+
+        return `<table class="gsm-table">
+          <thead><tr>
+            <th></th>
+            ${['G','D','A','X'].map(k => `<th style="color:${DOMAIN_CONFIG[k].color}">${DOMAIN_CONFIG[k].icon} ${k} ${DOMAIN_CONFIG[k].name}</th>`).join('')}
+          </tr></thead>
+          <tbody>
+            ${allGroups.map(g => `<tr>
+              <th><span class="gsm-row-label"><span class="gsm-dot" style="background:${groupColors[g]}"></span>${g}</span></th>
+              ${['G','D','A','X'].map(k => {
+                const d = matrix[k][g];
+                if (!d) return '<td class="gsm-na">—</td>';
+                const avg = (d.sum / d.cnt).toFixed(1);
+                return `<td class="${cellCls(d.sum / d.cnt)}">${avg}</td>`;
+              }).join('')}
+            </tr>`).join('')}
+          </tbody>
+        </table>
+        ${maxGap > 0.5 && gapDomain ? `<div class="gsm-insight">\u26A0\uFE0F <strong>${gapDomain}\uC601\uC5ED(${DOMAIN_CONFIG[gapDomain].name})</strong>\uC758 \uC804\uD658 \uC555\uB825 \uB300\uBE44 \uC2E4\uD589 \uAE30\uBC18 \uAC2D\uCC28\uAC00 \uD06C\uBBC0\uB85C(\u0394${maxGap.toFixed(1)}), \uC6B0\uC120\uC801 \uC778\uD504\uB77C \uAC15\uD654\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4.</div>` : ''}
+        ${weakCapDomains.length > 0 ? `<div class="gsm-insight" style="background:#fef2f2;border-color:#fca5a5;color:#991b1b">\u{1F6A8} <strong>\uC5ED\uB7C9/\uB3D9\uB825 \uBD80\uC871 \uC601\uC5ED:</strong> ${weakCapDomains.map(w => `${w.domain}(${DOMAIN_CONFIG[w.domain].name}) ${w.group} ${w.avg}\uC810`).join(', ')} \u2014 \uC778\uC7AC \uC5ED\uB7C9 \uAC1C\uBC1C \uBC0F \uC870\uC9C1 \uC5ED\uB7C9 \uAC15\uD654\uAC00 \uC6B0\uC120 \uACFC\uC81C\uC785\uB2C8\uB2E4.</div>` : ''}`;
+      })()}
+    </div>
+  </div>
+
+  <!-- 4. \uC601\uC5ED\uBCC4 \uC0C1\uC138 \uC9C4\uB2E8 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F50D}</span>
+      <h2>\uC601\uC5ED\uBCC4 \uC0C1\uC138 \uC9C4\uB2E8</h2>
+      <span class="ch-tag">G-DAX \uD56D\uBAA9\uCF54\uB4DC \xD7 BTJR \uACBD\uB85C \uB9E4\uD551</span>
+    </div>
+    <div class="card-body">
+      ${['G','D','A','X'].map(k => {
+        const cfg = DOMAIN_CONFIG[k];
+        const avg = domainAvgs[k];
+        const lv = getLevel(avg);
+        const readiness = getReadiness(k, sc);
+        const readLabel = readiness > 0 ? ` | \uC900\uBE44\uB3C4 ${readiness.toFixed(1)}` : '';
+        return `<div class="domain-detail dd-${k}">
+          <div class="dd-header">
+            <div class="dd-icon">${cfg.icon}</div>
+            <div class="dd-title">${k} \u2014 ${cfg.name}</div>
+            <span class="dd-level">\uC555\uB825 ${getPressure(avg)}${readLabel}</span>
+            <div class="dd-score">${avg.toFixed(1)}</div>
+          </div>
+          <div class="dd-questions">
+            ${(() => {
+              let lastGroup = '';
+              const groupCss = {'전환 압력':'dg-pressure','실행 기반':'dg-infra','추진 동력':'dg-drive','성장 동력':'dg-growth','인재 역량':'dg-talent'};
+              /* 그룹별 평균 사전 계산 */
+              const groupAvgs = {};
+              cfg.questions.forEach((q, i) => {
+                if (!q.group) return;
+                if (!groupAvgs[q.group]) groupAvgs[q.group] = { sum: 0, cnt: 0 };
+                groupAvgs[q.group].sum += sc[k][i];
+                groupAvgs[q.group].cnt++;
+              });
+              return cfg.questions.map((q, i) => {
+                const val = sc[k][i];
+                let dots = '';
+                for (let j = 1; j <= 5; j++) {
+                  dots += `<div class="q-dot ${j <= val ? 'filled' : 'empty'}">${j}</div>`;
+                }
+                const btags = q.btjr.map(b => `<span class="btag btag-${b}">${b}</span>`).join('');
+                const revMark = q.reverse ? ' \u{1F504}' : '';
+                let groupHtml = '';
+                if (q.group && q.group !== lastGroup) {
+                  lastGroup = q.group;
+                  const ga = groupAvgs[q.group];
+                  const gavg = ga ? (ga.sum / ga.cnt).toFixed(1) : '';
+                  groupHtml = `<div class="dd-group-label ${groupCss[q.group] || ''}">${q.group}<span class="dd-group-avg">${gavg}</span></div>`;
+                }
+                return `${groupHtml}<div class="dd-q">
+                  <span class="q-code">${q.code}</span>
+                  <div class="q-text">${q.label}${revMark}: ${q.text}</div>
+                  <div class="btjr-tags">${btags}</div>
+                  <div class="q-dots">${dots}</div>
+                </div>`;
+              }).join('');
+            })()}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>
+
+  <!-- 5. \uC804\uD658 \uC720\uD615 4\uBD84\uB958 -->
+  <div class="card print-break">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F3F7}</span>
+      <h2>\uC804\uD658 \uC720\uD615 \uBD84\uB958</h2>
+      <span class="ch-tag">Ch.3.4 \uC804\uD658 \uC720\uD615 4\uBD84\uB958 \uB85C\uC9C1</span>
+    </div>
+    <div class="card-body">
+      <div class="fw-callout fw-callout-navy">
+        <span class="fw-icon">\u{1F4D0}</span>
+        <div><strong>\uBD84\uB958 \uB85C\uC9C1 (G \u00D7 D+A \uBAA8\uB378):</strong> X\uCD95 = G\uC601\uC5ED \uD3C9\uADE0(\uD658\uACBD\uC804\uD658 \uC555\uB825), Y\uCD95 = D+A \uAC00\uC911\uD3C9\uADE0(\uAE30\uC220\uC804\uD658 \uC555\uB825). \uC5C5\uC885\uC720\uD615 <strong>${indType}</strong> \uAE30\uC900 D\u00D7${(DA_WEIGHTS[indType]||DA_WEIGHTS['\uC81C\uC870\uD615']).D}+A\u00D7${(DA_WEIGHTS[indType]||DA_WEIGHTS['\uC81C\uC870\uD615']).A} \uAC00\uC911\uCE58 \uC801\uC6A9. \uAE30\uC900\uC120 3.0 \uAE30\uC900 4\uBD84\uBA74 \uBD84\uB958. \uBCF8 \uAE30\uC5C5: <strong>${typeCfg.name}</strong> (G ${domainAvgs.G.toFixed(1)} / D+A ${techAvg.toFixed(1)})</div>
+      </div>
+      <div class="quadrant-wrap"><canvas id="quadrantChart"></canvas></div>
+      <div class="type-grid" style="margin-top:20px;">
+        ${Object.entries(TYPE_CONFIG).map(([key, tc]) => `
+          <div class="type-card ${tc.cssClass} ${tType===key?'active':''}">
+            <div class="tc-icon">${tc.icon}</div>
+            <div class="tc-title">${tc.name}</div>
+            <div class="tc-desc">${tc.desc}</div>
+            <div class="tc-condition">${tc.condition}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- 5-2. X\uC601\uC5ED \uACE0\uC6A9\uC804\uD658 \uAC15\uB3C4 \uD310\uC815 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F4A5}</span>
+      <h2>X\uC601\uC5ED: \uACE0\uC6A9\uC804\uD658 \uAC15\uB3C4 \uD310\uC815</h2>
+      <span class="ch-tag">\uACE0\uC6A9\uC804\uD658 \uC555\uB825 \uAE30\uBC18 Task Pool \uAC15\uB3C4 \uC870\uC808</span>
+    </div>
+    <div class="card-body">
+      <div class="fw-callout fw-callout-red">
+        <span class="fw-icon">\u{1F504}</span>
+        <div><strong>X\uC601\uC5ED(\uACE0\uC6A9\uC804\uD658)\uC758 \uC5ED\uD560:</strong> \uC804\uD658 \uC720\uD615\uC740 G \u00D7 D+A\uB85C \uACB0\uC815\uB418\uACE0, X\uC601\uC5ED\uC740 \u201C\uC804\uD658\uC744 \uC2E4\uD589\uD560 \uB54C \uC870\uC9C1\uC774 \uAC10\uB2F9\uD574\uC57C \uD560 \uBCC0\uD654\uC758 \uADDC\uBAA8\u201D\uB97C \uD310\uC815\uD569\uB2C8\uB2E4. \uB3D9\uC77C\uD55C \uC804\uD658 \uC720\uD615\uC774\uB77C\uB3C4 X\uC810\uC218\uC5D0 \uB530\uB77C Task Pool \uACFC\uC81C\uC758 \uAC15\uB3C4\uC640 \uBC94\uC704\uAC00 \uB2EC\uB77C\uC9D1\uB2C8\uB2E4.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;justify-content:center;margin:16px 0;">
+        <div style="text-align:center;">
+          <div style="font-size:40px;font-weight:900;color:${intensityCfg.color}">${intensityCfg.icon}</div>
+          <div style="font-size:18px;font-weight:700;color:${intensityCfg.color};margin-top:4px;">${intensityCfg.name}</div>
+          <div style="font-size:13px;color:var(--gray-500);margin-top:2px;">${intensityCfg.desc}</div>
+        </div>
+        <div style="background:var(--gray-100);border-radius:12px;padding:14px 20px;font-size:13px;line-height:1.7;">
+          <div><strong>X\uC601\uC5ED \uD3C9\uADE0:</strong> ${domainAvgs.X.toFixed(1)} / 5.0 (\uC804\uD658\uC555\uB825 ${getPressure(domainAvgs.X)})</div>
+          <div><strong>\uC804\uD658 \uC720\uD615:</strong> ${typeCfg.name} + <span style="color:${intensityCfg.color};font-weight:700;">${intensityCfg.name}</span></div>
+          <div style="margin-top:6px;font-size:12px;color:var(--gray-500);">
+            ${intensity === 'high' ? '\u2192 \uC9C1\uBB34 \uC7AC\uC124\uACC4, \uC804\uD658\uBC30\uCE58, \uB178\uC0AC\uD611\uB825 \uAC70\uBC84\uB10C\uC2A4 \uD544\uC218. Task Pool\uC5D0\uC11C \uC778\uB825\uAD6C\uC870 \uC804\uD658 \uACFC\uC81C\uB97C \uCD5C\uB300 \uADDC\uBAA8\uB85C \uD3B8\uC131' :
+              intensity === 'medium' ? '\u2192 \uB2E8\uACC4\uC801 \uC9C1\uBB34\uC804\uD658, \uAD50\uC721\uD6C8\uB828 \uAC15\uD654 \uC911\uC2EC. Task Pool\uC5D0\uC11C \uC5ED\uB7C9 \uAC1C\uBC1C \uACFC\uC81C \uC911\uC810 \uD3B8\uC131' :
+              '\u2192 \uC810\uC9C4\uC801 \uC5ED\uB7C9 \uAC1C\uBC1C, \uC120\uC81C\uC801 \uC900\uBE44 \uC911\uC2EC. Task Pool\uC5D0\uC11C \uAE30\uBCF8 \uC5ED\uB7C9 \uD655\uBCF4 \uACFC\uC81C \uC911\uC2EC \uD3B8\uC131'}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. BTJR \uC804\uD658 \uC601\uD5A5 \uACBD\uB85C -->
+  <div class="card print-break">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F517}</span>
+      <h2>BTJR \uC804\uD658 \uC601\uD5A5 \uACBD\uB85C \uBD84\uC11D</h2>
+      <span class="ch-tag">Ch.3.6 \uC804\uD658 \uC601\uD5A5 \uACBD\uB85C \uBD84\uC11D</span>
+    </div>
+    <div class="card-body">
+      <div class="fw-callout fw-callout-blue">
+        <span class="fw-icon">\u{1F504}</span>
+        <div><strong>BTJR \uACBD\uB85C:</strong> \uC0AC\uC5C5\uAD6C\uC870(B)\uAC00 \uBC14\uB00C\uBA74 \u2192 \uAE30\uC220\uC6B4\uC601(T)\uC774 \uC804\uD658\uB418\uACE0 \u2192 \uC9C1\uBB34\uC5ED\uB7C9(J)\uC774 \uC7AC\uD3B8\uB418\uBA70 \u2192 \uB178\uC0AC\uAD00\uACC4(R)\uC758 \uB4EB\uBC1B\uCE68\uC774 \uD544\uC218. \uAC01 \uC810\uC218\uB294 G-DAX \uBB38\uD56D\uBCC4 BTJR \uAC00\uC911\uCE58 \uB9E4\uD551\uC73C\uB85C \uC0B0\uCD9C\uB418\uC5C8\uC2B5\uB2C8\uB2E4.</div>
+      </div>
+      <div class="btjr-flow">
+        ${['B','T','J','R'].map((k, i) => {
+          const cfg = BTJR_CONFIG[k];
+          const score = parseFloat(btjr[k]);
+          const btjrLevel = score >= 3.5 ? '\u9AD8' : score >= 2.5 ? '\u4E2D' : '\u4F4E';
+          return `${i > 0 ? '<div class="btjr-arrow">\u2192</div>' : ''}
+          <div class="btjr-box btjr-${k}">
+            <div class="b-initial">${k}</div>
+            <div class="b-kr">${cfg.name}</div>
+            <div class="b-score">\uC804\uD658\uC555\uB825 ${btjr[k]}</div>
+            <div class="b-level">${btjrLevel}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <!-- BTJR 압력 vs 실행 기반 분리 비교 -->
+      <div class="btjr-split">
+        <div class="btjr-split-card" style="background:#fef2f2;border-color:#fca5a5">
+          <h4><span class="bsc-dot" style="background:#ef4444"></span>\uC804\uD658 \uC555\uB825 \uBB38\uD56D \u2192 BTJR</h4>
+          ${['B','T','J','R'].map(k => {
+            const v = parseFloat(btjrGrp.pressure[k]);
+            const pct = (v / 5 * 100).toFixed(0);
+            return `<div class="btjr-mini-bar">
+              <span class="bmb-label" style="color:${BTJR_CONFIG[k].color}">${k} ${BTJR_CONFIG[k].name}</span>
+              <div class="bmb-track"><div class="bmb-fill" style="width:${pct}%;background:${BTJR_CONFIG[k].color}">${v}</div></div>
+            </div>`;
+          }).join('')}
+          <div class="btjr-split-insight">\uC0B0\uC5C5\uC804\uD658 \uC555\uB825\uC774 BTJR \uAC01 \uACBD\uB85C\uC5D0 \uBBF8\uCE58\uB294 \uC601\uD5A5\uB3C4</div>
+        </div>
+        <div class="btjr-split-card" style="background:#eff6ff;border-color:#bfdbfe">
+          <h4><span class="bsc-dot" style="background:#2563eb"></span>\uC2E4\uD589 \uAE30\uBC18/\uC5ED\uB7C9 \uBB38\uD56D \u2192 BTJR</h4>
+          ${['B','T','J','R'].map(k => {
+            const v = parseFloat(btjrGrp.readiness[k]);
+            const pct = (v / 5 * 100).toFixed(0);
+            return `<div class="btjr-mini-bar">
+              <span class="bmb-label" style="color:${BTJR_CONFIG[k].color}">${k} ${BTJR_CONFIG[k].name}</span>
+              <div class="bmb-track"><div class="bmb-fill" style="width:${pct}%;background:${BTJR_CONFIG[k].color}">${v}</div></div>
+            </div>`;
+          }).join('')}
+          <div class="btjr-split-insight">\uB0B4\uBD80 \uC2E4\uD589 \uC5ED\uB7C9\uC774 BTJR \uAC01 \uACBD\uB85C\uC5D0 \uBBF8\uCE58\uB294 \uC900\uBE44\uB3C4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. \uC804\uD658\uC555\uB825 \xD7 \uC900\uBE44\uB3C4 \uB9E4\uD2B8\uB9AD\uC2A4 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F4D0}</span>
+      <h2>\uC804\uD658\uC555\uB825 \xD7 \uB0B4\uBD80\uC900\uBE44\uB3C4 \uB9E4\uD2B8\uB9AD\uC2A4</h2>
+      <span class="ch-tag">\uC5ED\uBC29\uD5A5 \uBB38\uD56D(G4,D3,A3,X3,X4) \uAE30\uBC18 \uBD84\uC11D</span>
+    </div>
+    <div class="card-body">
+      <div class="fw-callout fw-callout-red">
+        <span class="fw-icon">\u26A0\uFE0F</span>
+        <div><strong>\uD574\uC11D \uAC00\uC774\uB4DC:</strong> \uC804\uD658\uC555\uB825\uC740 \uC21C\uBC29\uD5A5 \uBB38\uD56D \uD3C9\uADE0, \uB0B4\uBD80\uC900\uBE44\uB3C4\uB294 \uC5ED\uBC29\uD5A5 \uBB38\uD56D(\u{1F504}) \uD3C9\uADE0\uC73C\uB85C \uC0B0\uCD9C. \uC555\uB825\uC774 \uB192\uACE0 \uC900\uBE44\uB3C4\uAC00 \uB0AE\uC740 \uC601\uC5ED\uC774 \uAC00\uC7A5 \uC2DC\uAE09\uD55C \uB300\uC751 \uC601\uC5ED\uC785\uB2C8\uB2E4.</div>
+      </div>
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <thead>
+            <tr><th>G-DAX \uC601\uC5ED</th><th>\uC804\uD658\uC555\uB825<br>(\uC21C\uBC29\uD5A5 \uD3C9\uADE0)</th><th>\uB0B4\uBD80\uC900\uBE44\uB3C4<br>(\uC5ED\uBC29\uD5A5\u{1F504} \uD3C9\uADE0)</th><th>Gap \uD574\uC11D</th><th>\uC6B0\uC120\uC21C\uC704</th></tr>
+          </thead>
+          <tbody>
+            ${['G','D','A','X'].map(k => {
+              const cfg = DOMAIN_CONFIG[k];
+              const avg = domainAvgs[k];
+              const pressure = getPressure(avg);
+              const readiness = getReadiness(k, sc);
+              const readLabel = readiness > 0 ? readiness.toFixed(1) : 'N/A';
+              const readLevel = readiness >= 4 ? '\uB192\uC74C' : readiness >= 3 ? '\uBCF4\uD1B5' : readiness > 0 ? '\uB0AE\uC74C' : '-';
+
+              let gapClass, gapText, priority;
+              if (readiness > 0) {
+                const gap = avg - readiness;
+                if (pressure === '\u9AD8' && readiness <= 2.5) { gapClass = 'cell-high'; gapText = '\uAE34\uAE09 \uB300\uC751 \uD544\uC694'; priority = '\u2605\u2605\u2605'; }
+                else if (pressure === '\u9AD8' && readiness <= 3.5) { gapClass = 'cell-med'; gapText = '\uC911\uC810 \uAD00\uB9AC \uD544\uC694'; priority = '\u2605\u2605'; }
+                else if (pressure === '\u4E2D') { gapClass = 'cell-med'; gapText = '\uBAA8\uB2C8\uD130\uB9C1'; priority = '\u2605'; }
+                else { gapClass = 'cell-low'; gapText = '\uC591\uD638'; priority = '-'; }
+              } else {
+                gapClass = 'cell-med'; gapText = '\uC815\uBC00\uC9C4\uB2E8 \uD544\uC694'; priority = '\u2605';
+              }
+
+              return `<tr>
+                <td style="font-weight:700;color:${cfg.color}">${cfg.icon} ${k} ${cfg.name}</td>
+                <td><strong>${pressure}</strong> (${avg.toFixed(1)})</td>
+                <td>${readLevel} (${readLabel})</td>
+                <td class="${gapClass}">${gapText}</td>
+                <td>${priority}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Cross-SWOT \uC608\uBE44 \uBD84\uC11D -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F9E9}</span>
+      <h2>Cross-SWOT \uC608\uBE44 \uBD84\uC11D</h2>
+      <span class="ch-tag">Ch.3.5 SWOT \uC885\uD569\uBD84\uC11D \uC5F0\uACC4</span>
+    </div>
+    <div class="card-body">
+      <div class="fw-callout fw-callout-purple">
+        <span class="fw-icon">\u{1F4A1}</span>
+        <div><strong>\uC0AC\uC804\uC9C4\uB2E8 \uAE30\uBC18 \uC608\uBE44 \uBD84\uC11D:</strong> \uC815\uBC00 SWOT\uC740 FABRIC \uB0B4\uBD80\uD604\uD669 + G-DAX \uC0B0\uC5C5\uC804\uD658\uD658\uACBD\uC744 \uD1B5\uD574 \uC644\uC131\uB429\uB2C8\uB2E4. \uC544\uB798\uB294 \uC0AC\uC804\uC9C4\uB2E8 \uC751\uB2F5 \uAE30\uBC18\uC758 \uC608\uBE44 \uBD84\uC11D\uC785\uB2C8\uB2E4.</div>
+      </div>
+      <div class="swot-grid">
+        <div class="swot-cell swot-s"><h4>\u{1F4AA} S (\uAC15\uC810)</h4><ul>${swotData.S.map(s => `<li>${s}</li>`).join('')}</ul></div>
+        <div class="swot-cell swot-w"><h4>\u26A0\uFE0F W (\uC57D\uC810)</h4><ul>${swotData.W.map(w => `<li>${w}</li>`).join('')}</ul></div>
+        <div class="swot-cell swot-o"><h4>\u{1F31F} O (\uAE30\uD68C)</h4><ul>${swotData.O.map(o => `<li>${o}</li>`).join('')}</ul></div>
+        <div class="swot-cell swot-t"><h4>\u{1F525} T (\uC704\uD611)</h4><ul>${swotData.T.map(t => `<li>${t}</li>`).join('')}</ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. \uC804\uD658 \uC720\uD615\uBCC4 Task Pool \uCD94\uCC9C -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F4CB}</span>
+      <h2>\uC804\uD658 \uC720\uD615\uBCC4 \uC804\uD658\uACFC\uC81C \uCD94\uCC9C</h2>
+      <span class="ch-tag">Ch.4 ${typeCfg.name} Task Pool \uAE30\uBC18</span>
+    </div>
+    <div class="card-body">
+      <div class="fw-callout fw-callout-navy">
+        <span class="fw-icon">\u{1F3AF}</span>
+        <div><strong>${typeCfg.name} \uD45C\uC900 Task Pool:</strong> ${typeCfg.desc}. \uC815\uBC00 \uC9C4\uB2E8 \uD6C4 \uAE30\uC5C5 \uB9DE\uCDA4 \uCEE4\uC2A4\uD130\uB9C8\uC774\uC9D5\uC744 \uD1B5\uD574 \uC138\uBD80\uACFC\uC81C\uAC00 \uAD6C\uCCB4\uD654\uB429\uB2C8\uB2E4.</div>
+      </div>
+      <div class="task-pool">
+        ${TASK_POOL[tType].map((dir, idx) => {
+          const dirColor = idx === 0 ? '#1e3a5f' : idx === 1 ? '#2563eb' : '#16a34a';
+          return `<div class="tp-direction">
+            <div class="tp-head">
+              <div class="tp-num" style="background:${dirColor}">${idx + 1}</div>
+              <div class="tp-title">\uC804\uD658\uBC29\uD5A5: ${dir.direction}</div>
+            </div>
+            <div class="tp-tasks">
+              ${dir.tasks.map(t => {
+                const relDomains = ['G','D','A','X'].filter(d => t.gdax.includes(d));
+                const weakDomains = relDomains.filter(d => domainAvgs[d] < 3.0);
+                const urgentDomains = relDomains.filter(d => domainAvgs[d] < 2.0);
+                let badge = '';
+                if (urgentDomains.length > 0) {
+                  badge = `<span class="tp-badge tp-badge-urgent">\uD83D\uDEA8 \uC2DC\uAE09 (${urgentDomains.join(',')} \uBBF8\uD759)</span>`;
+                } else if (weakDomains.length > 0) {
+                  badge = `<span class="tp-badge tp-badge-priority">\u26A0\uFE0F \uC6B0\uC120\uAC1C\uC120 (${weakDomains.map(d => d + ' ' + domainAvgs[d].toFixed(1)).join(', ')})</span>`;
+                }
+                return `<div class="tp-task${urgentDomains.length > 0 ? ' tp-urgent' : weakDomains.length > 0 ? ' tp-weak' : ''}"><div class="tp-task-header">\u25B8 ${t.name} <span class="tp-gdax">${t.gdax}</span>${badge}</div>${t.desc ? `<div class="tp-desc">${t.desc}</div>` : ''}</div>`;
+              }).join('')}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. \uB9DE\uCDA4\uD615 \uCD94\uCC9C \uC0AC\uD56D -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F4A1}</span>
+      <h2>\uB9DE\uCDA4\uD615 \uCD94\uCC9C \uC0AC\uD56D</h2>
+      <span class="ch-tag">\uC555\uB825\u00D7\uAC2D\uCC28\u00D7\uC5ED\uB7C9 \uBCF5\uD569 \uC2A4\uCF54\uC5B4\uB9C1 \uAE30\uBC18 \uC6B0\uC120\uC21C\uC704</span>
+    </div>
+    <div class="card-body">
+      <div class="rec-list" id="recommendations"></div>
+    </div>
+  </div>
+
+  <!-- 11. \uD76C\uB9DD \uC9C0\uC6D0 \uBD84\uC57C -->
+  ${d.needs && d.needs.length > 0 ? `
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F3AF}</span>
+      <h2>\uD76C\uB9DD \uC9C0\uC6D0 \uBD84\uC57C</h2>
+    </div>
+    <div class="card-body">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${d.needs.map(n => `<span style="padding:6px 14px;background:#eff6ff;color:#1e40af;border-radius:8px;font-size:13px;font-weight:600;border:1px solid #bfdbfe;">${n}</span>`).join('')}
+      </div>
+    </div>
+  </div>` : ''}
+
+  </div><!-- page -->
+
+  <div class="footer">
+    <strong>위탁기관</strong> 고용노동부 &nbsp;|&nbsp; <strong>운영기관</strong> 한국표준협회 산업일자리전환지원센터<br>
+    G-DAX 준비도 진단 결과 리포트 v2.0 · 진단일 ${dateStr}
+  </div>
+
+  <!-- PDF 다운로드 바 (고정 하단) -->
+  <div id="pdfBar" style="
+    position:fixed;bottom:0;left:0;right:0;z-index:9999;
+    background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%);
+    padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:16px;
+    box-shadow:0 -4px 20px rgba(0,0,0,0.15);
+  ">
+    <a href="/guide.html" target="_blank" style="color:#fff; font-size:13px; text-decoration:underline; opacity:0.85;">📖 보고서 보는 법</a>
+    <span style="color:#fff;font-size:14px;font-weight:500;">📋 G-DAX 준비도 진단 결과 리포트</span>
+    <button id="pdfBtn" onclick="downloadPDF()" style="
+      background:#fff;color:#1e3a5f;border:none;padding:10px 28px;
+      border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;
+      font-family:'Noto Sans KR',sans-serif;transition:all .2s;
+    " onmouseover="this.style.background='#f0f4f8'" onmouseout="this.style.background='#fff'">
+      📥 PDF 다운로드 (A4)
+    </button>
+  </div>
+  `;
+
+  // Draw charts
+  setTimeout(() => {
+    drawRadar('radarChart', sc);
+    drawQuadrant('quadrantChart', sc, indType);
+  }, 100);
+
+  // Generate recommendations
+  generateRecommendations(sc, domainAvgs, tType, btjr);
+}
+
+function generateRecommendations(sc, avgs, tType, btjr) {
+  const recs = [];
+  const typeCfg = TYPE_CONFIG[tType];
+
+  /* ── 영역별 전환과제 우선순위 자동 스코어링 ── */
+  const thirdGrp = { G: '성장 동력', D: '인재 역량', A: '인재 역량', X: '추진 동력' };
+  const priorityScores = {};
+  ['G','D','A','X'].forEach(k => {
+    const cfg = DOMAIN_CONFIG[k];
+    /* 그룹별 소계 계산 */
+    const gAvg = {};
+    cfg.questions.forEach((q, i) => {
+      if (!q.group) return;
+      if (!gAvg[q.group]) gAvg[q.group] = { s: 0, c: 0 };
+      gAvg[q.group].s += sc[k][i]; gAvg[q.group].c++;
+    });
+    const pAvg = gAvg['전환 압력'] ? gAvg['전환 압력'].s / gAvg['전환 압력'].c : 0;
+    const iAvg = gAvg['실행 기반'] ? gAvg['실행 기반'].s / gAvg['실행 기반'].c : 0;
+    const tg = thirdGrp[k];
+    const cAvg = gAvg[tg] ? gAvg[tg].s / gAvg[tg].c : 0;
+
+    /* 복합 스코어: 압력강도 × max(압력-기반 갭, 0) × (5 - 역량)/4 */
+    const pressureGap = Math.max(pAvg - iAvg, 0);
+    const capWeakness = (5 - cAvg) / 4;  // 0~1 범위 정규화
+    const score = pAvg * (1 + pressureGap * 0.5) * (1 + capWeakness * 0.3);
+    priorityScores[k] = { score: score.toFixed(2), pAvg, iAvg, cAvg, pressureGap };
+  });
+
+  // 복합 스코어 기준 정렬 (높은 순)
+  const sorted = Object.entries(priorityScores).sort((a,b) => parseFloat(b[1].score) - parseFloat(a[1].score));
+
+  sorted.forEach(([k, ps]) => {
+    const cfg = DOMAIN_CONFIG[k];
+    const avg = avgs[k];
+    const readiness = getReadiness(k, sc);
+    const gap = readiness > 0 ? avg - readiness : avg;
+
+    if (avg >= 3.5) {
+      const recMap = {
+        G: { title: '\uCE5C\uD658\uACBD \uC804\uD658 \uC804\uB7B5 \uC218\uB9BD \uC2DC\uAE09', desc: '\uD0C4\uC18C \uADDC\uC81C \uB300\uC751 \uB85C\uB4DC\uB9F5 \uC218\uB9BD, RE100 \uB300\uC751, \uD0C4\uC18C\uBC1C\uC790\uAD6D \uC0B0\uC815 \uCCB4\uACC4 \uAD6C\uCD95\uC744 \uAD8C\uACE0\uD569\uB2C8\uB2E4.' },
+        D: { title: '\uB514\uC9C0\uD138 \uC778\uD504\uB77C \uACE0\uB3C4\uD654 \uD544\uC694', desc: '\uC2A4\uB9C8\uD2B8\uACF5\uC7A5 \uB3C4\uC785, ERP/MES \uC5C5\uADF8\uB808\uC774\uB4DC, \uB370\uC774\uD130 \uAE30\uBC18 \uC758\uC0AC\uACB0\uC815 \uCCB4\uACC4 \uAD6C\uCD95\uC774 \uC2DC\uAE09\uD569\uB2C8\uB2E4.' },
+        A: { title: 'AI \uB3C4\uC785 \uB85C\uB4DC\uB9F5 \uC218\uB9BD \uAD8C\uACE0', desc: 'AI \uD65C\uC6A9 \uAC00\uB2A5 \uC601\uC5ED \uBC1C\uAD74 \uBC0F \uB2E8\uACC4\uC801 \uB3C4\uC785(\uD488\uC9C8\uAC80\uC0AC\u2192\uC608\uC9C0\uBCF4\uC804\u2192\uACF5\uC815\uCD5C\uC801\uD654)\uC744 \uC81C\uC548\uD569\uB2C8\uB2E4.' },
+        X: { title: '\uACE0\uC6A9\uAD6C\uC870 \uC804\uD658 \uB300\uC751 \uCCB4\uACC4 \uAD6C\uCD95', desc: '\uC9C1\uBB34 \uC7AC\uC124\uACC4 \uBC0F \uC778\uB825 \uC7AC\uBC30\uCE58 \uACC4\uD68D\uC774 \uC2DC\uAE09\uD569\uB2C8\uB2E4. \uB178\uC0AC \uACF5\uB3D9 \uC804\uD658\uC704\uC6D0\uD68C \uAD6C\uC131\uC744 \uAD8C\uACE0\uD569\uB2C8\uB2E4.' }
+      };
+      const r = recMap[k];
+      recs.push({ domain: k, title: r.title, desc: r.desc, color: cfg.color, priority: 1, score: ps.score, tags: [k, ...DOMAIN_CONFIG[k].questions[0].btjr] });
+    } else if (avg >= 2.5 && gap > 1.0) {
+      recs.push({ domain: k, title: `${cfg.name} \uC601\uC5ED Gap \uD574\uC18C \uD544\uC694`, desc: `\uC804\uD658\uC555\uB825 \uB300\uBE44 \uB0B4\uBD80 \uC900\uBE44\uB3C4 \uACA9\uCC28\uAC00 \uD06C\uBBC0\uB85C \uC6B0\uC120 \uB300\uC751\uC774 \uD544\uC694\uD569\uB2C8\uB2E4.`, color: cfg.color, priority: 2, score: ps.score, tags: [k] });
+    }
+  });
+
+  // BTJR pathway recommendation
+  if (parseFloat(btjr.B) >= 3.0) {
+    recs.push({ domain: 'BTJR', title: 'BTJR \uC804\uD658 \uC5F0\uC1C4 \uC601\uD5A5 \uBD84\uC11D \uD544\uC694',
+      desc: `\uC0AC\uC5C5\uAD6C\uC870(${btjr.B}) \uC804\uD658 \uC555\uB825\uC774 \uB192\uC544 \uAE30\uC220\uC6B4\uC601(${btjr.T})\u2192\uC9C1\uBB34\uC5ED\uB7C9(${btjr.J})\u2192\uB178\uC0AC\uAD00\uACC4(${btjr.R})\uB85C \uC5F0\uC1C4\uC801 \uC601\uD5A5\uC774 \uC608\uC0C1\uB429\uB2C8\uB2E4. \uD1B5\uD569 \uC804\uD658 \uC804\uB7B5\uC774 \uD544\uC694\uD569\uB2C8\uB2E4.`,
+      color: '#1e3a5f', priority: 1, tags: ['B','T','J','R'] });
+  }
+
+  // 전환 유형 기반 추천
+  recs.push({ domain: typeCfg.name, title: `${typeCfg.name} \uB9DE\uCDA4 \uCEE8\uC124\uD305 \uD504\uB85C\uADF8\uB7A8`,
+    desc: `${typeCfg.desc}. \uC815\uBC00 \uC9C4\uB2E8(FABRIC + G-DAX)\uC744 \uD1B5\uD574 \uAE30\uC5C5 \uB9DE\uCDA4 \uC804\uD658\uACFC\uC81C\uB97C \uC124\uACC4\uD569\uB2C8\uB2E4.`,
+    color: '#1e3a5f', priority: 3, tags: ['\uC804\uD658\uC720\uD615'] });
+
+  recs.sort((a,b) => a.priority - b.priority);
+
+  const container = document.getElementById('recommendations');
+  if (!container) return;
+  container.innerHTML = recs.map((r, i) => `
+    <div class="rec-item">
+      <div class="rec-num" style="background:${r.color}">${i + 1}</div>
+      <div class="rec-content">
+        <div class="rec-title">${r.title}${r.score ? ` <span style="font-size:10px;color:#6b7280;font-weight:500;margin-left:6px">\uC6B0\uC120\uC810\uC218 ${r.score}</span>` : ''}</div>
+        <div class="rec-desc">${r.desc}</div>
+        <div class="rec-tags">
+          ${(r.tags || []).map(t => {
+            const tagColors = { G: 'background:#dcfce7;color:#166534', D: 'background:#dbeafe;color:#1e40af',
+              A: 'background:#ede9fe;color:#5b21b6', X: 'background:#fee2e2;color:#991b1b',
+              B: 'background:#dbeafe;color:#1e40af', T: 'background:#dcfce7;color:#166534',
+              J: 'background:#fef3c7;color:#92400e', R: 'background:#fee2e2;color:#991b1b' };
+            const style = tagColors[t] || 'background:#f3f4f6;color:#374151';
+            return `<span class="rtag" style="${style}">${t}</span>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Initialize
+render();
+
+/* ── PDF 다운로드 (window.print 방식) ── */
+function downloadPDF() {
+  const btn = document.getElementById('pdfBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ PDF 준비 중...';
+
+  // 1) 페이지 제목을 파일명으로 설정 (브라우저가 PDF 저장 시 이 이름 사용)
+  const companyName = document.querySelector('.company-name')?.textContent || 'GDAX진단';
+  const today = new Date().toISOString().slice(0, 10);
+  const originalTitle = document.title;
+  document.title = `GDAX_준비도진단_결과_${companyName}_${today}`;
+
+  // 2) Canvas 차트를 이미지로 변환 (인쇄 시 canvas는 빈 상태로 출력되므로)
+  const canvases = document.querySelectorAll('canvas');
+  const originals = [];
+  canvases.forEach(canvas => {
+    try {
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      img.className = 'chart-img';
+      img.style.cssText = canvas.style.cssText || '';
+      img.style.maxWidth = '100%';
+      img.style.height = 'auto';
+      originals.push({ canvas, parent: canvas.parentNode, next: canvas.nextSibling });
+      canvas.parentNode.insertBefore(img, canvas);
+      canvas.style.display = 'none';
+    } catch(e) { /* CORS 등 오류 시 원본 canvas 유지 */ }
+  });
+
+  // 3) 인쇄 실행
+  setTimeout(() => {
+    window.print();
+
+    // 4) 인쇄 후 복원
+    originals.forEach(({ canvas }) => {
+      canvas.style.display = '';
+      const img = canvas.parentNode.querySelector('img.chart-img');
+      if (img) img.remove();
+    });
+    document.title = originalTitle;
+    btn.disabled = false;
+    btn.textContent = '📥 PDF 다운로드 (A4)';
+  }, 300);
+}
+</script>
+<!-- html2pdf.js 제거: window.print() 네이티브 방식으로 전환 -->
+</body>
+</html>
