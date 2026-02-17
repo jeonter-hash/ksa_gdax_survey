@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이전 진단 결과 조회 | G-DAX</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
+  :root {
+    --navy:#1e3a5f; --blue:#2563eb; --green:#16a34a; --purple:#7c3aed; --red:#dc2626;
+    --g50:#f9fafb; --g100:#f3f4f6; --g200:#e5e7eb; --g500:#6b7280; --g700:#374151; --g900:#111827;
+    --shadow:0 4px 24px rgba(0,0,0,.06); --r:16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans KR',-apple-system,sans-serif; background:var(--g50); color:var(--g900); line-height:1.6; }
+  .hero { background:linear-gradient(135deg,var(--navy),#1e40af 50%,var(--green)); color:#fff; padding:50px 24px; text-align:center; }
+  .hero h1 { font-size:32px; font-weight:900; margin-bottom:10px; }
+  .hero p { font-size:15px; opacity:.9; }
+  .container { max-width:700px; margin:0 auto; padding:30px 20px; }
+  .card { background:#fff; border-radius:var(--r); box-shadow:var(--shadow); padding:30px; margin-bottom:24px; border:1px solid var(--g200); }
+  .card h2 { font-size:20px; font-weight:700; margin-bottom:20px; color:var(--navy); }
+  .input-group { margin-bottom:20px; }
+  .label { font-size:14px; font-weight:600; color:var(--g700); margin-bottom:8px; display:block; }
+  .input { width:100%; padding:14px; border:2px solid var(--g200); border-radius:10px; font-size:15px; font-family:inherit; transition:border .2s; }
+  .input:focus { outline:none; border-color:var(--blue); }
+  .btn { width:100%; padding:16px; background:linear-gradient(135deg,var(--navy),var(--blue)); color:#fff; border:none; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; font-family:inherit; transition:all .3s; }
+  .btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(37,99,235,.3); }
+  .btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+  .results-area { margin-top:30px; }
+  .results-header { font-size:18px; font-weight:700; color:var(--navy); margin-bottom:16px; }
+  .result-card { background:#fff; border-radius:12px; box-shadow:var(--shadow); padding:20px; margin-bottom:16px; border:1px solid var(--g200); transition:all .2s; }
+  .result-card:hover { box-shadow:0 8px 32px rgba(0,0,0,.1); }
+  .rc-top { display:flex; gap:14px; margin-bottom:12px; }
+  .rc-icon { font-size:32px; }
+  .rc-company { font-size:16px; font-weight:700; color:var(--navy); }
+  .rc-date { font-size:13px; color:var(--g500); }
+  .rc-meta { font-size:14px; color:var(--g700); margin-bottom:10px; }
+  .rc-scores { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px; font-size:13px; font-weight:600; }
+  .rc-scores span { padding:4px 10px; background:var(--g100); border-radius:6px; }
+  .rc-actions { display:flex; gap:10px; }
+  .btn-view, .btn-pdf, .btn-guide { flex:1; padding:10px; border-radius:8px; text-decoration:none; text-align:center; font-size:13px; font-weight:700; transition:all .2s; }
+  .btn-view { background:var(--blue); color:#fff; }
+  .btn-view:hover { background:#1d4ed8; }
+  .btn-pdf { background:var(--green); color:#fff; }
+  .btn-pdf:hover { background:#15803d; }
+  .btn-guide { background:#f0f4f8; color:var(--navy); }
+  .btn-guide:hover { background:#e1e8ef; }
+  .empty-state { text-align:center; padding:40px 20px; }
+  .empty-state h3 { font-size:18px; color:var(--navy); margin-bottom:8px; }
+  .empty-state p { font-size:14px; color:var(--g500); margin-bottom:20px; }
+  .link-btn { display:inline-block; padding:12px 24px; background:var(--blue); color:#fff; text-decoration:none; border-radius:8px; font-weight:600; }
+  .link-btn:hover { background:#1d4ed8; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🔍 이전 진단 결과 조회</h1>
+  <p>진단 시 입력하신 이메일 주소로 이전 결과를 다시 확인할 수 있습니다</p>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h2>이메일 주소 입력</h2>
+    <div class="input-group">
+      <label class="label">진단 시 입력한 이메일 주소</label>
+      <input type="email" id="emailInput" class="input" placeholder="예: kim@company.com" />
+    </div>
+    <button id="lookupBtn" class="btn" onclick="lookupResults()">🔍 조회하기</button>
+  </div>
+
+  <div class="results-area" id="resultsArea"></div>
+</div>
+
+<script>
+async function lookupResults() {
+  const emailInput = document.getElementById('emailInput');
+  const email = emailInput.value.trim().toLowerCase();
+
+  if (!email || !email.includes('@')) {
+    alert('올바른 이메일 주소를 입력해 주세요.');
+    return;
+  }
+
+  const btn = document.getElementById('lookupBtn');
+  btn.disabled = true;
+  btn.textContent = '🔍 조회 중...';
+
+  try {
+    const res = await fetch('/api/lookup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    renderResults(data.results || []);
+  } catch (e) {
+    alert('조회에 실패했습니다. 다시 시도해 주세요.');
+    console.error('Lookup error:', e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🔍 조회하기';
+  }
+}
+
+function renderResults(results) {
+  const container = document.getElementById('resultsArea');
+
+  if (results.length === 0) {
+    container.innerHTML = `
+      <div class="card empty-state">
+        <div style="font-size:48px;margin-bottom:16px">📭</div>
+        <h3>진단 이력이 없습니다</h3>
+        <p>입력하신 이메일로 진단된 이력이 없습니다.</p>
+        <a href="/survey.html" class="link-btn">새로 진단하기 →</a>
+      </div>`;
+    return;
+  }
+
+  const typeNames = {
+    struct: '구조전환형', process: '공정혁신형',
+    value: '가치창출형', strong: '강소기반형'
+  };
+  const typeIcons = {
+    struct: '🏭', process: '⚙️', value: '🌱', strong: '🚀'
+  };
+  const intensityNames = {
+    high: '대규모 고용전환', medium: '중규모 고용전환', low: '소규모 고용전환'
+  };
+
+  container.innerHTML = `
+    <div class="results-header">총 ${results.length}건의 진단 이력</div>` +
+    results.map(r => `
+    <div class="result-card">
+      <div class="rc-top">
+        <span class="rc-icon">${typeIcons[r.transitionType] || '📊'}</span>
+        <div>
+          <div class="rc-company">${r.companyName}</div>
+          <div class="rc-date">진단일: ${new Date(r.createdAt).toLocaleDateString('ko-KR')}</div>
+        </div>
+      </div>
+      <div class="rc-meta">
+        <strong>${typeNames[r.transitionType]}</strong> · ${intensityNames[r.transitionIntensity]}
+      </div>
+      <div class="rc-scores">
+        <span>G: ${r.gAvg.toFixed(1)}</span>
+        <span>D+A: ${r.techAvg.toFixed(1)}</span>
+        <span>X: ${r.xAvg.toFixed(1)}</span>
+        <span>총점: ${r.totalScore}</span>
+      </div>
+      <div class="rc-actions">
+        <a href="/report.html?id=${r.assessmentId}" target="_blank" class="btn-view">📊 결과 리포트 보기</a>
+        <a href="/guide.html" target="_blank" class="btn-guide">📖 보고서 보는 법</a>
+      </div>
+    </div>`).join('');
+}
+
+// Enter 키 이벤트
+document.getElementById('emailInput').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') lookupResults();
+});
+</script>
+
+</body>
+</html>
