@@ -4,9 +4,10 @@ pages_build_output_dir = "./public"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "gdax-db"
-database_id = "placeholder_will_be_replaced_after_creation"
+database_name = "gdax-assessments"
+database_id = "a4599a8b-8d19-4d33-9959-26e68bd88c18"
 
 [vars]
 JWT_SECRET = "your_secret_key_change_this_in_production"
-ADMIN_USERNAME = "admin"
+ADMIN_USERNAME = "ksaadmin"
+ADMIN_PASSWORD = "gdax2016!"

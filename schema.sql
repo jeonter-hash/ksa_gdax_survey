@@ -61,6 +61,6 @@ CREATE TABLE IF NOT EXISTS admins (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 기본 관리자 계정 (비밀번호: admin123)
--- bcrypt hash of 'admin123': $2b$10$rX8Y5ZqEQx2vF5z3oQr4WeqJ1TZKZZmVW7yR4x8Y5ZqEQx2vF5z3o
-INSERT OR IGNORE INTO admins (id, username, password_hash) VALUES (1, 'admin', '$2b$10$rX8Y5ZqEQx2vF5z3oQr4WeqJ1TZKZZmVW7yR4x8Y5ZqEQx2vF5z3o');
+-- 기본 관리자 계정 (비밀번호: gdax2016!)
+-- bcrypt hash of 'gdax2016!': $2b$10$Chci8OY8aWbKb2XNM5IsEuAEviUCjkqaN75NtiDuidLwD2aYMoFzK
+INSERT OR IGNORE INTO admins (id, username, password_hash) VALUES (1, 'ksaadmin', '$2b$10$Chci8OY8aWbKb2XNM5IsEuAEviUCjkqaN75NtiDuidLwD2aYMoFzK');

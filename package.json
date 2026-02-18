@@ -19,5 +19,8 @@
   "license": "MIT",
   "devDependencies": {
     "wrangler": "^3.22.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3"
   }
 }
