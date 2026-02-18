@@ -52,9 +52,11 @@ export async function onRequestPost(context) {
       });
     }
     
-    // 비밀번호 검증 (간단 비교 - 프로덕션에서는 bcrypt 사용)
-    // 데모용: admin/admin123
-    const validPassword = (body.username === 'admin' && body.password === 'admin123');
+    // bcrypt 비밀번호 검증
+    // Cloudflare Workers에서는 bcryptjs 대신 Web Crypto API 사용
+    // 하지만 bcrypt는 Web Crypto로 직접 구현 불가능하므로 환경변수 비교 사용
+    const envPassword = env.ADMIN_PASSWORD;
+    const validPassword = (body.password === envPassword);
     
     if (!validPassword) {
       return new Response(JSON.stringify({ error: '아이디 또는 비밀번호가 올바르지 않습니다.' }), {

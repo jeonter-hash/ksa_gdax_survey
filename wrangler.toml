@@ -6,8 +6,3 @@ pages_build_output_dir = "./public"
 binding = "DB"
 database_name = "gdax-assessments"
 database_id = "a4599a8b-8d19-4d33-9959-26e68bd88c18"
-
-[vars]
-JWT_SECRET = "your_secret_key_change_this_in_production"
-ADMIN_USERNAME = "ksaadmin"
-ADMIN_PASSWORD = "gdax2016!"
