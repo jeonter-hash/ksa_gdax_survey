@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G-DAX 시스템 구조 레퍼런스</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
+  :root {
+    --green:#16a34a; --green-l:#dcfce7; --green-bg:#f0fdf4;
+    --digi:#2563eb; --digi-l:#dbeafe; --digi-bg:#eff6ff;
+    --ai:#7c3aed; --ai-l:#ede9fe; --ai-bg:#f5f3ff;
+    --trans:#dc2626; --trans-l:#fee2e2; --trans-bg:#fef2f2;
+    --navy:#1e3a5f; --g50:#f9fafb; --g100:#f3f4f6; --g200:#e5e7eb;
+    --g300:#d1d5db; --g500:#6b7280; --g700:#374151; --g900:#111827;
+    --btjr-B:#2563eb; --btjr-T:#16a34a; --btjr-J:#b45309; --btjr-R:#dc2626;
+    --shadow:0 4px 24px rgba(0,0,0,.06); --r:16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans KR',-apple-system,sans-serif; background:var(--g50); color:var(--g900); line-height:1.7; }
+
+  /* ── Cover ── */
+  .cover { background:linear-gradient(135deg,var(--navy) 0%,#1e40af 40%,#7c3aed 70%,#dc2626 100%); color:#fff; padding:48px 24px; text-align:center; position:relative; overflow:hidden; }
+  .cover::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2l3 3.5-3 3z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .cover-inner { position:relative; z-index:1; max-width:800px; margin:0 auto; }
+  .cover h1 { font-size:34px; font-weight:900; letter-spacing:-0.5px; margin-bottom:10px; }
+  .cover .sub { font-size:16px; font-weight:300; opacity:.9; margin-bottom:20px; }
+  .cover-chips { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .cover-chip { padding:6px 16px; border-radius:8px; font-size:13px; font-weight:700; background:rgba(255,255,255,.15); backdrop-filter:blur(4px); }
+  .cover-meta { margin-top:16px; font-size:13px; opacity:.7; }
+
+  /* ── Nav ── */
+  .nav { position:sticky; top:0; z-index:100; background:#fff; border-bottom:1px solid var(--g200); box-shadow:0 1px 8px rgba(0,0,0,.04); }
+  .nav-inner { max-width:960px; margin:0 auto; padding:10px 24px; display:flex; gap:6px; flex-wrap:wrap; }
+  .nav a { padding:6px 14px; border-radius:8px; font-size:12px; font-weight:600; color:var(--g700); text-decoration:none; transition:all .2s; }
+  .nav a:hover { background:var(--g100); }
+  .nav a.n-g { color:var(--green); } .nav a.n-d { color:var(--digi); } .nav a.n-a { color:var(--ai); } .nav a.n-x { color:var(--trans); }
+  .nav a.n-sys { color:var(--navy); }
+
+  /* ── Page ── */
+  .page { max-width:960px; margin:0 auto; padding:30px 24px; }
+
+  /* ── Card ── */
+  .card { background:#fff; border-radius:var(--r); box-shadow:var(--shadow); margin-bottom:24px; overflow:hidden; border:1px solid var(--g200); }
+  .card-hd { padding:16px 24px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--g100); }
+  .card-hd .icon { font-size:22px; }
+  .card-hd h2 { font-size:17px; font-weight:700; }
+  .card-hd .tag { margin-left:auto; font-size:11px; color:var(--g500); background:var(--g100); padding:3px 10px; border-radius:6px; }
+  .card-bd { padding:24px; }
+
+  /* Domain themed headers */
+  .hd-g { background:var(--green-bg); } .hd-d { background:var(--digi-bg); }
+  .hd-a { background:var(--ai-bg); } .hd-x { background:var(--trans-bg); }
+  .hd-sys { background:#f0f4f8; }
+
+  /* ── Tables ── */
+  table { width:100%; border-collapse:collapse; font-size:13px; margin:12px 0; }
+  th, td { padding:10px 12px; border:1px solid var(--g200); text-align:left; vertical-align:top; }
+  th { background:var(--g100); font-weight:600; color:var(--g700); white-space:nowrap; }
+  td { color:var(--g700); }
+  .tbl-head-green th { background:var(--green-bg); color:var(--green); }
+  .tbl-head-digi th { background:var(--digi-bg); color:var(--digi); }
+  .tbl-head-ai th { background:var(--ai-bg); color:var(--ai); }
+  .tbl-head-trans th { background:var(--trans-bg); color:var(--trans); }
+  .tbl-head-navy th { background:#e8eef5; color:var(--navy); }
+  .td-desc { font-size:11px; color:var(--g500); line-height:1.5; max-width:360px; }
+
+  /* ── Tags ── */
+  .t { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:700; margin:1px 2px; }
+  .t-B { background:#dbeafe; color:#1e40af; } .t-T { background:#dcfce7; color:#166534; }
+  .t-J { background:#fef3c7; color:#92400e; } .t-R { background:#fee2e2; color:#991b1b; }
+  .t-grp-p { background:#fee2e2; color:#dc2626; } .t-grp-i { background:#dbeafe; color:#2563eb; }
+  .t-grp-d { background:#fef3c7; color:#b45309; } .t-grp-c { background:#ede9fe; color:#7c3aed; }
+  .t-grp-x { background:#dcfce7; color:#16a34a; }
+  .t-rev { background:#fef2f2; color:#991b1b; border:1px solid #fca5a5; }
+
+  /* ── Callout ── */
+  .co { padding:14px 18px; border-radius:10px; font-size:12px; line-height:1.7; margin:14px 0; display:flex; gap:10px; align-items:flex-start; }
+  .co-navy { background:#f0f4f8; border:1px solid #cbd5e1; color:#334155; }
+  .co-green { background:var(--green-bg); border:1px solid #bbf7d0; color:#166534; }
+  .co-red { background:var(--trans-bg); border:1px solid #fca5a5; color:#991b1b; }
+  .co-blue { background:var(--digi-bg); border:1px solid #bfdbfe; color:#1e40af; }
+  .co-purple { background:var(--ai-bg); border:1px solid #c4b5fd; color:#5b21b6; }
+  .co .co-icon { font-size:16px; flex-shrink:0; }
+
+  /* ── Section title ── */
+  .sec-title { font-size:22px; font-weight:800; color:var(--navy); margin:36px 0 8px; padding-bottom:8px; border-bottom:3px solid var(--navy); display:flex; align-items:center; gap:10px; }
+  .sec-title .sec-num { background:var(--navy); color:#fff; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; flex-shrink:0; }
+
+  /* ── Flow diagram ── */
+  .flow { display:flex; align-items:center; gap:0; margin:16px 0; flex-wrap:wrap; justify-content:center; }
+  .flow-box { padding:12px 18px; border-radius:10px; font-size:12px; font-weight:700; text-align:center; min-width:120px; }
+  .flow-arrow { font-size:18px; color:var(--g300); padding:0 4px; }
+  .flow-g { background:var(--green-l); color:var(--green); border:2px solid var(--green); }
+  .flow-d { background:var(--digi-l); color:var(--digi); border:2px solid var(--digi); }
+  .flow-a { background:var(--ai-l); color:var(--ai); border:2px solid var(--ai); }
+  .flow-x { background:var(--trans-l); color:var(--trans); border:2px solid var(--trans); }
+  .flow-navy { background:#e8eef5; color:var(--navy); border:2px solid var(--navy); }
+  .flow-btjr { background:#fff; border:2px dashed var(--g300); color:var(--g700); }
+
+  /* ── Grid layouts ── */
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid-4 { display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; }
+  @media(max-width:768px) { .grid-2, .grid-4 { grid-template-columns:1fr; } }
+
+  .mini-card { padding:16px; border-radius:10px; border:1px solid var(--g200); }
+  .mini-card h4 { font-size:13px; font-weight:700; margin-bottom:6px; }
+  .mini-card p { font-size:11px; color:var(--g500); line-height:1.5; }
+
+  h3 { font-size:15px; font-weight:700; color:var(--g900); margin:20px 0 8px; }
+  p.desc { font-size:13px; color:var(--g700); line-height:1.7; margin-bottom:12px; }
+
+  /* ── Print ── */
+  @media print {
+    .nav { display:none; }
+    .cover { padding:30px 20px; }
+    .card { break-inside:avoid; page-break-inside:avoid; }
+    body { font-size:11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER ═══ -->
+<div class="cover">
+  <div class="cover-inner">
+    <h1>G-DAX 시스템 구조 레퍼런스</h1>
+    <div class="sub">준비도 설문지 · 결과보고서 항목별 구조 및 설명</div>
+    <div class="cover-chips">
+      <span class="cover-chip">🌱 G 친환경전환</span>
+      <span class="cover-chip">💻 D 디지털전환</span>
+      <span class="cover-chip">🤖 A AI전환</span>
+      <span class="cover-chip">🔄 X 고용전환</span>
+    </div>
+    <div class="cover-meta">v3.0 · 2026.02.17 · 4영역 × 5문항 = 20문항 · BTJR 전환 영향 경로 · 3단 구조 분류</div>
+  </div>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#overview" class="n-sys">시스템 개요</a>
+    <a href="#framework" class="n-sys">프레임워크</a>
+    <a href="#survey" class="n-sys">설문지 구조</a>
+    <a href="#domain-g" class="n-g">G 친환경</a>
+    <a href="#domain-d" class="n-d">D 디지털</a>
+    <a href="#domain-a" class="n-a">A AI</a>
+    <a href="#domain-x" class="n-x">X 고용</a>
+    <a href="#3tier" class="n-sys">3단 구조</a>
+    <a href="#btjr" class="n-sys">BTJR 경로</a>
+    <a href="#report" class="n-sys">보고서 구조</a>
+    <a href="#scoring" class="n-sys">점수 체계</a>
+    <a href="#type4" class="n-sys">전환유형 4분류</a>
+    <a href="#taskpool" class="n-sys">Task Pool</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══ 1. 시스템 개요 ═══ -->
+<div class="sec-title" id="overview"><span class="sec-num">1</span>시스템 개요</div>
+
+<div class="card">
+  <div class="card-hd hd-sys"><span class="icon">🏗️</span><h2>G-DAX 준비도 진단 시스템이란?</h2><span class="tag">System Overview</span></div>
+  <div class="card-bd">
+    <p class="desc">G-DAX(Green-Digital-AI-eXployment)는 한국표준협회(KSA) 산업일자리전환 컨설팅에서 사용하는 <strong>기업 전환 준비도 진단 프레임워크</strong>입니다. FABRIC(기업 내부역량 분석) × G-DAX(외부 전환 압력 진단) 이중 구조로 설계되어, 기업의 전환 준비 수준을 다각적으로 측정합니다.</p>
+
+    <div class="co co-navy"><span class="co-icon">📐</span><div><strong>시스템 구성 요소:</strong> 설문지(HTML) → 데이터 수집 → URL 파라미터(Base64 인코딩) → 결과보고서(HTML) → PDF 출력(window.print()). 전체 클라이언트 사이드 완결형 아키텍처로 서버 불필요.</div></div>
+
+    <h3>핵심 구성 파일</h3>
+    <table>
+      <tr><th style="width:200px">파일</th><th>역할</th><th style="width:80px">용량</th></tr>
+      <tr><td><strong>GDAX_준비도진단_설문지.html</strong></td><td>기업 정보 수집 + 20문항 리커트 척도 + 추가 니즈 + 담당자 정보 → Base64 인코딩 후 결과보고서로 전달</td><td>46KB</td></tr>
+      <tr><td><strong>GDAX_준비도진단_결과보고서.html</strong></td><td>URL 파라미터 파싱 → 점수 계산 → 11개 분석 카드 렌더링 → PDF 출력</td><td>85KB</td></tr>
+      <tr><td><strong>G-DAX_결과보고서_보는법.html</strong></td><td>결과 보고서는 10개 카드(섹션)로 구성</td><td>51KB</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ 2. 프레임워크 ═══ -->
+<div class="sec-title" id="framework"><span class="sec-num">2</span>진단 프레임워크</div>
+
+<div class="card">
+  <div class="card-hd hd-sys"><span class="icon">🔬</span><h2>FABRIC × G-DAX 이중 진단 구조</h2><span class="tag">Dual Framework</span></div>
+  <div class="card-bd">
+    <div class="grid-2">
+      <div class="mini-card" style="border-color:var(--navy);">
+        <h4 style="color:var(--navy);">FABRIC (기업 내부역량)</h4>
+        <p>F(Financial) · A(Activity/운영) · B(Business model) · R(Resource/인적자원) · I(Information/정보시스템) · C(Culture/조직문화) — 6대 내부역량을 정밀 진단. G-DAX 설문 데이터가 FABRIC의 사전 프로파일링(Ch.1~2)으로 연계됩니다.</p>
+      </div>
+      <div class="mini-card" style="border-color:var(--digi);">
+        <h4 style="color:var(--digi);">G-DAX (외부 전환 압력)</h4>
+        <p>G(Green/친환경) · D(Digital/디지털) · A(AI/인공지능) · X(eXployment/고용전환) — 4대 외부 전환 축의 압력 수준과 기업 대응 준비도를 측정. BTJR 전환 영향 경로로 과제를 도출합니다.</p>
+      </div>
+    </div>
+
+    <h3>데이터 흐름</h3>
+    <div class="flow">
+      <div class="flow-box flow-navy">📋 설문지<br><small>20문항 수집</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box flow-btjr">🔄 Base64<br><small>URL 전달</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box flow-navy">📊 결과보고서<br><small>11개 카드</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box flow-btjr">📥 PDF<br><small>window.print()</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 3. 설문지 구조 ═══ -->
+<div class="sec-title" id="survey"><span class="sec-num">3</span>설문지 구조</div>
+
+<div class="card">
+  <div class="card-hd hd-sys"><span class="icon">📋</span><h2>설문지 전체 구성</h2><span class="tag">Survey Structure</span></div>
+  <div class="card-bd">
+    <p class="desc">설문지는 크게 5개 섹션으로 구성되며, 기업 기본 정보 → G·D·A·X 4개 영역(각 5문항) → 추가 니즈 → 담당자 정보 순서로 진행됩니다. 예상 소요시간은 약 7분입니다.</p>
+
+    <table>
+      <tr><th>섹션</th><th>내용</th><th>필드 수</th><th>필수/선택</th></tr>
+      <tr><td><strong>Sec 1. 기업 기본 정보</strong></td><td>회사명, 대표자명, 소재지, 업종, 업종유형(제조형/서비스형/기술형), 상시근로자수, 매출액, 설립연도</td><td>8개 필드</td><td>6 필수 / 2 선택</td></tr>
+      <tr><td><strong>Sec 2~5. G-DAX 진단</strong></td><td>4개 영역 × 5문항 = 20문항 리커트 5점 척도 (1: 전혀 아님 ~ 5: 매우 그렇다)</td><td>20문항</td><td>전체 필수</td></tr>
+      <tr><td><strong>Sec 6. 추가 니즈</strong></td><td>사업재편, 교육훈련, 스마트공장, 정부지원, 노사관리, AI활용, 컨설팅 (다중 선택)</td><td>7개 항목</td><td>선택</td></tr>
+      <tr><td><strong>Sec 7. 담당자 정보</strong></td><td>담당자명, 직책, 이메일, 연락처</td><td>4개 필드</td><td>전체 필수</td></tr>
+    </table>
+
+    <h3>업종 유형 분류 (D/A 가중치 차등 적용)</h3>
+    <table>
+      <tr><th>업종 유형</th><th>설명</th><th>D 가중치</th><th>A 가중치</th><th>적용 근거</th></tr>
+      <tr><td><strong>제조형</strong></td><td>제조·생산 중심 기업</td><td>55%</td><td>45%</td><td>스마트팩토리(D) 비중 높음</td></tr>
+      <tr><td><strong>서비스형</strong></td><td>서비스·유통 중심 기업</td><td>50%</td><td>50%</td><td>D/A 균등 배분</td></tr>
+      <tr><td><strong>기술형</strong></td><td>R&D·IT·기술 중심 기업</td><td>35%</td><td>65%</td><td>AI(A) 비중 높음</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ 4~7. 영역별 문항 상세 ═══ -->
+
+<!-- G 영역 -->
+<div class="sec-title" id="domain-g"><span class="sec-num" style="background:var(--green);">G</span>G — 친환경전환 (Green Transition)</div>
+
+<div class="card">
+  <div class="card-hd hd-g"><span class="icon">🌱</span><h2>G영역 문항 상세</h2><span class="tag">5문항 · 탄소중립·ESG·에너지</span></div>
+  <div class="card-bd">
+    <div class="co co-green"><span class="co-icon">🔗</span><div><strong>FABRIC 연결:</strong> G영역 응답은 G-DAX 진단 Ch.3.2의 친환경전환 산업전환환경(전환압력 高/中/低) 사전 평가에 활용됩니다.</div></div>
+
+    <table class="tbl-head-green">
+      <tr><th style="width:60px">코드</th><th style="width:100px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th><th style="width:50px">역방향</th></tr>
+      <tr>
+        <td><strong>G1</strong></td>
+        <td>탄소 리스크</td>
+        <td>우리 회사의 주력 제품·서비스가 탄소 감축 정책(탄소중립기본법, EU CBAM 등)에 따라 시장 축소 또는 사업 재편이 필요한 상황이다.</td>
+        <td><span class="t t-grp-p">전환 압력</span></td>
+        <td><span class="t t-B">B</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>G2</strong></td>
+        <td>공급망 압력</td>
+        <td>원청사·바이어로부터 ESG 경영, 탄소 배출량 보고, RE100 이행 등을 요구받고 있거나 가까운 시일 내 요구가 예상된다.</td>
+        <td><span class="t t-grp-p">전환 압력</span></td>
+        <td><span class="t t-B">B</span> <span class="t t-T">T</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>G3</strong></td>
+        <td>에너지 전환</td>
+        <td>에너지 비용(전기료·연료비)이 제조원가·운영비의 상당 부분을 차지하며, 친환경 에너지 전환(태양광·ESS 등)을 검토 중이다.</td>
+        <td><span class="t t-grp-p">전환 압력</span></td>
+        <td><span class="t t-T">T</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>G4</strong></td>
+        <td>환경관리체계</td>
+        <td>환경 규제(배출권거래제, 폐기물 규제, 유해물질 관리 등) 대응을 위한 사내 전담 인력이나 관리 체계가 마련되어 있다.</td>
+        <td><span class="t t-grp-i">실행 기반</span></td>
+        <td><span class="t t-J">J</span> <span class="t t-R">R</span></td>
+        <td><span class="t t-rev">역방향</span></td>
+      </tr>
+      <tr>
+        <td><strong>G5</strong></td>
+        <td>Green 기회</td>
+        <td>친환경 전환(저탄소 공정, 친환경 소재, 순환경제 등)이 새로운 매출원이나 사업 기회가 될 수 있다고 판단한다.</td>
+        <td><span class="t t-grp-d">성장 동력</span></td>
+        <td><span class="t t-B">B</span></td>
+        <td>—</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- D 영역 -->
+<div class="sec-title" id="domain-d"><span class="sec-num" style="background:var(--digi);">D</span>D — 디지털전환 (Digital Transformation)</div>
+
+<div class="card">
+  <div class="card-hd hd-d"><span class="icon">💻</span><h2>D영역 문항 상세</h2><span class="tag">5문항 · DX인프라·데이터·디지털역량</span></div>
+  <div class="card-bd">
+    <div class="co co-blue"><span class="co-icon">🔗</span><div><strong>FABRIC 연결:</strong> D영역 응답은 FABRIC의 F(운영인프라)·F5(정보시스템)와 직접 연결되어 Ch.2 내부현황 분석에 반영됩니다.</div></div>
+
+    <table class="tbl-head-digi">
+      <tr><th style="width:60px">코드</th><th style="width:110px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th><th style="width:50px">역방향</th></tr>
+      <tr>
+        <td><strong>D1</strong></td>
+        <td>DX 격차</td>
+        <td>경쟁사 대비 우리 회사의 디지털화 수준(ERP/MES/SCM 등)이 뒤처져 있어 생산성·품질 경쟁력이 약화되고 있다.</td>
+        <td><span class="t t-grp-p">전환 압력</span></td>
+        <td><span class="t t-T">T</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>D2</strong></td>
+        <td>DX 투자계획</td>
+        <td>스마트공장·IoT·클라우드 등 디지털 인프라 도입 계획이 있고, 이를 위한 예산 또는 정부지원 연계를 준비 중이다.</td>
+        <td><span class="t t-grp-p">전환 압력</span></td>
+        <td><span class="t t-B">B</span> <span class="t t-T">T</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>D3</strong></td>
+        <td>시스템통합도</td>
+        <td>핵심 업무(생산·재고·고객·회계)를 전산 시스템으로 통합 관리하고 있으며, 부서 간 데이터 연동이 원활하다.</td>
+        <td><span class="t t-grp-i">실행 기반</span></td>
+        <td><span class="t t-T">T</span></td>
+        <td><span class="t t-rev">역방향</span></td>
+      </tr>
+      <tr>
+        <td><strong>D4</strong></td>
+        <td>데이터 활용</td>
+        <td>데이터 기반 의사결정(품질 분석, 수요 예측, 원가 관리 등)의 필요성을 느끼지만, 데이터 수집·분석 체계가 미흡하다.</td>
+        <td><span class="t t-grp-i">실행 기반</span></td>
+        <td><span class="t t-T">T</span> <span class="t t-J">J</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>D5</strong></td>
+        <td>디지털역량</td>
+        <td>직원들이 디지털 기기·SW 활용에 어려움을 느끼고 있어, DX 추진 시 체계적인 디지털 리터러시 교육이 필요하다.</td>
+        <td><span class="t t-grp-c">인재 역량</span></td>
+        <td><span class="t t-J">J</span> <span class="t t-R">R</span></td>
+        <td>—</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- A 영역 -->
+<div class="sec-title" id="domain-a"><span class="sec-num" style="background:var(--ai);">A</span>A — AI전환 (AI Transformation)</div>
+
+<div class="card">
+  <div class="card-hd hd-a"><span class="icon">🤖</span><h2>A영역 문항 상세</h2><span class="tag">5문항 · AI도입·자동화·직무전환</span></div>
+  <div class="card-bd">
+    <div class="co co-purple"><span class="co-icon">🔗</span><div><strong>FABRIC 연결:</strong> A영역은 FABRIC의 A(운영활동)·I(정보시스템) 분석과 연결되어, AI 자동화 적용 가능 영역과 직무 변화 예측에 활용됩니다.</div></div>
+
+    <table class="tbl-head-ai">
+      <tr><th style="width:60px">코드</th><th style="width:110px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th><th style="width:50px">역방향</th></tr>
+      <tr>
+        <td><strong>A1</strong></td>
+        <td>AI 적용가능성</td>
+        <td>우리 업종에서 AI(인공지능)를 활용하여 업무 효율을 높이는 사례가 등장하고 있으며, 도입을 검토할 필요가 있다.</td>
+        <td><span class="t t-grp-p">전환 압력</span></td>
+        <td><span class="t t-T">T</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>A2</strong></td>
+        <td>자동화 효과</td>
+        <td>우리 회사의 반복·단순 업무(검사, 입력, 분류 등)에 AI/로봇을 적용하면 상당한 생산성 향상이 기대된다.</td>
+        <td><span class="t t-grp-p">전환 압력</span></td>
+        <td><span class="t t-T">T</span> <span class="t t-J">J</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>A3</strong></td>
+        <td>데이터 축적</td>
+        <td>AI 도입에 필요한 학습 데이터(품질, 공정, 고객 데이터 등)가 체계적으로 축적·관리되고 있다.</td>
+        <td><span class="t t-grp-i">실행 기반</span></td>
+        <td><span class="t t-T">T</span></td>
+        <td><span class="t t-rev">역방향</span></td>
+      </tr>
+      <tr>
+        <td><strong>A4</strong></td>
+        <td>직무전환대응</td>
+        <td>AI·자동화가 도입되면 일부 직무가 변화할 수 있으며, 이에 대한 인력 재배치·교육 계획을 마련하고 있다.</td>
+        <td><span class="t t-grp-c">인재 역량</span></td>
+        <td><span class="t t-J">J</span> <span class="t t-R">R</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>A5</strong></td>
+        <td>생성형AI활용</td>
+        <td>생성형 AI(ChatGPT, Copilot 등)를 업무에 활용하면 직원 생산성이 높아질 것으로 기대하며, 도입을 검토 중이다.</td>
+        <td><span class="t t-grp-c">인재 역량</span></td>
+        <td><span class="t t-J">J</span></td>
+        <td>—</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- X 영역 -->
+<div class="sec-title" id="domain-x"><span class="sec-num" style="background:var(--trans);">X</span>X — 고용전환 (eXployment Transformation)</div>
+
+<div class="card">
+  <div class="card-hd hd-x"><span class="icon">🔄</span><h2>X영역 문항 상세</h2><span class="tag">5문항 · 인력구조·직무변화·노사관계</span></div>
+  <div class="card-bd">
+    <div class="co co-red"><span class="co-icon">🔗</span><div><strong>FABRIC 연결:</strong> X영역은 FABRIC의 R(인적자원)·C(조직문화) 분석과 연결되어, 인력 재배치 및 노사 협력 기반 변화관리 과제 도출에 활용됩니다.</div></div>
+
+    <table class="tbl-head-trans">
+      <tr><th style="width:60px">코드</th><th style="width:110px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th><th style="width:50px">역방향</th></tr>
+      <tr>
+        <td><strong>X1</strong></td>
+        <td>인력 리스크</td>
+        <td>구인난·핵심인력 유출·고령화로 인한 기술전수 단절이 시급한 문제이거나, 가까운 미래에 심각해질 것으로 예상된다.</td>
+        <td><span class="t t-grp-p">전환 압력</span></td>
+        <td><span class="t t-J">J</span> <span class="t t-R">R</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>X2</strong></td>
+        <td>직무재편필요</td>
+        <td>신기술(스마트공장, AI 등) 도입에 따라 기존 직원의 직무 내용이 변화하거나, 새로운 역할이 필요해지고 있다.</td>
+        <td><span class="t t-grp-p">전환 압력</span></td>
+        <td><span class="t t-J">J</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>X3</strong></td>
+        <td>노사 소통</td>
+        <td>직무전환·근로조건 변경·신기술 도입 등 변화 사안에 대해 노사 간 소통이 원활하고 갈등 관리 체계가 갖춰져 있다.</td>
+        <td><span class="t t-grp-i">실행 기반</span></td>
+        <td><span class="t t-R">R</span></td>
+        <td><span class="t t-rev">역방향</span></td>
+      </tr>
+      <tr>
+        <td><strong>X4</strong></td>
+        <td>전환교육체계</td>
+        <td>직원의 직무전환·역량 향상을 위한 체계적인 교육훈련 프로그램이 운영되고 있다.</td>
+        <td><span class="t t-grp-i">실행 기반</span></td>
+        <td><span class="t t-J">J</span> <span class="t t-R">R</span></td>
+        <td><span class="t t-rev">역방향</span></td>
+      </tr>
+      <tr>
+        <td><strong>X5</strong></td>
+        <td>경영진의지</td>
+        <td>경영진이 고용구조 전환(신규 직무 창출, 인력 재배치, 조직개편 등)을 핵심 경영 과제로 인식하고 추진 의지가 있다.</td>
+        <td><span class="t t-grp-x">추진 동력</span></td>
+        <td><span class="t t-B">B</span> <span class="t t-R">R</span></td>
+        <td>—</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ 8. 3단 구조 ═══ -->
+<div class="sec-title" id="3tier"><span class="sec-num">4</span>3단 구조별 그룹 분류</div>
+
+<div class="card">
+  <div class="card-hd hd-sys"><span class="icon">🔺</span><h2>전환 압력 → 실행 기반 → 동력/역량</h2><span class="tag">3-Tier Diagnostic Structure</span></div>
+  <div class="card-bd">
+    <p class="desc">모든 20문항은 3단 구조(전환 압력 → 실행 기반 → 동력/역량)로 분류됩니다. 이 구조는 "외부 압력이 높은데 내부 기반이 부족한 영역"을 자동 식별하여 우선 개선 대상을 도출하는 핵심 프레임워크입니다.</p>
+
+    <div class="flow">
+      <div class="flow-box" style="background:#fee2e2;color:#dc2626;border:2px solid #dc2626;">🔥 전환 압력<br><small>외부 변화 강도</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box" style="background:#dbeafe;color:#2563eb;border:2px solid #2563eb;">🏗️ 실행 기반<br><small>내부 인프라·체계</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box" style="background:#fef3c7;color:#b45309;border:2px solid #b45309;">⚡ 동력/역량<br><small>성장·인재·추진력</small></div>
+    </div>
+
+    <h3>영역별 3단 구조 매핑</h3>
+    <table>
+      <tr><th>영역</th><th><span class="t t-grp-p">전환 압력</span></th><th><span class="t t-grp-i">실행 기반</span></th><th>3번째 그룹 (영역별 상이)</th></tr>
+      <tr>
+        <td style="color:var(--green);font-weight:700;">🌱 G 친환경</td>
+        <td>G1 탄소리스크, G2 공급망압력, G3 에너지전환</td>
+        <td>G4 환경관리체계 <span class="t t-rev">역</span></td>
+        <td><span class="t t-grp-d">성장 동력</span> G5 Green기회</td>
+      </tr>
+      <tr>
+        <td style="color:var(--digi);font-weight:700;">💻 D 디지털</td>
+        <td>D1 DX격차, D2 DX투자계획</td>
+        <td>D3 시스템통합도 <span class="t t-rev">역</span>, D4 데이터활용</td>
+        <td><span class="t t-grp-c">인재 역량</span> D5 디지털역량</td>
+      </tr>
+      <tr>
+        <td style="color:var(--ai);font-weight:700;">🤖 A AI</td>
+        <td>A1 AI적용가능성, A2 자동화효과</td>
+        <td>A3 데이터축적 <span class="t t-rev">역</span></td>
+        <td><span class="t t-grp-c">인재 역량</span> A4 직무전환대응, A5 생성형AI활용</td>
+      </tr>
+      <tr>
+        <td style="color:var(--trans);font-weight:700;">🔄 X 고용</td>
+        <td>X1 인력리스크, X2 직무재편필요</td>
+        <td>X3 노사소통 <span class="t t-rev">역</span>, X4 전환교육체계 <span class="t t-rev">역</span></td>
+        <td><span class="t t-grp-x">추진 동력</span> X5 경영진의지</td>
+      </tr>
+    </table>
+
+    <div class="co co-red"><span class="co-icon">⚠️</span><div><strong>역방향(reverse) 문항 해석:</strong> G4, D3, A3, X3, X4 총 5개 문항은 높은 점수 = 높은 준비도(좋은 것)를 의미합니다. 나머지 15개 문항은 높은 점수 = 높은 전환 압력(시급성)을 의미합니다. 결과보고서에서 준비도(readiness) 산출 시 역방향 문항의 점수를 반전(6 - score)하여 계산합니다.</div></div>
+  </div>
+</div>
+
+<!-- ═══ 9. BTJR 경로 ═══ -->
+<div class="sec-title" id="btjr"><span class="sec-num">5</span>BTJR 전환 영향 경로</div>
+
+<div class="card">
+  <div class="card-hd hd-sys"><span class="icon">🔄</span><h2>B → T → J → R 전환 연쇄 경로</h2><span class="tag">Transition Impact Pathway</span></div>
+  <div class="card-bd">
+    <p class="desc">BTJR은 산업 전환이 기업에 미치는 영향의 연쇄 경로를 모델링한 것입니다. 사업구조(B) 변화가 기술운영(T)에 영향을 주고, 이는 직무역량(J) 요구 변화를 거쳐 노사관계(R)까지 파급됩니다. 각 G-DAX 문항은 1~2개의 BTJR 경로에 매핑되어 있습니다.</p>
+
+    <div class="flow">
+      <div class="flow-box" style="background:#dbeafe;color:#1e40af;border:2px solid #2563eb;">B 사업구조<br><small>Business Structure</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box" style="background:#dcfce7;color:#166534;border:2px solid #16a34a;">T 기술운영<br><small>Technology & Ops</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box" style="background:#fef3c7;color:#92400e;border:2px solid #b45309;">J 직무역량<br><small>Job & Competency</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box" style="background:#fee2e2;color:#991b1b;border:2px solid #dc2626;">R 노사관계<br><small>Labor Relations</small></div>
+    </div>
+
+    <h3>BTJR 경로별 매핑 문항</h3>
+    <table class="tbl-head-navy">
+      <tr><th style="width:60px">경로</th><th style="width:160px">경로명</th><th>매핑 문항</th><th style="width:90px">문항 수</th></tr>
+      <tr>
+        <td><span class="t t-B" style="font-size:12px;">B</span></td>
+        <td><strong>사업구조</strong> (Business)</td>
+        <td>G1, G2, G5, D2, X5</td>
+        <td>5문항</td>
+      </tr>
+      <tr>
+        <td><span class="t t-T" style="font-size:12px;">T</span></td>
+        <td><strong>기술운영</strong> (Technology)</td>
+        <td>G2, G3, D1, D2, D3, D4, A1, A2, A3</td>
+        <td>9문항</td>
+      </tr>
+      <tr>
+        <td><span class="t t-J" style="font-size:12px;">J</span></td>
+        <td><strong>직무역량</strong> (Job)</td>
+        <td>G4, D4, D5, A2, A4, A5, X1, X2, X4</td>
+        <td>9문항</td>
+      </tr>
+      <tr>
+        <td><span class="t t-R" style="font-size:12px;">R</span></td>
+        <td><strong>노사관계</strong> (Relations)</td>
+        <td>G4, D5, A4, X1, X3, X4, X5</td>
+        <td>7문항</td>
+      </tr>
+    </table>
+
+    <div class="co co-blue"><span class="co-icon">📊</span><div><strong>BTJR 분리 분석 (v3 신규):</strong> btjrByGroup() 함수가 전환 압력 문항과 실행 기반/역량 문항을 분리하여 각각의 BTJR 점수를 산출합니다. "전환 압력 문항 → BTJR" vs "실행 기반/역량 문항 → BTJR" 비교 패널로 표시됩니다.</div></div>
+  </div>
+</div>
+
+<!-- ═══ 10. 결과보고서 구조 ═══ -->
+<div class="sec-title" id="report"><span class="sec-num">6</span>결과보고서 카드 구조</div>
+
+<div class="card">
+  <div class="card-hd hd-sys"><span class="icon">📊</span><h2>결과보고서 11개 분석 카드</h2><span class="tag">Report Card Structure</span></div>
+  <div class="card-bd">
+    <p class="desc">결과보고서는 render() 함수에서 11개 분석 카드를 순차 렌더링합니다. 각 카드는 FABRIC × G-DAX 프레임워크의 특정 챕터와 연결됩니다.</p>
+
+    <table>
+      <tr><th style="width:50px">#</th><th style="width:220px">카드 이름</th><th>내용 설명</th><th style="width:130px">연결 챕터</th></tr>
+      <tr>
+        <td><strong>1</strong></td>
+        <td>🏢 기업 정보 요약</td>
+        <td>회사명, 대표자, 소재지, 업종, 업종유형, 근로자수, 매출, 설립연도를 테이블로 표시</td>
+        <td>Ch.1 기업개요</td>
+      </tr>
+      <tr>
+        <td><strong>2</strong></td>
+        <td>📊 종합 진단 결과</td>
+        <td>총점(100점 만점), 전체 평균, 등급(A~D), 4대 영역별 평균 바차트, 압력 수준(高/中/低), 전환 유형·강도 배지</td>
+        <td>G-DAX 통합 점수</td>
+      </tr>
+      <tr>
+        <td><strong>3</strong></td>
+        <td>🕸 영역별 균형도 (레이더)</td>
+        <td>G·D·A·X 4축 레이더 차트 + 4분면 차트(G축 × D+A축). Canvas 기반 시각화</td>
+        <td>Ch.3.3 레이더</td>
+      </tr>
+      <tr>
+        <td><strong>3.5</strong></td>
+        <td>📊 구조별 소계 분석</td>
+        <td>영역(G/D/A/X) × 그룹(전환압력/실행기반/동력·역량) 교차 매트릭스. 색상 코딩(≥3.5 적색, ≥2.5 황색, &lt;2.5 녹색). 압력-기반 갭 인사이트 + 역량 부족 하이라이트</td>
+        <td>3단 구조 교차</td>
+      </tr>
+      <tr>
+        <td><strong>4</strong></td>
+        <td>🔍 영역별 상세 진단</td>
+        <td>G·D·A·X 각 영역의 5문항별 점수, BTJR 매핑, 그룹 라벨, 소계 평균 표시. 역방향 문항에 "역" 배지</td>
+        <td>G-DAX 항목코드 × BTJR</td>
+      </tr>
+      <tr>
+        <td><strong>5</strong></td>
+        <td>🏭 전환 유형 진단</td>
+        <td>G × D+A 모델 기반 4분류(구조전환형/공정혁신형/가치창출형/강소기반형). 업종별 D/A 가중치 반영</td>
+        <td>Ch.3.4 전환유형</td>
+      </tr>
+      <tr>
+        <td><strong>6</strong></td>
+        <td>⚡ 고용전환 강도</td>
+        <td>X영역 평균 기반 3등급(대규모/중규모/소규모). Task Pool 과제 강도 조절자 역할</td>
+        <td>고용전환 강도</td>
+      </tr>
+      <tr>
+        <td><strong>7</strong></td>
+        <td>🔄 BTJR 전환 영향 경로</td>
+        <td>B→T→J→R 흐름 박스 + 경로별 평균 점수 바차트 + 전환 압력 vs 실행기반/역량 BTJR 분리 비교 패널</td>
+        <td>Ch.3.6 전환경로</td>
+      </tr>
+      <tr>
+        <td><strong>8</strong></td>
+        <td>📈 준비도 갭 분석</td>
+        <td>역방향 문항(G4,D3,A3,X3,X4) 기반 압력 vs 준비도 갭 시각화. 영역별 갭 크기 표시</td>
+        <td>역방향 문항 기반</td>
+      </tr>
+      <tr>
+        <td><strong>9</strong></td>
+        <td>🧩 Cross-SWOT 분석</td>
+        <td>G-DAX 점수 기반 자동 생성 SWOT. 강점(역방향 高)·약점(역방향 低)·기회(압력 高)·위협(압력 低+역량 低)</td>
+        <td>Ch.3.5 SWOT</td>
+      </tr>
+      <tr>
+        <td><strong>10</strong></td>
+        <td>🎯 전환과제 방향성</td>
+        <td>전환 유형별 Task Pool에서 3~4개 전환 방향 및 세부 과제 자동 생성. G-DAX 항목코드 연결</td>
+        <td>Ch.4 Task Pool</td>
+      </tr>
+      <tr>
+        <td><strong>11</strong></td>
+        <td>🚀 우선순위 추천</td>
+        <td>압력×갭차×역량 복합 스코어링(pAvg × (1+pressureGap×0.5) × (1+capWeakness×0.3))으로 자동 정렬된 전환과제 추천 목록. 우선점수 표시</td>
+        <td>압력×갭×역량 스코어링</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ 11. 점수 체계 ═══ -->
+<div class="sec-title" id="scoring"><span class="sec-num">7</span>점수 체계 및 산출 로직</div>
+
+<div class="card">
+  <div class="card-hd hd-sys"><span class="icon">🧮</span><h2>핵심 산출 함수 및 기준</h2><span class="tag">Scoring Logic</span></div>
+  <div class="card-bd">
+
+    <h3>기본 점수 체계</h3>
+    <table>
+      <tr><th>지표</th><th>산출 방식</th><th>범위</th></tr>
+      <tr><td><strong>영역 평균</strong></td><td>domainAvg(scores[k]) = 5문항 합산 / 5</td><td>1.0 ~ 5.0</td></tr>
+      <tr><td><strong>총점</strong></td><td>20문항 전체 합산</td><td>20 ~ 100</td></tr>
+      <tr><td><strong>전체 평균</strong></td><td>총점 / 20</td><td>1.0 ~ 5.0</td></tr>
+      <tr><td><strong>100점 환산</strong></td><td>총점 / 100 × 100</td><td>20 ~ 100</td></tr>
+    </table>
+
+    <h3>등급 판정 (getLevel)</h3>
+    <table>
+      <tr><th>등급</th><th>평균 범위</th><th>라벨</th><th>의미</th></tr>
+      <tr><td style="color:#dc2626;font-weight:800;">A</td><td>≥ 4.0</td><td>매우 높음</td><td>전환 압력이 매우 높아 즉각적 대응 필요</td></tr>
+      <tr><td style="color:#b45309;font-weight:800;">B</td><td>≥ 3.0</td><td>높음</td><td>전환 압력이 높아 체계적 대응 계획 필요</td></tr>
+      <tr><td style="color:#2563eb;font-weight:800;">C</td><td>≥ 2.0</td><td>보통</td><td>전환 압력이 보통으로 점진적 대응 가능</td></tr>
+      <tr><td style="color:#16a34a;font-weight:800;">D</td><td>&lt; 2.0</td><td>낮음</td><td>전환 압력이 낮아 현재 대응이 양호</td></tr>
+    </table>
+
+    <h3>압력 수준 (getPressure)</h3>
+    <table>
+      <tr><th>수준</th><th>평균 범위</th><th>한자</th></tr>
+      <tr><td>높음</td><td>≥ 3.5</td><td>高</td></tr>
+      <tr><td>보통</td><td>≥ 2.5</td><td>中</td></tr>
+      <tr><td>낮음</td><td>&lt; 2.5</td><td>低</td></tr>
+    </table>
+
+    <h3>준비도 산출 (getReadiness)</h3>
+    <p class="desc">역방향 문항의 점수를 반전(6 - score)하여 "내부 준비도" 지표로 활용합니다. 높은 준비도 = 해당 영역의 내부 기반이 잘 갖춰짐.</p>
+    <table>
+      <tr><th>영역</th><th>준비도 문항</th><th>산출식</th></tr>
+      <tr><td>G</td><td>G4 (환경관리체계)</td><td>(6 - G4점수) → 1문항 평균</td></tr>
+      <tr><td>D</td><td>D3 (시스템통합도)</td><td>(6 - D3점수) → 1문항 평균</td></tr>
+      <tr><td>A</td><td>A3 (데이터축적)</td><td>(6 - A3점수) → 1문항 평균</td></tr>
+      <tr><td>X</td><td>X3, X4 (노사소통, 전환교육)</td><td>((6-X3) + (6-X4)) / 2</td></tr>
+    </table>
+
+    <h3>복합 우선순위 스코어링 (v3 신규)</h3>
+    <div class="co co-navy"><span class="co-icon">🎯</span><div>
+      <strong>산출 공식:</strong><br>
+      <code>score = pAvg × (1 + pressureGap × 0.5) × (1 + capWeakness × 0.3)</code><br><br>
+      <strong>변수 설명:</strong><br>
+      • <strong>pAvg</strong> = 전환 압력 그룹 평균 (압력 강도 기본값)<br>
+      • <strong>pressureGap</strong> = max(전환압력 평균 - 실행기반 평균, 0) → 갭이 클수록 시급<br>
+      • <strong>capWeakness</strong> = (5 - 3번째 그룹 평균) / 4 → 역량이 낮을수록 위험<br><br>
+      이 공식으로 "압력이 높고, 기반이 부족하며, 역량도 약한" 영역이 최우선 과제로 자동 부상합니다.
+    </div></div>
+  </div>
+</div>
+
+<!-- ═══ 12. 전환유형 4분류 ═══ -->
+<div class="sec-title" id="type4"><span class="sec-num">8</span>전환 유형 4분류 모델</div>
+
+<div class="card">
+  <div class="card-hd hd-sys"><span class="icon">🏭</span><h2>G × (D+A) 4분면 분류 모델</h2><span class="tag">Type Classification Logic</span></div>
+  <div class="card-bd">
+    <p class="desc">X축 = G 영역 평균(환경전환 압력), Y축 = D+A 가중평균(기술전환 압력). 기준점 3.0을 중심으로 4개 전환 유형을 분류합니다. X영역은 분류 축이 아닌 "고용전환 강도 조절자"로, 분류 이후 Task Pool의 인력 과제 강도를 조절합니다.</p>
+
+    <table>
+      <tr><th style="width:130px">전환 유형</th><th style="width:50px">아이콘</th><th style="width:170px">분류 조건</th><th>설명</th></tr>
+      <tr style="background:#fef2f2;">
+        <td><strong>구조전환형</strong></td><td>🏭</td>
+        <td>G ≥ 3.0 <strong>AND</strong> D+A ≥ 3.0</td>
+        <td>Green + Digital/AI 동시 전환 + 대규모 인력 재편이 필요한 유형. 가장 광범위한 전환 과제 수반.</td>
+      </tr>
+      <tr style="background:#eff6ff;">
+        <td><strong>공정혁신형</strong></td><td>⚙️</td>
+        <td>G &lt; 3.0 <strong>AND</strong> D+A ≥ 3.0</td>
+        <td>Digital/AI 전환 집중 + 운영 고도화. 환경 압력은 낮으나 기술 전환 시급.</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td><strong>가치창출형</strong></td><td>🌱</td>
+        <td>G ≥ 3.0 <strong>AND</strong> D+A &lt; 3.0</td>
+        <td>Green 전환 집중 + 친환경 가치 혁신. 기술 압력은 낮으나 환경 전환 시급.</td>
+      </tr>
+      <tr style="background:#f9fafb;">
+        <td><strong>강소기반형</strong></td><td>🚀</td>
+        <td>G &lt; 3.0 <strong>AND</strong> D+A &lt; 3.0</td>
+        <td>선택적 고도화 + 미래 경쟁력 확보. 현재 압력은 낮으나 선제적 투자 필요.</td>
+      </tr>
+    </table>
+
+    <h3>고용전환 강도 등급 (X영역 기반)</h3>
+    <table>
+      <tr><th>등급</th><th>X 평균</th><th>아이콘</th><th>설명</th></tr>
+      <tr><td><strong>대규모 고용전환</strong></td><td>≥ 3.5</td><td>🔥</td><td>인력구조 재편·노사협력 필수. Task Pool에서 인력 관련 과제 강도 최대.</td></tr>
+      <tr><td><strong>중규모 고용전환</strong></td><td>≥ 2.5</td><td>⚡</td><td>단계적 인력 전환·교육 강화. 점진적 직무 재설계 필요.</td></tr>
+      <tr><td><strong>소규모 고용전환</strong></td><td>&lt; 2.5</td><td>✅</td><td>점진적 역량 개발 중심. 급격한 인력 구조 변화 불필요.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ 13. Task Pool ═══ -->
+<div class="sec-title" id="taskpool"><span class="sec-num">9</span>전환유형별 Task Pool</div>
+
+<div class="card">
+  <div class="card-hd hd-sys"><span class="icon">🎯</span><h2>유형별 전환과제 방향성 및 세부 Task</h2><span class="tag">Type-specific Task Pool</span></div>
+  <div class="card-bd">
+    <p class="desc">전환 유형 분류 결과에 따라 해당 유형의 Task Pool에서 전환 방향성과 세부 과제가 자동 생성됩니다. 각 과제는 G-DAX 항목코드와 매핑되어 진단 결과와 연계됩니다.</p>
+
+    <h3>🏭 구조전환형 Task Pool</h3>
+    <table class="tbl-head-navy">
+      <tr><th>전환 방향</th><th>세부 과제</th><th>G-DAX</th><th>상세 설명</th></tr>
+      <tr><td rowspan="3"><strong>친환경·디지털 이중전환</strong></td><td>친환경 운영 체계 전환</td><td>G1~G5</td><td class="td-desc">탄소배출 모니터링 시스템 도입, 에너지 효율화 설비 교체, 친환경 원자재 전환 등 운영 전반의 그린 전환을 추진. 환경규제 대응과 ESG 경영 기반을 동시에 구축.</td></tr>
+      <tr><td>디지털 운영 플랫폼 구축</td><td>D1~D5</td><td class="td-desc">ERP·MES·SCM 등 핵심 운영 시스템의 클라우드 전환과 데이터 통합 플랫폼 구축. 실시간 의사결정 지원 체계와 디지털 워크플로우 자동화 포함.</td></tr>
+      <tr><td>AI 도입 기반 조성</td><td>A1~A5</td><td class="td-desc">AI 활용 전략 수립, 데이터 거버넌스 체계 구축, 파일럿 프로젝트 추진을 통해 AI 도입의 조직적 기반 마련. 현장 수용성 확보와 단계적 확산 로드맵 포함.</td></tr>
+      <tr><td rowspan="2"><strong>대규모 인력구조 전환</strong></td><td>직무 재설계 및 전환배치</td><td>X2, X4</td><td class="td-desc">이중전환으로 변화하는 직무를 분석하여 직무기술서를 재설계하고, 영향받는 인력의 전환배치 경로 설계. 직무 매칭 시스템과 내부 공모제 활용.</td></tr>
+      <tr><td>전환 교육훈련 체계 구축</td><td>X4, X5</td><td class="td-desc">그린·디지털·AI 3대 영역의 직무전환 교육과정 설계, 단계별 역량 인증 체계 구축. OJT·멘토링·이러닝 등 다양한 학습 경로 제공.</td></tr>
+      <tr><td rowspan="2"><strong>노사협력 기반 변화관리</strong></td><td>노사 공동 전환 거버넌스</td><td>X1, X3</td><td class="td-desc">노사 공동 전환위원회 구성, 전환 과정 의사결정에 근로자 대표 참여하는 거버넌스 체계 수립. 정기 소통 채널과 갈등 조정 메커니즘 포함.</td></tr>
+      <tr><td>심리 안정 및 변화 수용</td><td>X3, X5</td><td class="td-desc">대규모 전환에 따른 구성원 불안을 관리하는 심리 지원 프로그램 운영. 변화관리 커뮤니케이션, EAP, 전환 성공 사례 공유 등 포함.</td></tr>
+    </table>
+
+    <h3>⚙️ 공정혁신형 Task Pool</h3>
+    <table class="tbl-head-navy">
+      <tr><th>전환 방향</th><th>세부 과제</th><th>G-DAX</th><th>상세 설명</th></tr>
+      <tr><td rowspan="3"><strong>디지털 기반 스마트 오퍼레이션</strong></td><td>핵심 운영 시스템 통합</td><td>D2~D5</td><td class="td-desc">분산된 레거시 시스템을 통합하여 실시간 데이터 흐름 확보. API 기반 시스템 연동, MDM, 통합 대시보드 구축으로 운영 가시성 확보.</td></tr>
+      <tr><td>AI 기반 운영 최적화</td><td>A1~A5</td><td class="td-desc">예측 정비, 수요 예측, 품질 자동 검사 등 AI를 활용한 운영 프로세스 최적화. 현장 데이터 수집 → 모델 학습 → 의사결정 지원 순환 체계.</td></tr>
+      <tr><td>프로세스 디지털 재설계</td><td>D1, D3</td><td class="td-desc">수작업·문서 기반 업무를 디지털 워크플로우로 재설계. RPA 도입, 전자결재 고도화, 비대면 협업 환경 구축으로 업무 효율성 극대화.</td></tr>
+      <tr><td rowspan="2"><strong>디지털 인력 역량 전환</strong></td><td>디지털 직무 역량 체계</td><td>X1, X2</td><td class="td-desc">디지털 전환에 필요한 직무별 역량 프레임워크 수립. 현재 수준 진단 → 갭 분석 → 맞춤형 교육의 체계 운영. 데이터 리터러시부터 전문 기술까지 단계별 경로.</td></tr>
+      <tr><td>DX 전담 조직 구축</td><td>X4, X5</td><td class="td-desc">디지털 전환 주도 전담 조직(CoE) 신설, 내부 DX 전문 인력 양성. 현업 부서 협업 체계, 애자일 운영 방식, 성과 측정 KPI 포함.</td></tr>
+      <tr><td><strong>기반 유지·보완 (Green)</strong></td><td>친환경 관리 기본 체계 정비</td><td>G1~G3</td><td class="td-desc">환경 법규 준수를 위한 기본 관리 체계 정비. 폐기물 관리, 에너지 사용량 모니터링, 환경 인허가 관리 등 규제 대응 최소 요건 충족.</td></tr>
+    </table>
+
+    <h3>🌱 가치창출형 Task Pool</h3>
+    <table class="tbl-head-navy">
+      <tr><th>전환 방향</th><th>세부 과제</th><th>G-DAX</th><th>상세 설명</th></tr>
+      <tr><td rowspan="3"><strong>친환경 가치 전환</strong></td><td>탄소중립 로드맵</td><td>G1~G5</td><td class="td-desc">2030·2050 탄소중립 목표에 맞춘 단계별 감축 로드맵. Scope 1·2·3 배출량 산정, 감축 목표 설정, 이행 과제 도출, 모니터링 체계 포함.</td></tr>
+      <tr><td>친환경 운영 체계</td><td>G3, G4</td><td class="td-desc">생산·물류·조달 전 과정에 친환경 운영 원칙 적용. 순환경제 원칙 기반 자원 효율화, 친환경 공급망 관리, 녹색구매 정책 도입.</td></tr>
+      <tr><td>ESG 경영 체계</td><td>G5</td><td class="td-desc">ESG 전략 수립, 공시 체계 구축, 이해관계자 소통 전략. K-ESG, GRI, TCFD 등 주요 프레임워크 대응 관리 체계 포함.</td></tr>
+      <tr><td rowspan="2"><strong>그린 인력 역량 전환</strong></td><td>그린 직무 역량 개발</td><td>X2, X4</td><td class="td-desc">친환경 전환에 필요한 직무별 그린 역량 정의, 맞춤형 교육 프로그램 개발. 환경 관리사, 에너지 진단사 등 전문 자격 취득 지원.</td></tr>
+      <tr><td>친환경 변화관리</td><td>X3, X5</td><td class="td-desc">그린 전환에 대한 구성원 인식 제고와 행동 변화 유도. 친환경 캠페인, 그린 오피스 운동, 환경 성과 인센티브 등 참여형 프로그램.</td></tr>
+      <tr><td><strong>기반 유지·보완 (Digital)</strong></td><td>디지털 기초 역량 확보</td><td>D1, D4</td><td class="td-desc">디지털 기본 인프라와 구성원 디지털 리터러시 확보. 클라우드 기반 협업 도구 도입, 정보보안 기본 체계, 전 직원 디지털 기초 교육.</td></tr>
+    </table>
+
+    <h3>🚀 강소기반형 Task Pool</h3>
+    <table class="tbl-head-navy">
+      <tr><th>전환 방향</th><th>세부 과제</th><th>G-DAX</th><th>상세 설명</th></tr>
+      <tr><td rowspan="2"><strong>미래 경쟁력 선제 확보</strong></td><td>AI·데이터 고도화</td><td>A1~A5</td><td class="td-desc">구축된 AI 기반을 고도화하여 자율 의사결정, 생성형 AI 활용, 데이터 기반 신규 비즈니스 모델 추진. AI 윤리 가이드라인과 거버넌스 체계 고도화.</td></tr>
+      <tr><td>차세대 운영 모델 설계</td><td>D2~D5</td><td class="td-desc">디지털 트윈, IoT 기반 스마트 팩토리, 자율 운영 시스템 등 차세대 운영 모델 설계. 기존 디지털 인프라 활용 혁신적 운영 방식 선제 도입.</td></tr>
+      <tr><td rowspan="2"><strong>핵심 인력 유지·강화</strong></td><td>핵심 인재 리텐션</td><td>X1, X5</td><td class="td-desc">전환 과정에서 핵심 인재 이탈 방지 리텐션 전략. 경력 개발 경로 설계, 핵심 인재 보상 체계, 조직 몰입도 관리 프로그램.</td></tr>
+      <tr><td>선제적 역량 개발</td><td>X2, X4</td><td class="td-desc">미래 직무 변화를 예측하여 선제적 역량 개발. 기술 트렌드 기반 역량 예측, 사내 벤처·학습 조직 활성화, 외부 전문기관 협력 교육.</td></tr>
+      <tr><td><strong>친환경 기초 체계</strong></td><td>환경 규제 기본 대응</td><td>G1, G4</td><td class="td-desc">현행 환경 규제 요건 충족 기본 대응 체계 정비. 환경 법규 모니터링, 배출 기준 준수 관리, 환경 사고 예방 및 비상 대응 체계.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ Footer ═══ -->
+<div style="text-align:center;padding:40px 24px 60px;font-size:12px;color:var(--g500);border-top:1px solid var(--g200);margin-top:40px;">
+  <strong style="color:var(--navy);">G-DAX 시스템 구조 레퍼런스 v3.0</strong><br>
+  산업일자리전환 준비도 진단 · FABRIC × G-DAX 이중 프레임워크<br>
+  4영역 × 5문항 = 20문항 · BTJR 전환 영향 경로 · 3단 구조 분류 · 복합 우선순위 스코어링<br>
+  2026.02.17 · 한국표준협회(KSA) 산업일자리전환 컨설팅
+</div>
+
+</div><!-- /page -->
+
+</body>
+</html>
