@@ -3,88 +3,1000 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>G-DAX 산업일자리전환 준비도 진단</title>
+<title>산업일자리전환 컨설팅 안내 | G-DAX 거시환경 분석</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Noto Sans KR',-apple-system,sans-serif; background:#f9fafb; color:#111827; }
-  .hero { background:linear-gradient(135deg,#1e3a5f 0%,#1e40af 40%,#7c3aed 70%,#dc2626 100%); color:#fff; min-height:100vh; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
-  .hero::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E"); }
-  .hero-inner { position:relative; z-index:1; max-width:900px; padding:40px 24px; text-align:center; }
-  .hero h1 { font-size:48px; font-weight:900; letter-spacing:-1px; margin-bottom:16px; }
-  .hero .subtitle { font-size:20px; font-weight:300; opacity:.9; margin-bottom:30px; line-height:1.7; }
-  .chips { display:flex; gap:12px; justify-content:center; margin:30px 0; flex-wrap:wrap; }
-  .chip { padding:8px 20px; border-radius:12px; font-size:15px; font-weight:700; background:rgba(255,255,255,.15); backdrop-filter:blur(4px); }
-  .btn-group { display:flex; gap:16px; justify-content:center; margin:40px 0 30px; flex-wrap:wrap; }
-  .btn { padding:18px 40px; border-radius:14px; font-size:18px; font-weight:700; text-decoration:none; transition:all .3s; display:inline-flex; align-items:center; gap:10px; }
-  .btn-primary { background:#fff; color:#1e3a5f; box-shadow:0 8px 32px rgba(0,0,0,.2); }
-  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,.3); }
-  .btn-secondary { background:rgba(255,255,255,.2); color:#fff; backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.3); }
-  .btn-secondary:hover { background:rgba(255,255,255,.3); }
-  .meta { font-size:14px; opacity:.8; margin-top:30px; }
-  .features { max-width:1000px; margin:-60px auto 0; padding:0 24px; position:relative; z-index:2; }
-  .feature-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
-  .feature-card { background:#fff; padding:28px; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,.06); border:1px solid #e5e7eb; }
-  .feature-card h3 { font-size:18px; font-weight:700; color:#1e3a5f; margin-bottom:10px; }
-  .feature-card p { font-size:14px; color:#6b7280; line-height:1.6; }
-  .footer { text-align:center; padding:60px 24px; color:#6b7280; font-size:13px; }
-  .footer strong { color:#374151; }
-  @media(max-width:640px) { .hero h1{font-size:36px} .btn-group{flex-direction:column;align-items:center} }
+
+  :root {
+    --pri: #1B3A5C;
+    --blue: #2E75B6;
+    --green: #2E7D32;
+    --digital: #1565C0;
+    --ai: #6A1B9A;
+    --employ: #C62828;
+    --accent: #3A7CA5;
+    --bg: #F8FAFB;
+    --card: #FFFFFF;
+    --text: #2D3748;
+    --muted: #718096;
+    --border: #E2E8F0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+  }
+
+  /* ── Hero Section ── */
+  .hero {
+    background: linear-gradient(135deg, #0F2B46 0%, #1B3A5C 40%, #2E75B6 100%);
+    color: white;
+    padding: 80px 0 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.6;
+  }
+  .hero .container { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: #7EC8E3; }
+  .hero p.sub {
+    font-size: 18px;
+    font-weight: 300;
+    opacity: 0.85;
+    max-width: 700px;
+    margin-bottom: 32px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-size: 36px;
+    font-weight: 900;
+    color: #7EC8E3;
+    display: block;
+  }
+  .hero-stat .label {
+    font-size: 13px;
+    opacity: 0.7;
+    font-weight: 400;
+  }
+
+  /* ── Layout ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  section { padding: 72px 0; }
+  section:nth-child(even) { background: #EDF2F7; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--pri);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+  .section-desc {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 720px;
+    margin-bottom: 48px;
+    line-height: 1.8;
+  }
+
+  /* ── Cards ── */
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 32px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .card-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 900;
+    color: white;
+    margin-bottom: 20px;
+  }
+  .card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--pri);
+  }
+  .card p { font-size: 15px; color: var(--muted); line-height: 1.7; }
+  .card .stat-highlight {
+    display: inline-block;
+    background: #FFF5F5;
+    color: var(--employ);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-top: 12px;
+  }
+  .card .stat-highlight.green { background: #E8F5E9; color: var(--green); }
+  .card .stat-highlight.blue { background: #E8F0FE; color: var(--digital); }
+  .card .stat-highlight.purple { background: #F3E5F5; color: var(--ai); }
+
+  /* ── Causal Chain ── */
+  .chain-wrapper {
+    background: white;
+    border-radius: 20px;
+    padding: 48px 40px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .chain-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 32px 0 24px;
+  }
+  .chain-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+  .chain-step .step-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px;
+    font-size: 28px; font-weight: 900;
+    color: white;
+    position: relative;
+    z-index: 2;
+  }
+  .chain-step .step-label {
+    font-size: 14px; font-weight: 700; margin-bottom: 4px;
+  }
+  .chain-step .step-desc {
+    font-size: 13px; color: var(--muted); line-height: 1.5;
+    padding: 0 8px;
+  }
+  .chain-arrow {
+    display: flex; align-items: center; justify-content: center;
+    width: 60px; flex-shrink: 0;
+    font-size: 28px; color: #CBD5E0; font-weight: 300;
+    padding-bottom: 50px;
+  }
+  .feedback-loop {
+    text-align: center;
+    padding: 16px;
+    border-top: 2px dashed var(--accent);
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .feedback-loop svg {
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+
+  /* ── Population Section ── */
+  .pop-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .pop-chart {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    border: 1px solid var(--border);
+  }
+  .pop-chart h4 {
+    font-size: 16px; font-weight: 700; color: var(--pri);
+    margin-bottom: 20px;
+  }
+  .bar-group { margin-bottom: 16px; }
+  .bar-label {
+    font-size: 13px; color: var(--muted); margin-bottom: 4px;
+    display: flex; justify-content: space-between;
+  }
+  .bar-track {
+    height: 28px;
+    background: #EDF2F7;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex; align-items: center; padding-left: 10px;
+    font-size: 12px; font-weight: 700; color: white;
+    transition: width 1s ease;
+  }
+  .pop-facts { list-style: none; }
+  .pop-facts li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 15px;
+  }
+  .pop-facts li:last-child { border: none; }
+  .pop-facts .fact-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+    background: #EDF2F7;
+  }
+
+  /* ── X Section / Why ── */
+  .why-box {
+    background: linear-gradient(135deg, #FFF5F5 0%, #FED7D7 100%);
+    border-radius: 20px;
+    padding: 48px;
+    border: 2px solid #FEB2B2;
+    margin-bottom: 40px;
+  }
+  .why-box h3 {
+    font-size: 24px; font-weight: 800; color: var(--employ);
+    margin-bottom: 16px;
+  }
+  .why-box p { font-size: 16px; color: #553333; line-height: 1.8; }
+  .why-equation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 32px 0;
+    flex-wrap: wrap;
+  }
+  .eq-box {
+    background: white;
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: center;
+    border: 2px solid;
+    min-width: 160px;
+  }
+  .eq-box .eq-label { font-size: 12px; font-weight: 600; opacity: 0.7; }
+  .eq-box .eq-val { font-size: 20px; font-weight: 800; }
+  .eq-op { font-size: 28px; font-weight: 300; color: #A0AEC0; }
+  .eq-result {
+    background: var(--employ);
+    color: white;
+    border-color: var(--employ) !important;
+  }
+
+  /* ── Consulting Process ── */
+  .process-timeline {
+    position: relative;
+    padding-left: 60px;
+  }
+  .process-timeline::before {
+    content: '';
+    position: absolute;
+    left: 24px; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--green), var(--digital), var(--ai), var(--employ));
+    border-radius: 2px;
+  }
+  .process-step {
+    position: relative;
+    margin-bottom: 36px;
+    background: white;
+    border-radius: 16px;
+    padding: 28px 32px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .process-step::before {
+    content: attr(data-step);
+    position: absolute;
+    left: -48px; top: 28px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: white;
+    z-index: 2;
+  }
+  .process-step .step-phase {
+    font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .process-step h4 {
+    font-size: 19px; font-weight: 700; color: var(--pri);
+    margin-bottom: 8px;
+  }
+  .process-step p { font-size: 15px; color: var(--muted); }
+  .process-step .step-details {
+    margin-top: 12px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .step-tag {
+    display: inline-block;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  /* ── Support Section ── */
+  .support-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .support-card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .support-card .sup-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px;
+    font-size: 22px;
+  }
+  .support-card h4 { font-size: 16px; font-weight: 700; color: var(--pri); margin-bottom: 6px; }
+  .support-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: linear-gradient(135deg, #1B3A5C 0%, #2E75B6 100%);
+    color: white;
+    text-align: center;
+    padding: 80px 0;
+  }
+  .cta-section h2 { font-size: 32px; font-weight: 800; margin-bottom: 16px; }
+  .cta-section p { font-size: 17px; opacity: 0.8; max-width: 600px; margin: 0 auto 32px; }
+  .cta-btn {
+    display: inline-block;
+    background: white;
+    color: var(--pri);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 40px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+  .cta-btn:hover { transform: scale(1.05); }
+
+  /* ── GDAX Term Box ── */
+  .term-box {
+    background: white;
+    border-radius: 16px;
+    border-left: 5px solid var(--employ);
+    padding: 28px 32px;
+    margin: 32px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .term-box h4 { font-size: 18px; font-weight: 800; color: var(--employ); margin-bottom: 12px; }
+  .term-box p { font-size: 15px; color: var(--text); line-height: 1.8; }
+  .term-meanings {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .term-meaning {
+    background: #FFF5F5;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .term-meaning .tm-icon { font-size: 28px; margin-bottom: 8px; }
+  .term-meaning h5 { font-size: 14px; font-weight: 700; color: var(--employ); margin-bottom: 4px; }
+  .term-meaning p { font-size: 13px; color: #666; }
+
+  /* ── Comparison Table ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 24px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .compare-table th {
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+  }
+  .compare-table td {
+    padding: 12px 20px;
+    font-size: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .compare-table thead th:first-child { background: #4A5568; color: white; }
+  .compare-table thead th:nth-child(2) { background: #718096; color: white; }
+  .compare-table thead th:nth-child(3) { background: var(--employ); color: white; }
+  .compare-table tbody td:first-child { font-weight: 600; background: #F7FAFC; }
+
+  /* ── Footer ── */
+  footer {
+    background: #1A202C;
+    color: #A0AEC0;
+    padding: 40px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+  footer strong { color: #E2E8F0; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .card-grid, .card-grid.cols-3, .card-grid.cols-4 { grid-template-columns: 1fr; }
+    .chain-flow { flex-direction: column; align-items: center; }
+    .chain-arrow { transform: rotate(90deg); width: auto; height: 40px; padding: 0; }
+    .pop-grid { grid-template-columns: 1fr; }
+    .support-cards { grid-template-columns: 1fr; }
+    .why-equation { flex-direction: column; }
+    .term-meanings { grid-template-columns: 1fr; }
+    .process-timeline { padding-left: 48px; }
+  }
+
+  @media print {
+    body { font-size: 11pt; background: white; }
+    .hero { padding: 40px 0 30px; }
+    section { padding: 32px 0; }
+    .card:hover { transform: none; box-shadow: none; }
+    .cta-section { break-before: page; }
+  }
 </style>
 </head>
 <body>
 
+<!-- ════════════ KSA LOGO HEADER ════════════ -->
+<div style="background:#fff; border-bottom:1px solid #E2E8F0; padding:16px 0;">
+  <div style="max-width:1100px; margin:0 auto; padding:0 24px; display:flex; align-items:center; gap:16px;">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAgEAlgCWAAD/7QlwUGhvdG9zaG9wIDMuMAA4QklNA+kAAAAAAHgAAwAAAEgASAAAAAADHQIw/+n/7wMzAkIDRwV7A+AAAgAAAEgASAAAAAAC2AIoAAEAAABkAAAAAQADAwMA/wABJw8AAQABAAAAAAAAAAAAAAAAYAgAGQGQAAAAAACgAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA4QklNA+0AAAAAABAAlgAAAAEAAgCWAAAAAQACOEJJTQPzAAAAAAAIAAAAAAAAAAA4QklNBAoAAAAAAAEAADhCSU0nEAAAAAAACgABAAAAAAAAAAI4QklNA/UAAAAAAEgAL2ZmAAEAbGZmAAYAAAAAAAEAL2ZmAAEAoZmaAAYAAAAAAAEAMgAAAAEAWgAAAAYAAAAAAAEANQAAAAEALQAAAAYAAAAAAAE4QklNA/gAAAAAAHAAAP////////////////////////////8D6AAAAAD/////////////////////////////A+gAAAAA/////////////////////////////wPoAAAAAP////////////////////////////8D6AAAOEJJTQQAAAAAAAACAAA4QklNBAIAAAAAAAIAADhCSU0ECAAAAAAAEAAAAAEAAAJAAAACQAAAAAA4QklNBAkAAAAAB18AAAABAAAAgAAAABEAAAGAAAAZgAAAB0MAGAAB/9j/4AAQSkZJRgABAgEASABIAAD//gAnRmlsZSB3cml0dGVuIGJ5IEFkb2JlIFBob3Rvc2hvcKggNC4wAP/uAA5BZG9iZQBkgAAAAAH/2wCEAAwICAgJCAwJCQwRCwoLERUPDAwPFRgTExUTExgRDAwMDAwMEQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwBDQsLDQ4NEA4OEBQODg4UFA4ODg4UEQwMDAwMEREMDAwMDAwRDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIABEAgAMBIgACEQEDEQH/3QAEAAj/xAE/AAABBQEBAQEBAQAAAAAAAAADAAECBAUGBwgJCgsBAAEFAQEBAQEBAAAAAAAAAAEAAgMEBQYHCAkKCxAAAQQBAwIEAgUHBggFAwwzAQACEQMEIRIxBUFRYRMicYEyBhSRobFCIyQV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Vd/yof8AKj/qx/8AT1ef9VsVd/yof8qP+rH/ANPV5/1WxV3/ACof8qP+rH/09Xn/AFWxV3/Kh/yo/wCrH/09Xn/VbFXf8qH/ACo/6sf/AE9Xn/VbFXf8qH/Kj/qx/wDT1ef9VsVZfoOg6ToGkwaTpMH1bT7bn6EHN5OPqOZG+KQu5q7sd2xVH4q7FXYqxfXvyv8AIOvXDXOqaLBLcuayTxl4JGPizQtGzH/WxVKf+VD/AJUf9WP/AKerz/qtirv+VD/lR/1Y/wDp6vP+q2Ku/wCVD/lR/wBWP/p6vP8Aqtirv+VD/lR/1Y/+nq8/6rYq7/lQ/wCVH/Vj/wCnq8/6rYq7/lQ/5Uf9WP8A6erz/qtirv8AlQ/5Uf8AVj/6erz/AKrYqmflz8rPIflvU11PRdM+q3yo0Ym9e4k+F9mHGSR1/wCFxVleKuxV2KuxVDajpmnalaSWeoW0V3aS7SQTIsiH5qwIxVg9z+Qn5XTymT9EtEW6rHcTqtflzNPoxVS/6F9/K/8A6t0v/STP/wA14q7/AKF9/K//AKt0v/STP/zXirv+hffyv/6t0v8A0kz/APNeKu/6F9/K/wD6t0v/AEkz/wDNeKu/6F9/K/8A6t0v/STP/wA14q7/AKF9/K//AKt0v/STP/zXirJfK/5feTvK9W0TTIraZhxa5PKWYjuPUkLuAf5VPHFWQ4q7FXYq7FXYq7FXYq7FXYq7FXYqk/mrylofmnTBpmswtPZrIswRXaM80BAPJCD+0cVYj/0L7+V//Vul/wCkmf8A5rxVNPLf5ReRfLerxatpNnJDfQh1jkaeVwA6lW+FmI6HFWZYq7FX/9b1TirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVf/9f1TirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVf/9k=" alt="KSA 한국표준협회" style="height:40px;">
+    <div style="height:28px; width:1px; background:#D1D5DB;"></div>
+    <span style="font-size:22px; font-weight:700; color:#1B3A5C; letter-spacing:-0.3px;">산업일자리전환지원센터</span>
+  </div>
+</div>
+
+<!-- ════════════ HERO ════════════ -->
 <div class="hero">
-  <div class="hero-inner">
-    <h1>G-DAX 산업일자리전환 준비도 진단</h1>
-    <div class="subtitle">
-      FABRIC × G-DAX × BTJR 통합 프레임워크 기반<br>
-      친환경 · 디지털 · AI · 고용전환의 4대 영역 종합 진단
-    </div>
-    <div class="chips">
-      <span class="chip">🌱 G 친환경전환</span>
-      <span class="chip">💻 D 디지털전환</span>
-      <span class="chip">🤖 A AI전환</span>
-      <span class="chip">🔄 X 고용전환</span>
-    </div>
-    <div class="btn-group">
-      <a href="/survey.html" class="btn btn-primary">📋 진단 시작하기</a>
-      <a href="/myreport.html" class="btn btn-secondary">🔍 이전 결과 조회</a>
-      <a href="/guide.html" target="_blank" class="btn btn-secondary">📖 가이드 보기</a>
-    </div>
-    <div class="meta">
-      ⏱ 소요시간 약 7분 · 📋 총 20개 진단 문항 · 📊 BTJR 전환 경로 분석 포함
-    </div>
-  </div>
-</div>
-
-<div class="features">
-  <div class="feature-grid">
-    <div class="feature-card">
-      <h3>🎯 맞춤형 전환 유형 분류</h3>
-      <p>G × D+A 모델 기반으로 구조전환형·공정혁신형·가치창출형·강소기반형 4가지 유형으로 분류합니다.</p>
-    </div>
-    <div class="feature-card">
-      <h3>📊 BTJR 영향 경로 분석</h3>
-      <p>사업구조·기술운영·직무역량·노사관계의 4가지 경로로 전환 영향을 분석합니다.</p>
-    </div>
-    <div class="feature-card">
-      <h3>📥 PDF 리포트 다운로드</h3>
-      <p>A4 규격의 전문 리포트를 PDF로 다운로드하여 경영진 보고 및 정부지원 신청에 활용하세요.</p>
-    </div>
-    <div class="feature-card">
-      <h3>🎁 맞춤형 과제 추천</h3>
-      <p>전환 유형과 준비도에 맞춘 구체적인 전환과제(Task Pool)를 우선순위와 함께 제공합니다.</p>
+  <div class="container">
+    <div class="hero-tag">2026 산업일자리전환 컨설팅</div>
+    <h1>대한민국 산업 대전환,<br><span>G-DAX</span>로 구조화하고<br>정부지원으로 대응하세요</h1>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="num">1,000만</span>
+        <span class="label">2044년까지 감소하는<br>생산가능인구</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">80%</span>
+        <span class="label">CBAM을 인지하지<br>못하는 중소기업</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">75.5%</span>
+        <span class="label">스마트팩토리 도입 기업 중<br>'기초 수준'에 머무는 비율</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">0.72</span>
+        <span class="label">세계 최저<br>합계출산율</span>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="footer">
-  <strong>위탁기관</strong> 고용노동부 &nbsp;|&nbsp; <strong>운영기관</strong> 한국표준협회 산업일자리전환지원센터<br>
-  G-DAX 준비도 진단 시스템 v2.0 · FABRIC × G-DAX × BTJR 통합 프레임워크<br>
-  <br>
-  <a href="/admin/login.html" style="color:#6b7280;font-size:11px;text-decoration:none">관리자</a>
+<!-- ════════════ SECTION 1: G-DAX란? ════════════ -->
+<section>
+  <div class="container">    <h2 class="section-title">G-DAX란 무엇인가?</h2>
+
+    <div class="card-grid cols-4">
+      <div class="card">
+        <div class="card-icon" style="background: linear-gradient(135deg, #2E7D32, #66BB6A);">G</div>
+        <h3>Green<br><small style="font-weight:400; font-size:14px; color:var(--muted);">친환경전환</small></h3>
+        <p>EU CBAM 본격 시행, K-ETS 3기 확대, Scope 3 공급망 관리 요구 등 <strong>외부에서 강제되는 규제 압력</strong>이 전환의 출발점입니다.</p>
+        <span class="stat-highlight green">2026년 CBAM 인증서 구매 의무화</span>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: linear-gradient(135deg, #1565C0, #42A5F5);">D</div>
+        <h3>Digital<br><small style="font-weight:400; font-size:14px; color:var(--muted);">디지털전환</small></h3>
+        <p>탄소 데이터 수집에도 센서·MES·ERP가 필수입니다. Green 대응의 <strong>기술적 기반</strong>을 디지털 인프라가 제공합니다.</p>
+        <span class="stat-highlight blue">중소제조업 디지털 성숙도 41.4/100점</span>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: linear-gradient(135deg, #6A1B9A, #AB47BC);">A</div>
+        <h3>AI<br><small style="font-weight:400; font-size:14px; color:var(--muted);">인공지능전환</small></h3>
+        <p>디지털 인프라 위에서 AI가 작동합니다. 품질 검사, 예지보전, 공정 최적화 등 <strong>생산성 혁신의 가속기</strong>입니다.</p>
+        <span class="stat-highlight purple">2026년 AI 팩토리 500개소 목표</span>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: linear-gradient(135deg, #C62828, #EF5350);">X</div>
+        <h3>eXployment<br><small style="font-weight:400; font-size:14px; color:var(--muted);">고용전환</small></h3>
+        <p>G·D·A 전환의 <strong>최종 귀결점</strong>이자, 전환을 실행하는 '사람'의 문제입니다. 직무 소멸과 생성, 재교육이 핵심입니다.</p>
+        <span class="stat-highlight">2026년 고용정책 '질적 전환' 공식 전환</span>
+      </div>
+    </div>
+
+    <!-- 인과 사슬 -->
+    <div class="chain-wrapper" style="margin-top: 48px;">
+      <h3 style="text-align:center; font-size:20px; font-weight:700; color:var(--pri); margin-bottom:8px;">G→D→A→X: 산업전환의 인과 사슬</h3>
+      <p style="text-align:center; font-size:14px; color:var(--muted); margin-bottom:24px;">각 축은 선행 축의 결과를 전제조건으로 요구하며, 최종적으로 X(고용전환)에서 수렴합니다.</p>
+
+      <div class="chain-flow">
+        <div class="chain-step">
+          <div class="step-circle" style="background: linear-gradient(135deg, #2E7D32, #66BB6A);">G</div>
+          <div class="step-label" style="color:var(--green);">1단계: 규제 압력</div>
+          <div class="step-desc">탈탄소 규제가 기업 의지와 무관하게 외부에서 강제됨</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-step">
+          <div class="step-circle" style="background: linear-gradient(135deg, #1565C0, #42A5F5);">D</div>
+          <div class="step-label" style="color:var(--digital);">2단계: 인프라 구축</div>
+          <div class="step-desc">G 대응에 센서·MES·ERP 등 디지털 기반이 필수</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-step">
+          <div class="step-circle" style="background: linear-gradient(135deg, #6A1B9A, #AB47BC);">A</div>
+          <div class="step-label" style="color:var(--ai);">3단계: 지능화 고도화</div>
+          <div class="step-desc">D 기반 위에서만 AI가 실효성을 가짐</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-step">
+          <div class="step-circle" style="background: linear-gradient(135deg, #C62828, #EF5350);">X</div>
+          <div class="step-label" style="color:var(--employ);">4단계: 인력 재편</div>
+          <div class="step-desc">G·D·A 전환의 최종 귀결이자 실행 주체</div>
+        </div>
+      </div>
+
+      <div class="feedback-loop">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--accent)"><path d="M2 8a6 6 0 0110.89-3.48l1.4-1.4A8 8 0 100 8h2z"/><path d="M16 0l-4 4 4 4V0z"/></svg>
+        피드백 루프: 재교육된 인력(X)이 G·D·A 전환을 실행 — 순환 구조
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--accent)" style="transform:scaleX(-1)"><path d="M2 8a6 6 0 0110.89-3.48l1.4-1.4A8 8 0 100 8h2z"/><path d="M16 0l-4 4 4 4V0z"/></svg>
+      </div>
+    </div>
+
+    <!-- eXployment 용어 정의 -->
+    <div class="term-box" style="margin-top: 40px;">
+      <h4>eXployment — 왜 이 용어를 사용하는가?</h4>
+      <p>기존 <strong>Employment</strong>는 '현재 고용 상태'를 뜻하는 정적 개념입니다. 그러나 산업전환 시대에 필요한 것은 직무가 소멸·생성·재배치되는 <strong>동적 과정</strong>입니다. eXployment는 Employment에 <strong>전환(X)</strong>의 의미를 결합한 용어로, 이 패러다임 전환을 명확히 구분합니다.</p>
+      <div class="term-meanings">
+        <div class="term-meaning">
+          <div class="tm-icon">🔄</div>
+          <h5>Transformation의 X</h5>
+          <p>DX·AX·GX처럼 한국 산업정책에서 'X'는 이미 '전환'의 약어로 통용</p>
+        </div>
+        <div class="term-meaning">
+          <div class="tm-icon">❓</div>
+          <h5>미지수의 X</h5>
+          <p>AI 시대, 어떤 직무가 남고 사라질지 모르는 구조적 불확실성</p>
+        </div>
+        <div class="term-meaning">
+          <div class="tm-icon">✕</div>
+          <h5>Cross(교차)의 X</h5>
+          <p>G·D·A 세 축의 전환이 교차하는 지점에서 고용 영향이 수렴</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Employment vs eXployment -->
+    <table class="compare-table">
+      <thead>
+        <tr><th>구분</th><th>Employment (전통적 고용)</th><th>eXployment (고용전환)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>개념</td><td>정적 — 현재 고용 상태의 유지</td><td>동적 — 직무의 소멸·생성·재배치 과정</td></tr>
+        <tr><td>핵심 질문</td><td>"몇 명이 고용되어 있는가?"</td><td>"어떤 직무가 사라지고, 어떤 역량이 필요한가?"</td></tr>
+        <tr><td>관리 초점</td><td>채용·이직률·인건비</td><td>직무재설계·재교육·인력재배치</td></tr>
+        <tr><td>시간 지평</td><td>현재 (As-Is)</td><td>미래 전환 경로 (As-Is → To-Be)</td></tr>
+        <tr><td>정책 대응</td><td>고용유지지원금, 일자리 창출</td><td>산업전환 고용안정, 직무전환 훈련</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════════ SECTION 2: 왜 지금 전환이 필요한가? ════════════ -->
+<section>
+  <div class="container">    <h2 class="section-title">왜 지금 전환이 필요한가?</h2>
+
+    <!-- 핵심 수치 4개 카드 — 인구구조 변화 -->
+    <div class="card-grid cols-4" style="margin-bottom: 40px;">
+      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid var(--employ);">
+        <div style="font-size:40px; font-weight:900; color:var(--employ); line-height:1;">0.72</div>
+        <div style="font-size:13px; color:var(--muted); margin-top:8px;">세계 최저<br>합계출산율 (2024)</div>
+      </div>
+      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid #FF9800;">
+        <div style="font-size:40px; font-weight:900; color:#FF9800; line-height:1;">2025</div>
+        <div style="font-size:13px; color:var(--muted); margin-top:8px;">초고령사회 진입<br>(65세+ 인구 20% 초과)</div>
+      </div>
+      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid var(--digital);">
+        <div style="font-size:40px; font-weight:900; color:var(--digital); line-height:1;">-1,000<span style="font-size:20px; font-weight:400;">만</span></div>
+        <div style="font-size:13px; color:var(--muted); margin-top:8px;">2044년까지 감소하는<br>생산가능인구(15~64세)</div>
+      </div>
+      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid var(--green);">
+        <div style="font-size:40px; font-weight:900; color:var(--green); line-height:1;">52.0<span style="font-size:20px; font-weight:400;">%</span></div>
+        <div style="font-size:13px; color:var(--muted); margin-top:8px;">2060년 노인부양비<br>(생산인구 2명당 노인 1명)</div>
+      </div>
+    </div>
+
+    <!-- G-DAX 영향 카드 2x2 -->
+    <div class="card-grid" style="margin-bottom: 40px;">
+      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
+        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#2E7D32,#66BB6A); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">G</div>
+        <div>
+          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">Green 압력 증가</div>
+          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">탈탄소 투자 여력이 인력 감소로 제약됩니다. 자동화 연계 없이는 규제 대응이 불가능해지고 있습니다.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
+        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#1565C0,#42A5F5); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">D</div>
+        <div>
+          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">Digital 필요성 증폭</div>
+          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">줄어드는 인력을 디지털 기술로 보완해야 하는 구조적 압력이 DX를 가속시키고 있습니다.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
+        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#6A1B9A,#AB47BC); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">A</div>
+        <div>
+          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">AI 수요 급증</div>
+          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">숙련 인력 감소분을 AI가 대체하는 '인력 대체형 AI 수요'가 제조 AX를 견인합니다.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
+        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#C62828,#EF5350); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">X</div>
+        <div>
+          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">고용전환 불가피</div>
+          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">생산가능인구 급감과 기술전환 가속이 겹쳐, 재교육 없는 기업은 인력 확보 자체가 불가합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 결론 박스 -->
+    <div style="background:linear-gradient(135deg, #FFF5F5 0%, #FED7D7 100%); border-radius:16px; padding:36px 40px; border:1px solid #FEB2B2;">
+      <h3 style="font-size:20px; font-weight:800; color:var(--employ); margin-bottom:12px; text-align:center;">결론: 전략적 고용전환(eXployment)이 생존의 조건입니다</h3>
+      <p style="font-size:15px; color:#553333; line-height:1.8; text-align:center; max-width:700px; margin:0 auto;">G·D·A 전환은 가속되고, 이를 실행할 인력은 줄어듭니다. <strong>기존 인력의 직무전환·재교육·재배치 없이는 어떤 전환도 실행 불가능합니다.</strong> 이것이 eXployment, 즉 전략적 고용전환이 단순한 HR 이슈가 아니라 기업 생존 전략의 핵심인 이유입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ SECTION 3: 정부지원 컨설팅 ════════════ -->
+<section>
+  <div class="container">    <h2 class="section-title">정부지원 산업일자리전환 컨설팅으로 대응하세요</h2>
+
+    <div class="support-cards">
+      <div class="support-card">
+        <div class="sup-icon" style="background:#E8F5E9; color:var(--green);">📋</div>
+        <h4>기업 진단</h4>
+        <p>FABRIC(씨줄) × G-DAX(날줄) 입체진단으로 기업의 현 위치와 전환 방향을 구조적으로 분석</p>
+      </div>
+      <div class="support-card">
+        <div class="sup-icon" style="background:#E8F0FE; color:var(--digital);">🎯</div>
+        <h4>전환과제 설계</h4>
+        <p>진단 결과 기반 맞춤형 전환과제 도출, 단기·중기·장기 실행 로드맵 수립, KPI 설정</p>
+      </div>
+      <div class="support-card">
+        <div class="sup-icon" style="background:#F3E5F5; color:var(--ai);">🔗</div>
+        <h4>정부지원사업 연계</h4>
+        <p>고용노동부(산업전환 고용안정 지원금, 직무전환 훈련), 중소벤처기업부(스마트공장, 기술혁신), 산업통상자원부(탄소중립, 산업혁신) 등 부처별 최적 지원사업 매칭</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════ SECTION 4: 컨설팅 프로세스 ════════════ -->
+<section>
+  <div class="container">    <h2 class="section-title">컨설팅은 이렇게 진행됩니다</h2>
+
+    <div class="process-timeline">
+      <style>
+        .process-step[data-step="1"]::before { background: var(--green); }
+        .process-step[data-step="2"]::before { background: var(--digital); }
+        .process-step[data-step="3"]::before { background: var(--digital); }
+        .process-step[data-step="4"]::before { background: var(--ai); }
+        .process-step[data-step="5"]::before { background: var(--employ); }
+      </style>
+
+      <div class="process-step" data-step="1" style="border-left: 4px solid var(--green);">
+        <div class="step-phase" style="color:var(--green);">PHASE 1 — FABRIC 정밀진단</div>
+        <h4>씨줄: 기업 체질 정밀 진단 (6영역 33항목)</h4>
+        <p>F(설비·공정), A(직무·역량), B(사업 포트폴리오), R(인력 구성), I(제도·노사 환경), C(조직·거버넌스) 6개 영역, 33개 세부항목을 진단합니다. 현장 인터뷰, 설문조사, 데이터 수집을 병행하여 기업의 체질을 수치화합니다.</p>
+        <div class="step-details">
+          <span class="step-tag" style="background:#E8F5E9; color:var(--green);">현장 인터뷰</span>
+          <span class="step-tag" style="background:#E8F5E9; color:var(--green);">설문조사</span>
+          <span class="step-tag" style="background:#E8F5E9; color:var(--green);">데이터 수집</span>
+          <span class="step-tag" style="background:#E8F5E9; color:var(--green);">FABRIC 6영역 점수화</span>
+        </div>
+      </div>
+
+      <div class="process-step" data-step="2" style="border-left: 4px solid var(--digital);">
+        <div class="step-phase" style="color:var(--digital);">PHASE 2 — G-DAX 정밀진단</div>
+        <h4>날줄: 전환 대응력 정밀 진단 (4영역 21항목)</h4>
+        <p>Green·Digital·AI·eXployment 4개 축에 대한 기업의 대응 준비도를 21개 항목으로 정밀 진단합니다. FABRIC 결과와 교차 분석하여 전환 유형을 분류합니다.</p>
+        <div class="step-details">
+          <span class="step-tag" style="background:#E8F0FE; color:var(--digital);">G-DAX 4축 점수화</span>
+          <span class="step-tag" style="background:#E8F0FE; color:var(--digital);">전환 유형 분류 (4분면)</span>
+          <span class="step-tag" style="background:#E8F0FE; color:var(--digital);">핵심 Gap 도출</span>
+        </div>
+      </div>
+
+      <div class="process-step" data-step="3" style="border-left: 4px solid var(--digital);">
+        <div class="step-phase" style="color:var(--digital);">PHASE 3 — 종합분석</div>
+        <h4>씨줄×날줄 교차: SWOT 분석 및 전환 방향 도출</h4>
+        <p>FABRIC(씨줄) × G-DAX(날줄) 교차 분석으로 SWOT를 도출하고, 전환영향경로를 분석하여 3개 전환 방향을 설정합니다. 두 프레임워크가 겹치는 지점에서 기업의 진짜 과제가 드러납니다.</p>
+        <div class="step-details">
+          <span class="step-tag" style="background:#E8F0FE; color:var(--digital);">FABRIC×G-DAX 매트릭스</span>
+          <span class="step-tag" style="background:#E8F0FE; color:var(--digital);">Cross-SWOT</span>
+          <span class="step-tag" style="background:#E8F0FE; color:var(--digital);">전환영향경로 분석</span>
+        </div>
+      </div>
+
+      <div class="process-step" data-step="4" style="border-left: 4px solid var(--ai);">
+        <div class="step-phase" style="color:var(--ai);">PHASE 4 — 전환과제 설계</div>
+        <h4>맞춤형 전환과제 및 실행 로드맵</h4>
+        <p>전환 방향별 구체적 실행과제를 설계하고, 단기(6개월)·중기(1년)·장기(2~3년) 로드맵을 수립합니다.</p>
+        <div class="step-details">
+          <span class="step-tag" style="background:#F3E5F5; color:var(--ai);">전환과제 7개 내외 도출</span>
+          <span class="step-tag" style="background:#F3E5F5; color:var(--ai);">단기/중기/장기 로드맵</span>
+          <span class="step-tag" style="background:#F3E5F5; color:var(--ai);">KPI 설정</span>
+        </div>
+      </div>
+
+      <div class="process-step" data-step="5" style="border-left: 4px solid var(--employ);">
+        <div class="step-phase" style="color:var(--employ);">PHASE 5 — 정부지원 매칭</div>
+        <h4>최적 정부지원사업 연계</h4>
+        <p>전환과제별 최적 정부지원 프로그램을 매칭하고, 신청 전략과 연간 캘린더를 제공합니다.</p>
+        <div class="step-details">
+          <span class="step-tag" style="background:#FFEBEE; color:var(--employ);">3단계 매칭 전략</span>
+          <span class="step-tag" style="background:#FFEBEE; color:var(--employ);">6대 카테고리 분류</span>
+          <span class="step-tag" style="background:#FFEBEE; color:var(--employ);">연간 신청 캘린더</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FABRIC 상세 설명 -->
+    <div class="card" style="margin-top: 48px; border-left: 5px solid var(--blue); padding: 36px 40px;">
+      <h3 style="margin-bottom: 16px; font-size: 22px;">FABRIC — 기업 체질을 읽는 6개의 렌즈</h3>
+      <p style="font-size: 15px; color: var(--muted); margin-bottom: 24px;">FABRIC은 기업의 산업전환 체질을 6개 영역으로 해부하는 진단 프레임워크입니다. 각 영역은 기업이 전환에 성공하기 위해 반드시 갖추어야 할 핵심 역량을 대변하며, 영역별 5~6개 세부항목(총 33개)으로 구체화됩니다.</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        <div style="background: #E8F0FE; border-radius: 12px; padding: 20px;">
+          <div style="font-size: 32px; font-weight: 900; color: var(--blue); margin-bottom: 4px;">F</div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--pri); margin-bottom: 8px;">Facility & Process 설비·공정</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.7;">생산라인 구성, 설비 현황·노후도, 자동화 수준, 에너지·환경, 업무시스템(ERP·MES), 데이터 인프라, 정보보안·네트워크, 설비 투자를 진단합니다.</p>
+        </div>
+        <div style="background: #E8F0FE; border-radius: 12px; padding: 20px;">
+          <div style="font-size: 32px; font-weight: 900; color: var(--blue); margin-bottom: 4px;">A</div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--pri); margin-bottom: 8px;">Architecture of Jobs 직무·역량</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.7;">직무 분류 체계, 핵심 직무 프로파일, 전환 영향 직무, 역량 Gap 분석, 교육훈련 현황을 진단합니다. G-DAX 채점의 직접 근거가 되는 핵심 영역입니다.</p>
+        </div>
+        <div style="background: #E8F0FE; border-radius: 12px; padding: 20px;">
+          <div style="font-size: 32px; font-weight: 900; color: var(--blue); margin-bottom: 4px;">B</div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--pri); margin-bottom: 8px;">Business Portfolio 사업 포트폴리오</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.7;">매출 구조, 제품·서비스 포트폴리오, 시장 포지션, 수익성 구조, 성장 파이프라인을 진단합니다. SWOT 분석과 전환 영향 경로, 과제 경제성 평가에 활용됩니다.</p>
+        </div>
+        <div style="background: #E8F0FE; border-radius: 12px; padding: 20px;">
+          <div style="font-size: 32px; font-weight: 900; color: var(--blue); margin-bottom: 4px;">R</div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--pri); margin-bottom: 8px;">Resource of Workforce 인력 구성</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.7;">인력 규모, 인구통계 분포, 고용형태, 인력 흐름, 인건비 구조를 진단합니다. 전환 영향 인원 산출과 인건비 부담 분석의 기초 데이터가 됩니다.</p>
+        </div>
+        <div style="background: #E8F0FE; border-radius: 12px; padding: 20px;">
+          <div style="font-size: 32px; font-weight: 900; color: var(--blue); margin-bottom: 4px;">I</div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--pri); margin-bottom: 8px;">Institution & Labor 제도·노사 환경</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.7;">노사관계, 인사제도, 전환 관련 제도 조항(직무전환 규정), 변화 이력, 외부 연계를 진단합니다. 전환 실행의 제도적 기반을 평가합니다.</p>
+        </div>
+        <div style="background: #E8F0FE; border-radius: 12px; padding: 20px;">
+          <div style="font-size: 32px; font-weight: 900; color: var(--blue); margin-bottom: 4px;">C</div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--pri); margin-bottom: 8px;">Corporate Governance 조직·거버넌스</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.7;">조직 구조, 의사결정 체계, 전환 거버넌스, 사업장 분포, 조직 유연성(수평/수직, 프로젝트 조직)을 진단합니다. 전환을 추진할 조직적 역량을 평가합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 씨줄×날줄 직물 시각화 -->
+    <div class="card" style="margin-top: 32px; padding: 48px 40px; overflow: hidden;">
+      <h3 style="text-align:center; margin-bottom: 8px; font-size:22px;">FABRIC × G-DAX: 씨줄과 날줄의 입체 진단</h3>
+      <p style="font-size: 14px; color: var(--muted); margin-bottom: 36px; max-width: 640px; margin-left: auto; margin-right: auto; text-align:center;">직물이 씨줄과 날줄이 교차해야 비로소 완성되듯, 기업의 전환 전략도 FABRIC(체질)과 G-DAX(전환 대응력)가 교차해야 입체적으로 완성됩니다.</p>
+
+      <!-- SVG 직물 매트릭스 다이어그램 -->
+      <div style="text-align: center; margin-bottom: 32px;">
+        <svg viewBox="0 0 780 520" xmlns="http://www.w3.org/2000/svg" style="max-width:780px; width:100%; height:auto;">
+          <defs>
+            <linearGradient id="gBlue" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#2E75B6"/><stop offset="100%" stop-color="#5BA3D9"/></linearGradient>
+            <linearGradient id="gRed" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C62828"/><stop offset="100%" stop-color="#EF5350"/></linearGradient>
+            <linearGradient id="gGreen" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#2E7D32"/><stop offset="100%" stop-color="#66BB6A"/></linearGradient>
+            <linearGradient id="gDigital" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1565C0"/><stop offset="100%" stop-color="#42A5F5"/></linearGradient>
+            <linearGradient id="gAI" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#6A1B9A"/><stop offset="100%" stop-color="#AB47BC"/></linearGradient>
+            <linearGradient id="gEmploy" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C62828"/><stop offset="100%" stop-color="#E57373"/></linearGradient>
+            <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/></filter>
+          </defs>
+
+          <!-- 배경 -->
+          <rect x="0" y="0" width="780" height="520" rx="16" fill="#FAFBFC"/>
+
+          <!-- 라벨: 씨줄 FABRIC (가로) -->
+          <text x="30" y="36" font-size="11" font-weight="700" fill="#3A7CA5" letter-spacing="2">씨줄 (WEFT)</text>
+          <text x="170" y="36" font-size="16" font-weight="900" fill="#2E75B6">FABRIC</text>
+          <text x="275" y="36" font-size="11" fill="#718096">— 기업의 체질을 읽는다</text>
+
+          <!-- 라벨: 날줄 G-DAX (세로) -->
+          <text x="660" y="75" font-size="11" font-weight="700" fill="#C62828" letter-spacing="2" text-anchor="start">날줄 (WARP)</text>
+          <text x="660" y="95" font-size="16" font-weight="900" fill="#C62828" text-anchor="start">G-DAX</text>
+
+          <!-- FABRIC 가로 바 (씨줄 6개) -->
+          <rect x="30" y="60" width="610" height="28" rx="6" fill="url(#gBlue)" opacity="0.15"/>
+          <rect x="30" y="96" width="610" height="28" rx="6" fill="url(#gBlue)" opacity="0.12"/>
+          <rect x="30" y="132" width="610" height="28" rx="6" fill="url(#gBlue)" opacity="0.15"/>
+          <rect x="30" y="168" width="610" height="28" rx="6" fill="url(#gBlue)" opacity="0.12"/>
+          <rect x="30" y="204" width="610" height="28" rx="6" fill="url(#gBlue)" opacity="0.15"/>
+          <rect x="30" y="240" width="610" height="28" rx="6" fill="url(#gBlue)" opacity="0.12"/>
+
+          <!-- FABRIC 라벨 -->
+          <text x="42" y="79" font-size="13" font-weight="700" fill="#2E75B6">F</text><text x="58" y="79" font-size="11" fill="#4A5568">Facility &amp; Process 설비·공정</text>
+          <text x="42" y="115" font-size="13" font-weight="700" fill="#2E75B6">A</text><text x="58" y="115" font-size="11" fill="#4A5568">Architecture of Jobs 직무·역량</text>
+          <text x="42" y="151" font-size="13" font-weight="700" fill="#2E75B6">B</text><text x="58" y="151" font-size="11" fill="#4A5568">Business Portfolio 사업 포트폴리오</text>
+          <text x="42" y="187" font-size="13" font-weight="700" fill="#2E75B6">R</text><text x="58" y="187" font-size="11" fill="#4A5568">Resource of Workforce 인력 구성</text>
+          <text x="42" y="223" font-size="13" font-weight="700" fill="#2E75B6">I</text><text x="58" y="223" font-size="11" fill="#4A5568">Institution &amp; Labor 제도·노사</text>
+          <text x="42" y="259" font-size="13" font-weight="700" fill="#2E75B6">C</text><text x="58" y="259" font-size="11" fill="#4A5568">Corporate Governance 조직·거버넌스</text>
+
+          <!-- G-DAX 세로 바 (날줄 4개) — 교차 효과 -->
+          <rect x="250" y="50" width="36" height="228" rx="6" fill="url(#gGreen)" opacity="0.2"/>
+          <rect x="350" y="50" width="36" height="228" rx="6" fill="url(#gDigital)" opacity="0.2"/>
+          <rect x="450" y="50" width="36" height="228" rx="6" fill="url(#gAI)" opacity="0.2"/>
+          <rect x="550" y="50" width="36" height="228" rx="6" fill="url(#gEmploy)" opacity="0.2"/>
+
+          <!-- G-DAX 세로 라벨 (상단) -->
+          <text x="268" y="48" font-size="12" font-weight="800" fill="#2E7D32" text-anchor="middle">G</text>
+          <text x="368" y="48" font-size="12" font-weight="800" fill="#1565C0" text-anchor="middle">D</text>
+          <text x="468" y="48" font-size="12" font-weight="800" fill="#6A1B9A" text-anchor="middle">A</text>
+          <text x="568" y="48" font-size="12" font-weight="800" fill="#C62828" text-anchor="middle">X</text>
+
+          <!-- 교차점 원형 노드 (4×6 = 24개 핵심 노드) -->
+          <!-- F행 -->
+          <circle cx="268" cy="74" r="8" fill="#2E7D32" opacity="0.6"/><circle cx="368" cy="74" r="8" fill="#1565C0" opacity="0.6"/><circle cx="468" cy="74" r="8" fill="#6A1B9A" opacity="0.5"/><circle cx="568" cy="74" r="10" fill="#C62828" opacity="0.7"/>
+          <!-- A행 -->
+          <circle cx="268" cy="110" r="8" fill="#2E7D32" opacity="0.5"/><circle cx="368" cy="110" r="10" fill="#1565C0" opacity="0.7"/><circle cx="468" cy="110" r="9" fill="#6A1B9A" opacity="0.6"/><circle cx="568" cy="110" r="8" fill="#C62828" opacity="0.6"/>
+          <!-- B행 -->
+          <circle cx="268" cy="146" r="10" fill="#2E7D32" opacity="0.7"/><circle cx="368" cy="146" r="8" fill="#1565C0" opacity="0.5"/><circle cx="468" cy="146" r="8" fill="#6A1B9A" opacity="0.5"/><circle cx="568" cy="146" r="8" fill="#C62828" opacity="0.5"/>
+          <!-- R행 -->
+          <circle cx="268" cy="182" r="8" fill="#2E7D32" opacity="0.5"/><circle cx="368" cy="182" r="9" fill="#1565C0" opacity="0.6"/><circle cx="468" cy="182" r="10" fill="#6A1B9A" opacity="0.7"/><circle cx="568" cy="182" r="9" fill="#C62828" opacity="0.7"/>
+          <!-- I행 -->
+          <circle cx="268" cy="218" r="8" fill="#2E7D32" opacity="0.5"/><circle cx="368" cy="218" r="10" fill="#1565C0" opacity="0.7"/><circle cx="468" cy="218" r="10" fill="#6A1B9A" opacity="0.8"/><circle cx="568" cy="218" r="8" fill="#C62828" opacity="0.5"/>
+          <!-- C행 -->
+          <circle cx="268" cy="254" r="8" fill="#2E7D32" opacity="0.4"/><circle cx="368" cy="254" r="9" fill="#1565C0" opacity="0.6"/><circle cx="468" cy="254" r="9" fill="#6A1B9A" opacity="0.7"/><circle cx="568" cy="254" r="10" fill="#C62828" opacity="0.8"/>
+
+          <!-- 화살표: 교차 → 결과 -->
+          <path d="M320 295 Q390 310 390 340" stroke="#1B3A5C" stroke-width="2" fill="none" stroke-dasharray="6,3" marker-end="url(#arrowDown)"/>
+          <defs><marker id="arrowDown" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1B3A5C"/></marker></defs>
+
+          <!-- 결과 영역 -->
+          <rect x="80" y="320" width="620" height="180" rx="16" fill="#1B3A5C" filter="url(#shadow)"/>
+          <rect x="80" y="320" width="620" height="4" rx="2" fill="#2E75B6"/>
+
+          <text x="390" y="352" font-size="13" font-weight="700" fill="rgba(255,255,255,0.5)" text-anchor="middle" letter-spacing="3">INTERSECTION</text>
+          <text x="390" y="380" font-size="20" font-weight="900" fill="white" text-anchor="middle">씨줄 × 날줄 = 입체 진단</text>
+          <text x="390" y="402" font-size="12" fill="rgba(255,255,255,0.7)" text-anchor="middle">교차점에서 기업의 진짜 전환 과제가 드러납니다</text>
+
+          <!-- 결과 항목 4개 -->
+          <rect x="110" y="420" width="130" height="60" rx="8" fill="rgba(255,255,255,0.1)"/>
+          <text x="175" y="445" font-size="11" font-weight="700" fill="#7EC8E3" text-anchor="middle">전환 유형 분류</text>
+          <text x="175" y="462" font-size="10" fill="rgba(255,255,255,0.6)" text-anchor="middle">4분면 포지셔닝</text>
+
+          <rect x="260" y="420" width="130" height="60" rx="8" fill="rgba(255,255,255,0.1)"/>
+          <text x="325" y="445" font-size="11" font-weight="700" fill="#7EC8E3" text-anchor="middle">Cross-SWOT</text>
+          <text x="325" y="462" font-size="10" fill="rgba(255,255,255,0.6)" text-anchor="middle">전환영향경로 분석</text>
+
+          <rect x="410" y="420" width="130" height="60" rx="8" fill="rgba(255,255,255,0.1)"/>
+          <text x="475" y="445" font-size="11" font-weight="700" fill="#7EC8E3" text-anchor="middle">맞춤형 로드맵</text>
+          <text x="475" y="462" font-size="10" fill="rgba(255,255,255,0.6)" text-anchor="middle">단기/중기/장기</text>
+
+          <rect x="560" y="420" width="130" height="60" rx="8" fill="rgba(255,255,255,0.1)"/>
+          <text x="625" y="445" font-size="11" font-weight="700" fill="#7EC8E3" text-anchor="middle">정부지원 매칭</text>
+          <text x="625" y="462" font-size="10" fill="rgba(255,255,255,0.6)" text-anchor="middle">최적 사업 연계</text>
+        </svg>
+      </div>
+
+      <p style="font-size: 14px; color: var(--accent); text-align:center; font-weight: 500;">FABRIC의 사전적 의미 '직물(織物)'처럼 — 씨줄(FABRIC 6영역)과 날줄(G-DAX 4축)이 만나 기업 전환의 직물을 짜냅니다.<br><span style="font-size:12px; color:var(--muted); font-weight:400;">교차점의 크기는 각 영역 간 연관 강도를 나타냅니다. 큰 원일수록 해당 체질 영역이 전환 축에 미치는 영향이 큽니다.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ SECTION 5: 기대효과 ════════════ -->
+<section>
+  <div class="container">    <h2 class="section-title">컨설팅을 통해 얻는 것</h2>
+
+    <div class="card-grid cols-3">
+      <div class="card" style="border-top: 4px solid var(--green);">
+        <h3 style="font-size:18px;">📊 현 위치의 구조적 파악</h3>
+        <p>FABRIC 6영역 33항목 + G-DAX 4영역 21항목, 총 54개 항목에 대한 정밀 진단 점수와 Gap 분석을 통해 "우리 기업이 어디에 있는가"를 수치로 확인합니다.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--digital);">
+        <h3 style="font-size:18px;">🗺️ 실행 가능한 전환 로드맵</h3>
+        <p>진단 결과에서 자동으로 도출되는 맞춤형 전환과제와 단기·중기·장기 실행 계획. "무엇을, 언제, 어떤 순서로 해야 하는가"에 대한 명확한 답을 제공합니다.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--ai);">
+        <h3 style="font-size:18px;">💰 정부지원 최적 매칭</h3>
+        <p>기업 상황에 맞는 최적의 정부지원 프로그램을 자동 매칭하고, 연간 신청 캘린더와 함께 제공합니다. 지원금 확보의 전략적 접근이 가능합니다.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--employ);">
+        <h3 style="font-size:18px;">👥 인력 전환 전략</h3>
+        <p>직무분석 기반의 인력 재배치 계획, 재교육 프로그램 설계, 고용안정 협약 가이드를 통해 조직 저항을 최소화하면서 전환을 실행합니다.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--accent);">
+        <h3 style="font-size:18px;">📈 생산성 향상 기대치</h3>
+        <p>스마트팩토리 고도화, AI 도입, 공정 최적화를 통한 구체적 생산성 향상 수치와 비용 절감 예측을 제공합니다.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--pri);">
+        <h3 style="font-size:18px;">🏛️ 경영진 의사결정 근거</h3>
+        <p>Minto Pyramid 원칙에 따라 구조화된 최종보고서로, 이사회·경영진에게 전환 필요성과 투자 타당성을 논리적으로 설득할 수 있는 근거를 제공합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ CTA ════════════ -->
+<div class="cta-section">
+  <div class="container">
+    <h2>산업일자리 대전환, 준비되셨습니까?</h2>
+    <p>G-DAX 거시환경 분석이 보여주듯, 2026년의 변화는 이미 시작되었습니다. 정부지원 산업일자리전환 컨설팅을 통해 체계적으로 대응하세요.</p>
+    <a href="https://gdax-system.pages.dev/survey" class="cta-btn">G-DAX 준비도 무료 진단</a>
+    <p style="margin-top: 20px; font-size: 13px; opacity: 0.6;">KSA 한국표준협회 · 산업일자리전환 컨설팅</p>
+  </div>
 </div>
+
+<!-- ════════════ Footer ════════════ -->
+<footer>
+  <div class="container">
+    <p><strong>KSA 한국표준협회</strong> · 산업일자리전환 컨설팅</p>
+    <p style="margin-top: 8px;">본 자료는 2024~2026년 최신 정책·통계를 기반으로 작성되었습니다.</p>
+    <p style="margin-top: 4px;">G-DAX, FABRIC, eXployment는 본 컨설팅 고유 프레임워크 용어입니다.</p>
+    <p style="margin-top: 8px; font-size: 12px; opacity: 0.6;">Confidential | 2026년 2월</p>
+  </div>
+</footer>
 
 </body>
 </html>
