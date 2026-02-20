@@ -148,10 +148,43 @@
 
   /* ── Print ── */
   @media print {
-    body { background: #fff; }
-    .cover { padding: 40px 20px 30px; }
-    .chapter, .toc { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
-    .page { padding: 10px; }
+    @page { size: A4; margin: 18mm 15mm 20mm 15mm; }
+    body { background: #fff; font-size: 11px; line-height: 1.6; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    /* Cover: 단독 페이지 */
+    .cover { padding: 60px 20px 40px; break-after: page; page-break-after: always; }
+
+    /* TOC: 단독 페이지 */
+    .toc { box-shadow: none; border: 1px solid #ccc; break-after: page; page-break-after: always; }
+
+    /* Chapter: 각각 새 페이지에서 시작 */
+    .chapter { box-shadow: none; border: 1px solid #ccc; break-before: page; page-break-before: always; margin-bottom: 12px; }
+    .chapter-header { background: #f0f4f8 !important; -webkit-print-color-adjust: exact; }
+    .chapter-body { padding: 16px 20px; }
+
+    /* Section: 내부에서 끊기지 않도록 */
+    .section { break-inside: avoid; page-break-inside: avoid; }
+    .section-title { break-after: avoid; page-break-after: avoid; }
+
+    /* 테이블/TIP 끊김 방지 */
+    .guide-table { break-inside: avoid; page-break-inside: avoid; font-size: 10px; }
+    .guide-table th { padding: 6px 10px; }
+    .guide-table td { padding: 6px 10px; }
+    .tip, .key-point { break-inside: avoid; page-break-inside: avoid; }
+    .type-grid { break-inside: avoid; page-break-inside: avoid; }
+    .faq-item { break-inside: avoid; page-break-inside: avoid; }
+
+    /* 크기 축소 */
+    .page { max-width: 100%; padding: 0; }
+    h2 { font-size: 14px; }
+    h3 { font-size: 12px; }
+    p, li { font-size: 11px; }
+    .domain-box { font-size: 11px; padding: 4px 10px; }
+    .steps { gap: 4px; } .step { font-size: 10px; padding: 4px 8px; }
+    .marker-legend { font-size: 11px; }
+
+    /* Footer 인쇄용 */
+    .footer { break-before: avoid; font-size: 10px; padding: 12px 0; border-top: 1px solid #ddd; }
   }
 
   /* ── Utility ── */
@@ -166,7 +199,6 @@
 <div class="cover">
   <div class="cover-inner">
     <h1>G-DAX 결과 보고서 보는 법</h1>
-    <div class="subtitle">기업 담당자를 위한 쉬운 해설 가이드</div>
     <div class="gdax-chips">
       <span style="border-left:3px solid #16a34a">G Green</span>
       <span style="border-left:3px solid #2563eb">D Digital</span>
@@ -188,7 +220,7 @@
     <li><a href="#ch3"><span>3. 카드별 상세 해설</span></a></li>
     <li class="sub"><a href="#s31">3.1 기업 정보 요약</a></li>
     <li class="sub"><a href="#s32">3.2 종합 진단 결과</a></li>
-    <li class="sub"><a href="#s33">3.3 G-DAX 전환압력 vs 실행기반·역량 갭 분석</a></li>
+    <li class="sub"><a href="#s33">3.3 G-DAX 영역별 진단 레이더</a></li>
     <li class="sub"><a href="#s34">3.4 구조별 소계 분석</a></li>
     <li class="sub"><a href="#s35">3.5 영역별 상세 진단</a></li>
     <li class="sub"><a href="#s36">3.6 전환 영향 경로(BTJR) 분석</a></li>
@@ -199,6 +231,7 @@
     <li><a href="#ch4"><span>4. 점수 해석 기준</span></a></li>
     <li><a href="#ch5"><span>5. 자주 묻는 질문(FAQ)</span></a></li>
     <li><a href="#ch6"><span>6. 보고서 활용 팁</span></a></li>
+    <li><a href="#ch7"><span>7. 부록: 20개 문항 전체 일람표</span></a></li>
   </ul>
 </div>
 
@@ -259,7 +292,7 @@
       <tr><th style="width:40px">#</th><th>카드 이름</th><th>핵심 역할</th></tr>
       <tr><td>①</td><td>기업 정보 요약</td><td>우리 회사 기본 정보 확인</td></tr>
       <tr><td>②</td><td>종합 진단 결과</td><td>20문항 총점과 4개 영역별 점수 한눈에 보기</td></tr>
-      <tr><td>③</td><td>G-DAX 전환압력 vs 실행기반·역량 갭 분석</td><td>4개 영역별 전환 압력과 실행 역량의 차이(갭)를 시각적으로 확인</td></tr>
+      <tr><td>③</td><td>G-DAX 영역별 진단 레이더</td><td>4개 영역의 균형을 시각적으로 확인</td></tr>
       <tr><td>④</td><td>구조별 소계 분석</td><td>전환 압력 / 실행 기반 / 동력(역량) 3단 구조 분해</td></tr>
       <tr><td>⑤</td><td>영역별 상세 진단</td><td>G, D, A, X 각 영역의 문항별 점수 상세</td></tr>
       <tr><td>⑥</td><td>전환 영향 경로(BTJR) 분석</td><td>전환이 사업·기술·직무·노사에 미치는 영향</td></tr>
@@ -331,27 +364,26 @@
 
     <!-- 3.3 -->
     <div class="section" id="s33">
-      <div class="section-title"><span class="sec-icon">🧭</span> 3.3 G-DAX 전환압력 vs 실행기반·역량 갭 분석</div>
-      <p>4개 축(G, D, A, X)에 <strong>두 개의 다각형</strong>이 겹쳐 표시되는 레이더 차트입니다. <span style="color:var(--red)"><strong>빨간 실선 다각형</strong></span>은 <strong>전환 압력</strong>(외부 변화 강도)을, <span style="color:var(--blue)"><strong>파란 점선 다각형</strong></span>은 <strong>실행기반·역량</strong>(내부 준비 수준)을 나타냅니다.</p>
+      <div class="section-title"><span class="sec-icon">🧭</span> 3.3 G-DAX 영역별 진단 레이더</div>
+      <p>4개 축(G, D, A, X)을 가진 <strong>레이더(거미줄) 차트</strong>입니다. 파란 다각형이 귀사의 진단 결과이며, 다각형이 클수록 전체적인 전환 압력이 높습니다.</p>
 
-      <h3 style="margin-top:14px;">이중 다각형 읽는 법</h3>
+      <h3 style="margin-top:14px;">레이더 차트 읽는 법</h3>
       <ul>
         <li>중심(0점)에서 바깥쪽(5점)으로 갈수록 점수가 높습니다</li>
-        <li><strong style="color:var(--red)">빨간 다각형(전환 압력)</strong>이 클수록 외부에서 밀려오는 변화 압력이 강합니다</li>
-        <li><strong style="color:var(--blue)">파란 다각형(실행기반·역량)</strong>이 클수록 내부 준비가 잘 되어 있습니다</li>
-        <li>두 다각형 사이의 <strong style="color:var(--orange)">빗금 영역이 GAP(갭)</strong>입니다 — 이 갭이 클수록 시급한 대응이 필요합니다</li>
+        <li>다각형이 한쪽으로 치우쳐 있으면 그 영역에 편중된 압력이 있다는 뜻입니다</li>
+        <li>각 축 위에 작은 표시(◆ ■ ▲)가 있습니다 — 이것이 <strong>3단 구조 점수</strong>입니다</li>
       </ul>
 
-      <h3 style="margin-top:14px;">마커 범례</h3>
+      <h3 style="margin-top:14px;">3단 구조 서브 마커</h3>
       <div class="marker-legend">
-        <div class="marker-item"><span class="marker-icon marker-diamond"></span> <strong style="color:var(--red)">◆ 전환 압력</strong> — 각 영역별 전환 압력 티어 평균</div>
-        <div class="marker-item"><span class="marker-icon" style="width:12px;height:12px;border-radius:50%;background:var(--blue);"></span> <strong style="color:var(--blue)">● 실행기반·역량</strong> — 실행 기반 + 동력/역량 평균</div>
-        <div class="marker-item"><span style="display:inline-block;width:16px;height:12px;background:repeating-linear-gradient(45deg,rgba(255,100,50,0.15),rgba(255,100,50,0.15) 2px,transparent 2px,transparent 4px);border:1px solid rgba(255,100,50,0.3);border-radius:2px;"></span> <strong style="color:var(--orange)">GAP 영역</strong> — 압력과 준비도 사이의 격차</div>
+        <div class="marker-item"><span class="marker-icon marker-diamond"></span> <strong style="color:var(--red)">전환 압력</strong> — 외부에서 오는 변화 압력</div>
+        <div class="marker-item"><span class="marker-icon marker-square"></span> <strong style="color:var(--orange)">실행 기반</strong> — 현재 인프라/시스템</div>
+        <div class="marker-item"><span class="marker-icon marker-triangle"></span> <strong style="color:var(--blue)">동력/역량</strong> — 인적 역량</div>
       </div>
 
       <div class="tip">
-        <strong>💡 해석 예시:</strong> G(친환경) 축에서 빨간 ◆가 바깥(4.2점)이고 파란 ●이 안쪽(2.1점)이라면?<br>
-        → "친환경 전환 압력은 매우 높지만 내부 준비는 미흡한 상태"입니다. <strong>GAP이 2.1점으로, 이 영역의 실행기반·역량 강화가 최우선</strong>입니다.
+        <strong>💡 예시:</strong> ◆(압력)가 바깥쪽에 있는데 ▲(역량)이 안쪽에 있다면?<br>
+        → "전환 압력은 높지만 인력 역량은 부족한 상태"입니다. 이 <strong>갭(차이)이 클수록 시급한 대응</strong>이 필요합니다.
       </div>
     </div>
 
@@ -429,12 +461,7 @@
     <div class="section" id="s37">
       <div class="section-title"><span class="sec-icon">🎯</span> 3.7 전환 유형 분류</div>
       <p>귀사가 <strong>4가지 전환 유형</strong> 중 어디에 해당하는지를 보여주는 핵심 카드입니다.<br>
-      <strong>G 전환 압력 문항만의 평균</strong>(환경 전환 압력)과 <strong>D+A 전환 압력 문항만의 가중평균</strong>(기술 전환 압력)을 기준으로 4분면에 배치합니다.</p>
-
-      <div class="tip" style="margin:10px 0;">
-        <strong>⚠️ 주의:</strong> 전환 유형 분류에는 각 영역의 전체 평균이 아닌, <strong>"전환 압력" 티어에 해당하는 문항만</strong> 사용합니다.<br>
-        예) G 영역이면 G1·G2·G5(전환 압력 문항)의 평균, D+A 영역이면 D 전환 압력 문항과 A 전환 압력 문항의 가중평균입니다.
-      </div>
+      G 점수(환경 전환 압력)와 D+A 점수(기술 전환 압력)를 기준으로 4분면에 배치합니다.</p>
 
       <div class="type-grid">
         <div class="type-card tc-struct">
@@ -463,18 +490,13 @@
     <!-- 3.8 -->
     <div class="section" id="s38">
       <div class="section-title"><span class="sec-icon">🔥</span> 3.8 고용전환 강도</div>
-      <p>X(고용전환) 영역에서 <strong>전환 압력(X1·X2)</strong>과 <strong>추진동력(X5)</strong>만을 사용한 <strong>가중평균</strong>으로, 인력 구조 변화의 규모를 <strong>3단계</strong>로 판정합니다.</p>
-
-      <div class="tip" style="margin:10px 0;">
-        <strong>📐 계산 방식:</strong> 전환 압력(X1·X2) × 가중치 2 + 추진동력(X5) × 가중치 1의 <strong>가중평균</strong><br>
-        → 실행기반 문항(X3·X4)은 강도 판정에서 <strong>제외</strong>됩니다. 이는 "외부 압력의 크기"만으로 인력 전환 규모를 판단하기 위함입니다.
-      </div>
+      <p>X(고용전환) 영역의 평균 점수를 기준으로, 인력 구조 변화의 규모를 <strong>3단계</strong>로 판정합니다.</p>
 
       <table class="guide-table">
         <tr><th>강도</th><th>기준</th><th>의미</th></tr>
-        <tr><td>🔥 <strong>대규모</strong></td><td>가중평균 ≥ 3.5</td><td>인력구조 재편과 노사협력이 <strong>필수</strong></td></tr>
-        <tr><td>⚡ <strong>중규모</strong></td><td>가중평균 2.5 ~ 3.4</td><td>단계적 인력 전환과 교육 강화 필요</td></tr>
-        <tr><td>✅ <strong>소규모</strong></td><td>가중평균 &lt; 2.5</td><td>점진적 역량 개발 중심으로 대응</td></tr>
+        <tr><td>🔥 <strong>대규모</strong></td><td>X 평균 ≥ 3.5</td><td>인력구조 재편과 노사협력이 <strong>필수</strong></td></tr>
+        <tr><td>⚡ <strong>중규모</strong></td><td>X 평균 2.5 ~ 3.4</td><td>단계적 인력 전환과 교육 강화 필요</td></tr>
+        <tr><td>✅ <strong>소규모</strong></td><td>X 평균 &lt; 2.5</td><td>점진적 역량 개발 중심으로 대응</td></tr>
       </table>
 
       <p>고용전환 강도는 전환 유형의 Task Pool(추천 과제) <strong>강도를 조절</strong>합니다. 같은 유형이라도 고용전환 강도가 "대규모"이면 노사협력과 변화관리 과제가 더 강하게 추천됩니다.</p>
@@ -514,18 +536,6 @@
         <li><strong>G-DAX 연계:</strong> 해당 과제와 연관된 진단 문항 (예: "G1~G5")</li>
         <li><strong>과제 설명:</strong> 무엇을 어떻게 할 것인지 상세 설명</li>
       </ul>
-
-      <h3 style="margin-top:14px;">고용전환 강도에 따른 과제 조정 (xScale)</h3>
-      <p>일부 과제(특히 인력 전환·노사관계 관련)는 고용전환 강도에 따라 <strong>과제명·설명·방향이 동적으로 변경</strong>됩니다.</p>
-      <table class="guide-table">
-        <tr><th>강도</th><th>과제 조정 방향</th><th>예시</th></tr>
-        <tr><td>🔥 대규모</td><td>대규모 인력재편·노사합의 중심</td><td>"인력재배치 로드맵 수립" → 구체적 재편 계획</td></tr>
-        <tr><td>⚡ 중규모</td><td>단계적 전환·교육훈련 강화</td><td>"직무전환 교육 체계 구축" → 점진적 역량 전환</td></tr>
-        <tr><td>✅ 소규모</td><td>역량 고도화·선제적 준비</td><td>"핵심인력 유지 전략" → 미래 대비 중심</td></tr>
-      </table>
-      <div class="tip" style="margin:10px 0;">
-        <strong>💡 포인트:</strong> 같은 전환 유형이라도 고용전환 강도에 따라 보고서에 표시되는 과제 내용이 달라집니다. 이는 기업의 실제 인력 전환 규모에 맞춤화된 과제를 제시하기 위함입니다.
-      </div>
 
       <h3 style="margin-top:14px;">동적 배지(Badge) 이해하기</h3>
       <p>일부 과제 옆에 색깔 배지가 표시될 수 있습니다:</p>
@@ -649,7 +659,7 @@
       <ul>
         <li>표지(전환 유형 + 총점) → 종합 진단 결과 → 맞춤형 추천 사항 순으로 설명</li>
         <li><strong>"우리 회사는 ○○형이며, 최우선 과제는 △△입니다"</strong>로 시작하면 효과적</li>
-        <li>갭 분석 차트로 4개 영역의 전환 압력과 실행기반·역량 차이를 시각적으로 보여주세요</li>
+        <li>레이더 차트로 4개 영역의 균형을 시각적으로 보여주세요</li>
       </ul>
     </div>
 
@@ -680,6 +690,99 @@
       </ul>
     </div>
 
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- Chapter 7 — 부록 -->
+<!-- ═══════════════════════════════════════ -->
+<div class="chapter" id="ch7">
+  <div class="chapter-header">
+    <div class="ch-num">7</div>
+    <h2>부록: 20개 문항 전체 일람표</h2>
+  </div>
+  <div class="chapter-body">
+    <p>G-DAX 진단에 사용되는 <strong>20개 문항</strong>의 전체 목록입니다. 각 문항의 코드, 내용, 측정 방향, 3단 구조 분류, BTJR 영향 경로를 한눈에 확인할 수 있습니다.</p>
+
+    <div class="key-point">
+      <strong>💡 일람표 읽는 법:</strong> "순방향"은 점수가 높을수록 전환 압력이 높다는 의미이고, "역방향"은 점수가 높을수록 내부 준비가 잘 되어 있다는 뜻입니다. BTJR은 해당 문항이 영향을 미치는 전환 경로입니다.
+    </div>
+
+    <!-- G 영역 -->
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🌱</span> G — 친환경전환 (Green Transition)</div>
+      <table class="guide-table">
+        <tr><th style="width:50px">코드</th><th style="width:90px">라벨</th><th>문항 내용</th><th style="width:60px">방향</th><th style="width:70px">구조</th><th style="width:50px">BTJR</th></tr>
+        <tr><td><strong class="domain-g">G1</strong></td><td>탄소 리스크</td><td>탄소 감축 정책으로 인한 매출 감소 우려</td><td>순방향</td><td>전환 압력</td><td>B</td></tr>
+        <tr><td><strong class="domain-g">G2</strong></td><td>공급망 압력</td><td>원청사/바이어의 RE100·탄소배출 요구 수준</td><td>순방향</td><td>전환 압력</td><td>B, T</td></tr>
+        <tr><td><strong class="domain-g">G3</strong></td><td>에너지 전환</td><td>에너지 비용 비중 및 친환경 에너지 전환 필요성</td><td>순방향</td><td>전환 압력</td><td>T</td></tr>
+        <tr><td><strong class="domain-g">G4</strong></td><td>환경관리체계</td><td>환경 규제 대응 전담 인력·체계 구축 수준</td><td style="color:var(--green);font-weight:700">역방향</td><td>실행 기반</td><td>J, R</td></tr>
+        <tr><td><strong class="domain-g">G5</strong></td><td>Green 기회</td><td>탄소중립 관련 신규 사업기회 인식 및 추진 의지</td><td>순방향</td><td>성장 동력</td><td>B</td></tr>
+      </table>
+    </div>
+
+    <!-- D 영역 -->
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">💻</span> D — 디지털전환 (Digital Transformation)</div>
+      <table class="guide-table">
+        <tr><th style="width:50px">코드</th><th style="width:90px">라벨</th><th>문항 내용</th><th style="width:60px">방향</th><th style="width:70px">구조</th><th style="width:50px">BTJR</th></tr>
+        <tr><td><strong class="domain-d">D1</strong></td><td>DX 격차</td><td>경쟁사 대비 자동화·디지털 시스템 경쟁력 우려</td><td>순방향</td><td>전환 압력</td><td>T</td></tr>
+        <tr><td><strong class="domain-d">D2</strong></td><td>DX 투자계획</td><td>스마트공장·IoT·클라우드 도입 계획 및 예산 확보</td><td>순방향</td><td>전환 압력</td><td>B, T</td></tr>
+        <tr><td><strong class="domain-d">D3</strong></td><td>시스템통합도</td><td>ERP/MES 등 전산 시스템 실시간 관리 수준</td><td style="color:var(--green);font-weight:700">역방향</td><td>실행 기반</td><td>T</td></tr>
+        <tr><td><strong class="domain-d">D4</strong></td><td>데이터 활용</td><td>데이터 기반 의사결정 체계 구축 여부</td><td>순방향</td><td>실행 기반</td><td>T, J</td></tr>
+        <tr><td><strong class="domain-d">D5</strong></td><td>디지털역량</td><td>디지털 기술 활용 직원 역량 및 교육 수준</td><td>순방향</td><td>인재 역량</td><td>J, R</td></tr>
+      </table>
+    </div>
+
+    <!-- A 영역 -->
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🤖</span> A — AI전환 (AI Transformation)</div>
+      <table class="guide-table">
+        <tr><th style="width:50px">코드</th><th style="width:90px">라벨</th><th>문항 내용</th><th style="width:60px">방향</th><th style="width:70px">구조</th><th style="width:50px">BTJR</th></tr>
+        <tr><td><strong class="domain-a">A1</strong></td><td>AI 적용가능성</td><td>업종 내 AI 활용 사례 등장 및 도입 검토 필요성</td><td>순방향</td><td>전환 압력</td><td>T</td></tr>
+        <tr><td><strong class="domain-a">A2</strong></td><td>자동화 효과</td><td>반복·단순 업무에 AI/로봇 자동화 효과 예상</td><td>순방향</td><td>전환 압력</td><td>T, J</td></tr>
+        <tr><td><strong class="domain-a">A3</strong></td><td>데이터 축적</td><td>AI 도입을 위한 데이터 축적 체계 수준</td><td style="color:var(--green);font-weight:700">역방향</td><td>실행 기반</td><td>T</td></tr>
+        <tr><td><strong class="domain-a">A4</strong></td><td>직무전환대응</td><td>AI·자동화 도입 시 직무 변화 대응 계획 여부</td><td>순방향</td><td>인재 역량</td><td>J, R</td></tr>
+        <tr><td><strong class="domain-a">A5</strong></td><td>생성형AI활용</td><td>생성형 AI(ChatGPT 등) 업무 활용 가능성 인식</td><td>순방향</td><td>인재 역량</td><td>J</td></tr>
+      </table>
+    </div>
+
+    <!-- X 영역 -->
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🔄</span> X — 고용전환 (eXployment Transformation)</div>
+      <table class="guide-table">
+        <tr><th style="width:50px">코드</th><th style="width:90px">라벨</th><th>문항 내용</th><th style="width:60px">방향</th><th style="width:70px">구조</th><th style="width:50px">BTJR</th></tr>
+        <tr><td><strong class="domain-x">X1</strong></td><td>인력 리스크</td><td>구인난·핵심인력 고령화로 인한 기술전수 시급성</td><td>순방향</td><td>전환 압력</td><td>J, R</td></tr>
+        <tr><td><strong class="domain-x">X2</strong></td><td>직무재편필요</td><td>신기술 도입에 따른 직원 직무 변화 필요 정도</td><td>순방향</td><td>전환 압력</td><td>J</td></tr>
+        <tr><td><strong class="domain-x">X3</strong></td><td>노사 소통</td><td>직무전환·근로조건 변경 시 노사 소통 수준</td><td style="color:var(--green);font-weight:700">역방향</td><td>실행 기반</td><td>R</td></tr>
+        <tr><td><strong class="domain-x">X4</strong></td><td>전환교육체계</td><td>체계적 전환 교육훈련 프로그램 운영 수준</td><td style="color:var(--green);font-weight:700">역방향</td><td>실행 기반</td><td>J, R</td></tr>
+        <tr><td><strong class="domain-x">X5</strong></td><td>경영진의지</td><td>경영진의 고용구조 전환 핵심 과제 인식 및 추진 의지</td><td>순방향</td><td>추진 동력</td><td>B, R</td></tr>
+      </table>
+    </div>
+
+    <div class="tip">
+      <strong>💡 활용 팁:</strong> 이 일람표를 인쇄하여 결과 보고서와 함께 비치하면, 보고서의 문항별 점수를 해석할 때 빠르게 참조할 수 있습니다.<br>
+      특히 <strong>역방향 문항(G4, D3, A3, X3, X4)</strong>은 점수 해석이 반대이므로, 이 일람표를 옆에 두고 확인하는 것을 권장합니다.
+    </div>
+
+    <!-- 3단 구조 요약 -->
+    <h3 style="margin-top:20px;">3단 구조 분류 요약</h3>
+    <table class="guide-table">
+      <tr><th>구조</th><th>G (친환경)</th><th>D (디지털)</th><th>A (AI)</th><th>X (고용)</th></tr>
+      <tr><td><strong>전환 압력</strong></td><td>G1, G2, G3</td><td>D1, D2</td><td>A1, A2</td><td>X1, X2</td></tr>
+      <tr><td><strong>실행 기반</strong></td><td>G4</td><td>D3, D4</td><td>A3</td><td>X3, X4</td></tr>
+      <tr><td><strong>동력/역량</strong></td><td>G5</td><td>D5</td><td>A4, A5</td><td>X5</td></tr>
+    </table>
+
+    <!-- BTJR 매핑 요약 -->
+    <h3 style="margin-top:20px;">BTJR 영향 경로 매핑 요약</h3>
+    <table class="guide-table">
+      <tr><th>경로</th><th>의미</th><th>관련 문항</th></tr>
+      <tr><td><strong style="color:var(--blue)">B</strong> 사업구조</td><td>사업 모델·수익 구조에 미치는 영향</td><td>G1, G2, G5, D2, X5</td></tr>
+      <tr><td><strong style="color:var(--green)">T</strong> 기술운영</td><td>생산·운영 방식에 미치는 영향</td><td>G2, G3, D1, D2, D3, D4, A1, A2, A3</td></tr>
+      <tr><td><strong style="color:var(--orange)">J</strong> 직무역량</td><td>필요 직무와 역량에 미치는 영향</td><td>G4, D4, D5, A2, A4, A5, X1, X2, X4</td></tr>
+      <tr><td><strong style="color:var(--red)">R</strong> 노사관계</td><td>고용 관계·소통에 미치는 영향</td><td>G4, D5, A4, X1, X3, X4, X5</td></tr>
+    </table>
   </div>
 </div>
 
