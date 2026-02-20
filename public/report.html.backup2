@@ -510,12 +510,12 @@ const BTJR_CONFIG = {
 };
 
 /* ── 전환 유형 4분류 (G × D+A 모델) ── */
-/* 설계 원칙:
-   X축: G영역 전환 압력 문항만의 평균 (환경전환 압력)
-   Y축: D+A 전환 압력 문항만의 가중평균 (기술전환 압력)
-   → 실행 기반·동력/역량 문항은 분류에서 제외하여 순수 압력만 반영
-   → 업종별 D/A 가중치 차등 적용
-   → X(고용전환)는 분류 축이 아닌 "고용전환 강도 조절자" */
+/* 원래 설계 의도:
+   X축: G평균 (환경전환 압력 = 탄소 리스크)
+   Y축: (D평균 + A평균) / 2 (기술전환 압력 = Digital+AI)
+   → G와 D+A는 모두 "외부 전환 압력"의 두 축
+   → X(고용전환)는 분류 축이 아닌 "고용전환 강도 조절자"로 재배치
+   → 업종별 D/A 가중치 차등 적용 가능 */
 const TYPE_CONFIG = {
   struct:  { name: '구조전환형', icon: '\u{1F3ED}', desc: 'Green+Digital/AI 동시 전환 + 대규모 인력 재편', condition: '환경압력 高 + 기술압력 高', cssClass: 'tc-struct' },
   process: { name: '공정혁신형', icon: '\u{2699}\u{FE0F}', desc: 'Digital/AI 전환 집중 + 운영 고도화', condition: '환경압력 低 + 기술압력 高', cssClass: 'tc-process' },
@@ -548,41 +548,17 @@ const TASK_POOL = {
       { name: 'AI 도입 기반 조성', gdax: 'A1~A5',
         desc: 'AI 활용 전략 수립, 데이터 거버넌스 체계 구축, 파일럿 프로젝트 추진을 통해 AI 도입의 조직적 기반을 마련합니다. 현장 수용성 확보와 단계적 확산 로드맵을 포함합니다.' }
     ]},
-    { direction: '복합(디지털, 그린) 인력구조 전환', xScale: true,
-      xLabel: { high: '복합(디지털, 그린) 인력구조 전환', medium: '단계적 인력 전환·교육 강화', low: '점진적 인력 역량 개발' },
-      tasks: [
+    { direction: '대규모 인력구조 전환', tasks: [
       { name: '직무 재설계 및 전환배치', gdax: 'X2, X4',
-        xName: { high: '직무 재설계 및 전환배치', medium: '단계적 직무 재설계', low: '직무 역량 진단 및 개발' },
-        desc: '이중전환으로 변화하는 직무를 분석하여 직무기술서를 재설계하고, 영향받는 인력의 전환배치 경로를 설계합니다. 직무 매칭 시스템과 내부 공모제 등을 활용한 체계적 재배치를 추진합니다.',
-        xDesc: { high: '이중전환으로 변화하는 직무를 분석하여 직무기술서를 재설계하고, 영향받는 인력의 전환배치 경로를 설계합니다. 직무 매칭 시스템과 내부 공모제 등을 활용한 체계적 재배치를 추진합니다.',
-                 medium: '전환 영향 직무를 분석하여 단계적 직무 재설계를 추진합니다. 우선 변화 직무부터 직무기술서를 갱신하고, 점진적 직무 전환 경로를 설계합니다.',
-                 low: '미래 직무 변화를 예측하여 현재 직무 역량 수준을 진단합니다. 선제적 역량 개발 계획을 수립하고, 필요 시 소규모 직무 조정을 준비합니다.' }
-      },
+        desc: '이중전환으로 변화하는 직무를 분석하여 직무기술서를 재설계하고, 영향받는 인력의 전환배치 경로를 설계합니다. 직무 매칭 시스템과 내부 공모제 등을 활용한 체계적 재배치를 추진합니다.' },
       { name: '전환 교육훈련 체계 구축', gdax: 'X4, X5',
-        xName: { high: '전환 교육훈련 체계 구축', medium: '맞춤형 교육훈련 프로그램 운영', low: '기초 역량 교육 프로그램 운영' },
-        desc: '그린·디지털·AI 3대 영역의 직무전환 교육과정을 설계하고, 단계별 역량 인증 체계를 구축합니다. OJT·멘토링·이러닝 등 다양한 학습 경로를 제공합니다.',
-        xDesc: { high: '그린·디지털·AI 3대 영역의 직무전환 교육과정을 설계하고, 단계별 역량 인증 체계를 구축합니다. OJT·멘토링·이러닝 등 다양한 학습 경로를 제공합니다.',
-                 medium: '전환 우선순위 영역 중심으로 교육과정을 설계하고, 핵심 직무 대상 맞춤형 역량 개발 프로그램을 운영합니다.',
-                 low: '전 직원 대상 기초 디지털·친환경 리터러시 교육을 실시하고, 관심 직원 대상 심화 학습 경로를 제공합니다.' }
-      }
+        desc: '그린·디지털·AI 3대 영역의 직무전환 교육과정을 설계하고, 단계별 역량 인증 체계를 구축합니다. OJT·멘토링·이러닝 등 다양한 학습 경로를 제공합니다.' }
     ]},
-    { direction: '노사협력 기반 변화관리', xScale: true,
-      xLabel: { high: '노사협력 기반 변화관리', medium: '변화관리 소통 체계 구축', low: '조직 내 변화 소통 강화' },
-      tasks: [
+    { direction: '노사협력 기반 변화관리', tasks: [
       { name: '노사 공동 전환 거버넌스', gdax: 'X1, X3',
-        xName: { high: '노사 공동 전환 거버넌스', medium: '전환 소통 채널 구축', low: '변화 공감대 형성 프로그램' },
-        desc: '노사 공동 전환위원회를 구성하고, 전환 과정의 의사결정에 근로자 대표가 참여하는 거버넌스 체계를 수립합니다. 정기 소통 채널과 갈등 조정 메커니즘을 포함합니다.',
-        xDesc: { high: '노사 공동 전환위원회를 구성하고, 전환 과정의 의사결정에 근로자 대표가 참여하는 거버넌스 체계를 수립합니다. 정기 소통 채널과 갈등 조정 메커니즘을 포함합니다.',
-                 medium: '전환 추진 사항을 공유하는 정기 소통 채널을 구축하고, 부서별 변화 담당자를 지정하여 현장 의견을 수렴하는 체계를 운영합니다.',
-                 low: '전환 비전과 방향을 공유하는 사내 커뮤니케이션 프로그램을 운영하고, 구성원의 변화 공감대를 형성합니다.' }
-      },
+        desc: '노사 공동 전환위원회를 구성하고, 전환 과정의 의사결정에 근로자 대표가 참여하는 거버넌스 체계를 수립합니다. 정기 소통 채널과 갈등 조정 메커니즘을 포함합니다.' },
       { name: '심리 안정 및 변화 수용', gdax: 'X3, X5',
-        xName: { high: '심리 안정 및 변화 수용 프로그램', medium: '변화 적응 지원 프로그램', low: '변화 인식 제고 활동' },
-        desc: '대규모 전환에 따른 구성원 불안을 관리하는 심리 지원 프로그램을 운영합니다. 변화관리 커뮤니케이션, EAP(근로자 지원 프로그램), 전환 성공 사례 공유 등을 포함합니다.',
-        xDesc: { high: '대규모 전환에 따른 구성원 불안을 관리하는 심리 지원 프로그램을 운영합니다. 변화관리 커뮤니케이션, EAP(근로자 지원 프로그램), 전환 성공 사례 공유 등을 포함합니다.',
-                 medium: '전환 과정에서 구성원의 변화 적응을 돕는 지원 프로그램을 운영합니다. 전환 성공 사례 공유, 부서별 변화 워크숍 등을 포함합니다.',
-                 low: '전환의 긍정적 측면을 공유하고 구성원 변화 인식을 제고하는 사내 활동을 운영합니다.' }
-      }
+        desc: '대규모 전환에 따른 구성원 불안을 관리하는 심리 지원 프로그램을 운영합니다. 변화관리 커뮤니케이션, EAP(근로자 지원 프로그램), 전환 성공 사례 공유 등을 포함합니다.' }
     ]}
   ],
   process: [
@@ -594,23 +570,11 @@ const TASK_POOL = {
       { name: '프로세스 디지털 재설계', gdax: 'D1, D3',
         desc: '수작업·문서 기반 업무 프로세스를 디지털 워크플로우로 재설계합니다. RPA 도입, 전자결재 고도화, 비대면 협업 환경 구축 등을 통해 업무 효율성을 극대화합니다.' }
     ]},
-    { direction: '디지털 인력 역량 전환', xScale: true,
-      xLabel: { high: '대규모 디지털 인력 전환', medium: '디지털 인력 역량 전환', low: '디지털 기초 역량 개발' },
-      tasks: [
+    { direction: '디지털 인력 역량 전환', tasks: [
       { name: '디지털 직무 역량 체계', gdax: 'X1, X2',
-        xName: { high: '디지털 직무 대규모 재설계', medium: '디지털 직무 역량 체계', low: '디지털 기초 역량 프레임워크' },
-        desc: '디지털 전환에 필요한 직무별 역량 프레임워크를 수립하고, 현재 수준 진단 → 갭 분석 → 맞춤형 교육의 체계를 운영합니다. 데이터 리터러시부터 전문 기술까지 단계별 역량 경로를 제공합니다.',
-        xDesc: { high: '디지털 전환에 따른 직무 구조를 전면 재설계하고, 대규모 인력 재배치 및 전환교육 체계를 구축합니다. 직무 매칭·전환배치·역량 인증까지 포괄합니다.',
-                 medium: '디지털 전환에 필요한 직무별 역량 프레임워크를 수립하고, 현재 수준 진단 → 갭 분석 → 맞춤형 교육의 체계를 운영합니다.',
-                 low: '전 직원 디지털 리터러시 수준을 진단하고, 기초 디지털 역량 교육 프로그램을 운영합니다.' }
-      },
+        desc: '디지털 전환에 필요한 직무별 역량 프레임워크를 수립하고, 현재 수준 진단 → 갭 분석 → 맞춤형 교육의 체계를 운영합니다. 데이터 리터러시부터 전문 기술까지 단계별 역량 경로를 제공합니다.' },
       { name: 'DX 전담 조직 구축', gdax: 'X4, X5',
-        xName: { high: 'DX 전담 조직 및 인력 재편', medium: 'DX 전담 조직 구축', low: 'DX 추진 담당자 지정' },
-        desc: '디지털 전환을 주도하는 전담 조직(CoE)을 신설하고, 내부 DX 전문 인력을 양성합니다. 현업 부서와의 협업 체계, 애자일 운영 방식, 성과 측정 KPI를 포함합니다.',
-        xDesc: { high: '디지털 전환 전담 조직(CoE)을 신설하고, 현업 인력의 대규모 DX 전문가 전환을 추진합니다. 인력구조 재편과 신규 채용을 병행합니다.',
-                 medium: '디지털 전환을 주도하는 전담 조직(CoE)을 신설하고, 내부 DX 전문 인력을 양성합니다. 현업 부서와의 협업 체계를 포함합니다.',
-                 low: '부서별 DX 추진 담당자를 지정하고, 외부 전문가 자문을 활용하여 점진적 디지털 전환을 추진합니다.' }
-      }
+        desc: '디지털 전환을 주도하는 전담 조직(CoE)을 신설하고, 내부 DX 전문 인력을 양성합니다. 현업 부서와의 협업 체계, 애자일 운영 방식, 성과 측정 KPI를 포함합니다.' }
     ]},
     { direction: '기반 유지·보완 (Green)', tasks: [
       { name: '친환경 관리 기본 체계 정비', gdax: 'G1~G3',
@@ -626,23 +590,11 @@ const TASK_POOL = {
       { name: 'ESG 경영 체계', gdax: 'G5',
         desc: 'ESG 전략 수립, 공시 체계 구축, 이해관계자 소통 전략을 포함한 ESG 경영 체계를 수립합니다. K-ESG, GRI, TCFD 등 주요 프레임워크에 대응하는 관리 체계를 포함합니다.' }
     ]},
-    { direction: '그린 인력 역량 전환', xScale: true,
-      xLabel: { high: '대규모 그린 인력 전환', medium: '그린 인력 역량 전환', low: '그린 기초 역량 개발' },
-      tasks: [
+    { direction: '그린 인력 역량 전환', tasks: [
       { name: '그린 직무 역량 개발', gdax: 'X2, X4',
-        xName: { high: '그린 직무 대규모 재편', medium: '그린 직무 역량 개발', low: '그린 기초 역량 교육' },
-        desc: '친환경 전환에 필요한 직무별 그린 역량을 정의하고, 맞춤형 교육 프로그램을 개발합니다. 환경 관리사, 에너지 진단사 등 전문 자격 취득 지원을 포함합니다.',
-        xDesc: { high: '친환경 전환에 따른 직무를 전면 재설계하고, 대규모 인력 재배치 및 그린 직무 전환교육 체계를 구축합니다.',
-                 medium: '친환경 전환에 필요한 직무별 그린 역량을 정의하고, 맞춤형 교육 프로그램을 개발합니다. 전문 자격 취득 지원을 포함합니다.',
-                 low: '전 직원 대상 환경 인식 교육 및 기초 그린 역량 프로그램을 운영합니다.' }
-      },
+        desc: '친환경 전환에 필요한 직무별 그린 역량을 정의하고, 맞춤형 교육 프로그램을 개발합니다. 환경 관리사, 에너지 진단사 등 전문 자격 취득 지원을 포함합니다.' },
       { name: '친환경 변화관리', gdax: 'X3, X5',
-        xName: { high: '노사협력 기반 그린 변화관리', medium: '친환경 변화관리', low: '친환경 인식 제고 활동' },
-        desc: '그린 전환에 대한 구성원 인식 제고와 행동 변화를 유도하는 프로그램을 운영합니다. 친환경 캠페인, 그린 오피스 운동, 환경 성과 인센티브 등 참여형 프로그램을 포함합니다.',
-        xDesc: { high: '그린 전환에 따른 구성원 불안 관리와 노사 공동 전환 거버넌스를 수립합니다. EAP, 전환배치 지원, 노사 소통 채널을 포함합니다.',
-                 medium: '그린 전환에 대한 구성원 인식 제고와 행동 변화를 유도하는 프로그램을 운영합니다. 캠페인, 인센티브 등 참여형 프로그램을 포함합니다.',
-                 low: '친환경 캠페인과 그린 오피스 운동 등 구성원 인식 제고 활동을 운영합니다.' }
-      }
+        desc: '그린 전환에 대한 구성원 인식 제고와 행동 변화를 유도하는 프로그램을 운영합니다. 친환경 캠페인, 그린 오피스 운동, 환경 성과 인센티브 등 참여형 프로그램을 포함합니다.' }
     ]},
     { direction: '기반 유지·보완 (Digital)', tasks: [
       { name: '디지털 기초 역량 확보', gdax: 'D1, D4',
@@ -656,23 +608,11 @@ const TASK_POOL = {
       { name: '차세대 운영 모델 설계', gdax: 'D2~D5',
         desc: '디지털 트윈, IoT 기반 스마트 팩토리, 자율 운영 시스템 등 차세대 운영 모델을 설계합니다. 기존 디지털 인프라를 활용한 혁신적 운영 방식의 선제적 도입을 추진합니다.' }
     ]},
-    { direction: '핵심 인력 유지·강화', xScale: true,
-      xLabel: { high: '핵심 인력 대규모 재편', medium: '핵심 인력 유지·강화', low: '핵심 인력 선제적 관리' },
-      tasks: [
+    { direction: '핵심 인력 유지·강화', tasks: [
       { name: '핵심 인재 리텐션', gdax: 'X1, X5',
-        xName: { high: '인력구조 재편 및 핵심 인재 확보', medium: '핵심 인재 리텐션', low: '핵심 인재 관리 체계 점검' },
-        desc: '전환 과정에서 핵심 인재의 이탈을 방지하는 리텐션 전략을 수립합니다. 경력 개발 경로 설계, 핵심 인재 보상 체계, 조직 몰입도 관리 프로그램을 포함합니다.',
-        xDesc: { high: '대규모 전환에 따른 인력구조 재편과 핵심 인재 확보 전략을 동시에 추진합니다. 전환배치, 신규 채용, 핵심 인재 보상 체계를 포함합니다.',
-                 medium: '전환 과정에서 핵심 인재의 이탈을 방지하는 리텐션 전략을 수립합니다. 경력 개발 경로 설계, 보상 체계, 몰입도 관리를 포함합니다.',
-                 low: '현재 핵심 인재 관리 체계를 점검하고, 미래 인력 수요 예측 기반 선제적 인재 확보 계획을 수립합니다.' }
-      },
+        desc: '전환 과정에서 핵심 인재의 이탈을 방지하는 리텐션 전략을 수립합니다. 경력 개발 경로 설계, 핵심 인재 보상 체계, 조직 몰입도 관리 프로그램을 포함합니다.' },
       { name: '선제적 역량 개발', gdax: 'X2, X4',
-        xName: { high: '대규모 역량 전환 프로그램', medium: '선제적 역량 개발', low: '미래 역량 탐색 프로그램' },
-        desc: '미래 직무 변화를 예측하여 선제적으로 역량을 개발합니다. 기술 트렌드 기반 역량 예측, 사내 벤처·학습 조직 활성화, 외부 전문기관 협력 교육 등을 포함합니다.',
-        xDesc: { high: '미래 직무 변화에 따른 대규모 역량 전환 프로그램을 설계합니다. 전 직원 역량 재진단, 집중 교육, 전환배치를 체계적으로 추진합니다.',
-                 medium: '미래 직무 변화를 예측하여 선제적으로 역량을 개발합니다. 사내 벤처·학습 조직 활성화, 외부 전문기관 협력 교육 등을 포함합니다.',
-                 low: '기술 트렌드를 모니터링하고, 관심 직원 대상 미래 역량 탐색·학습 기회를 제공합니다.' }
-      }
+        desc: '미래 직무 변화를 예측하여 선제적으로 역량을 개발합니다. 기술 트렌드 기반 역량 예측, 사내 벤처·학습 조직 활성화, 외부 전문기관 협력 교육 등을 포함합니다.' }
     ]},
     { direction: '친환경 기초 체계', tasks: [
       { name: '환경 규제 기본 대응', gdax: 'G1, G4',
@@ -684,6 +624,8 @@ const TASK_POOL = {
 /* ── Parse URL Data or Use Demo ── */
 async function getData() {
   const params = new URLSearchParams(window.location.search);
+
+  // 방법1: DB 조회 (id 파라미터)
   const id = params.get('id');
   if (id) {
     try {
@@ -691,19 +633,27 @@ async function getData() {
       if (!res.ok) throw new Error('Not found');
       const json = await res.json();
       return {
-        data: { company: json.company, scores: json.scores,
-                needs: json.needs, contact: json.contact },
-        isDemo: false, meta: json.meta
+        data: {
+          company: json.company,
+          scores: json.scores,
+          needs: json.needs,
+          contact: json.contact
+        },
+        isDemo: false,
+        meta: json.meta
       };
-    } catch (e) { /* fall through */ }
+    } catch (e) { console.error('API fetch error:', e); /* fall through */ }
   }
+
+  // 방법2: 하위호환 (base64 파라미터)
   const raw = params.get('data');
   if (raw) {
     try {
       return { data: JSON.parse(decodeURIComponent(escape(atob(raw)))), isDemo: false };
     } catch(e) { /* fall through */ }
   }
-  // Demo data - 5문항 × 4영역 = 20문항
+
+  // 방법3: 데모 데이터
   return {
     data: {
       company: { name: '(주)한빛테크', ceo: '이한빛', location: '경기도 안산시',
@@ -719,42 +669,6 @@ async function getData() {
 
 /* ── Score Helpers ── */
 function domainAvg(scores) { return scores.reduce((a,b) => a+b, 0) / scores.length; }
-
-/* ── 통합 3단 구조 점수 계산 (레이더·전환유형·4분면 공용) ── */
-function calcTierScores(scores) {
-  const domains = ['G','D','A','X'];
-  const TIER3_LABEL = { G: '성장 동력', D: '인재 역량', A: '인재 역량', X: '추진 동력' };
-  const result = {};
-  domains.forEach(dk => {
-    const qs = DOMAIN_CONFIG[dk].questions;
-    const tiers = {};
-    qs.forEach((q, qi) => {
-      const g = q.group;
-      if (!tiers[g]) tiers[g] = { s: 0, c: 0 };
-      tiers[g].s += scores[dk][qi];
-      tiers[g].c++;
-    });
-    const t3Name = TIER3_LABEL[dk];
-    const pressure = tiers['전환 압력'] ? tiers['전환 압력'].s / tiers['전환 압력'].c : 0;
-    const foundation = tiers['실행 기반'] ? tiers['실행 기반'].s / tiers['실행 기반'].c : 0;
-    const capability = tiers[t3Name] ? tiers[t3Name].s / tiers[t3Name].c : 0;
-    // 실행 기반 + 동력/역량 통합 평균
-    const fItems = tiers['실행 기반'] ? tiers['실행 기반'].c : 0;
-    const cItems = tiers[t3Name] ? tiers[t3Name].c : 0;
-    const fSum = tiers['실행 기반'] ? tiers['실행 기반'].s : 0;
-    const cSum = tiers[t3Name] ? tiers[t3Name].s : 0;
-    const readiness = (fItems + cItems) > 0 ? (fSum + cSum) / (fItems + cItems) : 0;
-    result[dk] = {
-      pressure,
-      foundation,
-      capability,
-      readiness,  // 실행기반+동력/역량 통합
-      capLabel: dk === 'G' ? '동력' : (dk === 'X' ? '동력' : '역량'),
-      gap: Math.max(pressure - readiness, 0)
-    };
-  });
-  return result;
-}
 function totalScore(allScores) {
   const all = [...allScores.G, ...allScores.D, ...allScores.A, ...allScores.X];
   return all.reduce((a,b) => a+b, 0);
@@ -773,26 +687,24 @@ function getPressure(avg) {
 }
 
 /* ── 전환 유형 4분류 (G × D+A 모델) ── */
-/* X축 = G 전환 압력 평균 (환경전환 압력 = G1,G2,G3)
-   Y축 = techPressure (기술전환 압력 = D+A 전환 압력 문항만의 가중평균)
+/* X축 = G평균 (환경전환 압력 = 탄소 리스크)
+   Y축 = techPressure (기술전환 압력 = D+A 가중평균)
    업종별 가중치: 제조형(D55:A45), 서비스형(D50:A50), 기술형(D35:A65)
    X영역 = 고용전환 강도 조절자 (분류 후 Task Pool 강도 조절) */
-function getTechPressure(scores, indType, tierData) {
-  const ts = tierData || calcTierScores(scores);
-  const dPressure = ts.D.pressure;
-  const aPressure = ts.A.pressure;
+function getTechPressure(scores, indType) {
+  const dAvg = domainAvg(scores.D);
+  const aAvg = domainAvg(scores.A);
   const w = DA_WEIGHTS[indType] || DA_WEIGHTS['제조형'];
-  return dPressure * w.D + aPressure * w.A;
+  return dAvg * w.D + aAvg * w.A;
 }
 
-function getTypeClassification(scores, indType, tierData) {
-  const ts = tierData || calcTierScores(scores);
-  const gPressure = ts.G.pressure;
-  const techPressure = getTechPressure(scores, indType, ts);
+function getTypeClassification(scores, indType) {
+  const gAvg = domainAvg(scores.G);
+  const techAvg = getTechPressure(scores, indType);
   const threshold = 3.0;
 
-  const highGreen = gPressure >= threshold;
-  const highTech = techPressure >= threshold;
+  const highGreen = gAvg >= threshold;
+  const highTech = techAvg >= threshold;
 
   if (highGreen && highTech) return 'struct';   // 구조전환형
   if (!highGreen && highTech) return 'process';  // 공정혁신형
@@ -800,16 +712,11 @@ function getTypeClassification(scores, indType, tierData) {
   return 'strong';                                // 강소기반형
 }
 
-/* ── 고용전환 강도 판정 (X영역 전환 압력 + 추진 동력, 실행 기반 제외) ── */
-function getTransitionIntensity(scores, tierData) {
-  const ts = tierData || calcTierScores(scores);
-  // X 전환 압력(X1,X2) + 추진 동력(X5)의 가중 평균
-  // 실행 기반(X3,X4)은 역방향 문항으로 강도 산출에서 제외
-  const pressure = ts.X.pressure;   // X1,X2 평균
-  const momentum = ts.X.capability; // X5 (추진 동력)
-  const intensityScore = (pressure * 2 + momentum) / 3;  // 압력 2:동력 1 가중
-  if (intensityScore >= 3.5) return 'high';
-  if (intensityScore >= 2.5) return 'medium';
+/* ── 고용전환 강도 판정 (X영역 기반) ── */
+function getTransitionIntensity(scores) {
+  const xAvg = domainAvg(scores.X);
+  if (xAvg >= 3.5) return 'high';
+  if (xAvg >= 2.5) return 'medium';
   return 'low';
 }
 
@@ -915,33 +822,50 @@ function generateSWOT(scores, domainAvgs) {
   };
 }
 
-/* ── Draw Radar Chart (이중 폴리곤: 전환 압력 vs 실행기반·역량 갭 시각화) ── */
+/* ── Draw Radar Chart ── */
 function drawRadar(canvasId, scores) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const W = canvas.width = 580;
-  const H = canvas.height = 460;
-  const cx = W/2, cy = H/2 - 10, R = 130;
+  const H = canvas.height = 440;
+  const cx = W/2, cy = H/2 - 16, R = 130;
 
-  /* ── 반응형 폰트 스케일 ── */
+  /* ── 반응형 폰트 스케일 (캔버스 렌더 크기 기준) ── */
   const displayW = canvas.getBoundingClientRect().width || W;
   const fScale = Math.max(0.7, Math.min(1, displayW / W));
   const fs = (px) => Math.round(px * fScale) + 'px';
 
   const domains = ['G','D','A','X'];
+  const avgs = domains.map(d => domainAvg(scores[d]));
   const colors = domains.map(d => DOMAIN_CONFIG[d].color);
   const labels = domains.map(d => `${d} ${DOMAIN_CONFIG[d].name}`);
   const angles = domains.map((_, i) => (Math.PI * 2 * i / 4) - Math.PI/2);
 
-  /* ── 통합 3단 구조 점수 (calcTierScores 공용) ── */
-  const ts = calcTierScores(scores);
-  const pressureAvgs = domains.map(d => ts[d].pressure);
-  const readinessAvgs = domains.map(d => ts[d].readiness);
+  /* ── 3단 구조별 소점수 계산 ── */
+  const TIER_NAMES = ['전환 압력', '실행 기반'];
+  const TIER3_MAP = { G: '성장 동력', D: '인재 역량', A: '인재 역량', X: '인재 역량' };
+  const tierScores = {};
+  domains.forEach(dk => {
+    const qs = DOMAIN_CONFIG[dk].questions;
+    const tiers = {};
+    qs.forEach((q, qi) => {
+      const g = q.group;
+      if (!tiers[g]) tiers[g] = { s: 0, c: 0 };
+      tiers[g].s += scores[dk][qi];
+      tiers[g].c++;
+    });
+    const t3Name = TIER3_MAP[dk];
+    tierScores[dk] = [
+      { name: '압력', avg: tiers['전환 압력'] ? tiers['전환 압력'].s / tiers['전환 압력'].c : 0 },
+      { name: '기반', avg: tiers['실행 기반'] ? tiers['실행 기반'].s / tiers['실행 기반'].c : 0 },
+      { name: dk === 'G' ? '동력' : '역량', avg: tiers[t3Name] ? tiers[t3Name].s / tiers[t3Name].c : 0 }
+    ];
+  });
 
   ctx.clearRect(0, 0, W, H);
 
-  // Grid rings
+  // Grid
   for (let ring = 1; ring <= 5; ring++) {
     const r = R * ring / 5;
     ctx.beginPath();
@@ -966,95 +890,61 @@ function drawRadar(canvasId, scores) {
     ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 0.8; ctx.stroke();
   });
 
-  /* ── GAP 영역 (전환 압력 > 실행기반·역량인 영역을 빗금 채움) ── */
-  // 먼저 전환 압력 폴리곤과 실행기반·역량 폴리곤 사이의 갭 영역을 그림
-  const pressurePts = pressureAvgs.map((v, i) => ({
-    x: cx + (R * v / 5) * Math.cos(angles[i]),
-    y: cy + (R * v / 5) * Math.sin(angles[i])
-  }));
-  const readinessPts = readinessAvgs.map((v, i) => ({
-    x: cx + (R * v / 5) * Math.cos(angles[i]),
-    y: cy + (R * v / 5) * Math.sin(angles[i])
-  }));
-
-  // 각 축 세그먼트별로 갭 영역 채움
-  for (let i = 0; i < 4; i++) {
-    const ni = (i + 1) % 4;
-    const pCur = pressureAvgs[i], rCur = readinessAvgs[i];
-    const pNext = pressureAvgs[ni], rNext = readinessAvgs[ni];
-    // 해당 세그먼트에서 압력이 기반보다 높은 경우만 갭 표시
-    if (pCur > rCur || pNext > rNext) {
-      ctx.beginPath();
-      ctx.moveTo(pressurePts[i].x, pressurePts[i].y);
-      ctx.lineTo(pressurePts[ni].x, pressurePts[ni].y);
-      ctx.lineTo(readinessPts[ni].x, readinessPts[ni].y);
-      ctx.lineTo(readinessPts[i].x, readinessPts[i].y);
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(220, 38, 38, 0.08)';
-      ctx.fill();
-    }
-  }
-
-  /* ── 실행기반·역량 폴리곤 (파란색) ── */
+  // Data polygon
   ctx.beginPath();
-  readinessAvgs.forEach((v, i) => {
+  avgs.forEach((v, i) => {
     const r = R * v / 5;
     const x = cx + r * Math.cos(angles[i]);
     const y = cy + r * Math.sin(angles[i]);
     if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
   });
   ctx.closePath();
-  ctx.fillStyle = 'rgba(37, 99, 235, 0.10)'; ctx.fill();
-  ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 2; ctx.setLineDash([6, 3]); ctx.stroke();
-  ctx.setLineDash([]);
+  ctx.fillStyle = 'rgba(37, 99, 235, 0.12)'; ctx.fill();
+  ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 2.5; ctx.stroke();
 
-  /* ── 전환 압력 폴리곤 (빨간색) ── */
-  ctx.beginPath();
-  pressureAvgs.forEach((v, i) => {
+  // Data points, Labels & 3단 구조 서브 마커
+  const tierColors = ['#ef4444', '#f59e0b', '#3b82f6'];
+  const tierShapes = ['diamond', 'square', 'triangle'];
+
+  avgs.forEach((v, i) => {
+    const dk = domains[i];
     const r = R * v / 5;
     const x = cx + r * Math.cos(angles[i]);
     const y = cy + r * Math.sin(angles[i]);
-    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-  });
-  ctx.closePath();
-  ctx.fillStyle = 'rgba(220, 38, 38, 0.10)'; ctx.fill();
-  ctx.strokeStyle = '#dc2626'; ctx.lineWidth = 2.5; ctx.stroke();
 
-  /* ── 데이터 포인트 + 라벨 ── */
-  domains.forEach((dk, i) => {
-    const pVal = pressureAvgs[i];
-    const rVal = readinessAvgs[i];
-    const gapVal = ts[dk].gap;
+    // 메인 데이터 포인트
+    ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = colors[i]; ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
 
-    // 전환 압력 포인트 (빨간 다이아몬드)
-    const pr = R * pVal / 5;
-    const px = cx + pr * Math.cos(angles[i]);
-    const py = cy + pr * Math.sin(angles[i]);
-    const sz = 5;
-    ctx.fillStyle = '#dc2626'; ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(px, py - sz); ctx.lineTo(px + sz, py);
-    ctx.lineTo(px, py + sz); ctx.lineTo(px - sz, py);
-    ctx.closePath(); ctx.fill(); ctx.stroke();
-
-    // 실행기반·역량 포인트 (파란 원)
-    const rr = R * rVal / 5;
-    const rx = cx + rr * Math.cos(angles[i]);
-    const ry = cy + rr * Math.sin(angles[i]);
-    ctx.beginPath(); ctx.arc(rx, ry, 5, 0, Math.PI * 2);
-    ctx.fillStyle = '#2563eb'; ctx.fill();
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
-
-    // 갭 연결선 (점선)
-    if (gapVal > 0.3) {
-      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(rx, ry);
-      ctx.strokeStyle = 'rgba(220, 38, 38, 0.4)'; ctx.lineWidth = 1.5;
-      ctx.setLineDash([3, 3]); ctx.stroke(); ctx.setLineDash([]);
-    }
+    // 3단 구조 서브 마커 (축 위에 작은 마커 3개)
+    tierScores[dk].forEach((tier, ti) => {
+      const tr = R * tier.avg / 5;
+      const tx = cx + tr * Math.cos(angles[i]);
+      const ty = cy + tr * Math.sin(angles[i]);
+      const sz = 3.5;
+      ctx.fillStyle = tierColors[ti];
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1;
+      if (tierShapes[ti] === 'diamond') {
+        ctx.beginPath();
+        ctx.moveTo(tx, ty - sz); ctx.lineTo(tx + sz, ty);
+        ctx.lineTo(tx, ty + sz); ctx.lineTo(tx - sz, ty);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+      } else if (tierShapes[ti] === 'square') {
+        ctx.beginPath();
+        ctx.rect(tx - sz, ty - sz, sz * 2, sz * 2);
+        ctx.fill(); ctx.stroke();
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(tx, ty - sz); ctx.lineTo(tx + sz, ty + sz);
+        ctx.lineTo(tx - sz, ty + sz);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+      }
+    });
 
     // 라벨 위치
-    const lx = cx + (R + 44) * Math.cos(angles[i]);
-    const ly = cy + (R + 44) * Math.sin(angles[i]);
+    const lx = cx + (R + 40) * Math.cos(angles[i]);
+    const ly = cy + (R + 40) * Math.sin(angles[i]);
 
     const cosA = Math.cos(angles[i]);
     let align = 'center';
@@ -1064,54 +954,64 @@ function drawRadar(canvasId, scores) {
     // 도메인 라벨
     ctx.font = '700 ' + fs(13) + ' Noto Sans KR'; ctx.fillStyle = colors[i];
     ctx.textAlign = align; ctx.textBaseline = 'middle';
-    ctx.fillText(labels[i], lx, ly - 14);
+    ctx.fillText(labels[i], lx, ly - 10);
+    ctx.font = '600 ' + fs(12) + ' Noto Sans KR'; ctx.fillStyle = '#374151';
+    ctx.fillText(v.toFixed(1) + ' / 5.0', lx, ly + 7);
 
-    // 압력 vs 기반·역량 수치
-    ctx.font = '600 ' + fs(11) + ' Noto Sans KR';
-    ctx.fillStyle = '#dc2626'; ctx.fillText('압력 ' + pVal.toFixed(1), lx, ly + 2);
-
-    ctx.font = fs(11) + ' Noto Sans KR';
-    const subY = ly + 16;
-    ctx.fillStyle = '#2563eb';
-    const readinessText = '기반·역량 ' + rVal.toFixed(1);
-    ctx.fillText(readinessText, lx, subY);
-
-    // 갭 표시 (갭이 유의미할 경우)
-    if (gapVal > 0.3) {
-      ctx.font = '700 ' + fs(10) + ' Noto Sans KR';
-      ctx.fillStyle = '#991b1b';
-      ctx.fillText('GAP ' + gapVal.toFixed(1), lx, subY + 14);
+    // 3단 소점수 라벨 (measureText 기반 동적 배치)
+    const subY = ly + 22;
+    ctx.font = fs(9) + ' Noto Sans KR';
+    const tierLabels = tierScores[dk].map((t, ti) => {
+      return { text: t.name + ' ' + t.avg.toFixed(1), color: tierColors[ti] };
+    });
+    const gap = 4;
+    const totalW = tierLabels.reduce((sum, tl) => sum + ctx.measureText(tl.text).width, 0) + gap * (tierLabels.length - 1);
+    let sx;
+    if (align === 'center') {
+      sx = lx - totalW / 2;
+    } else if (align === 'right') {
+      sx = lx - totalW;
+    } else {
+      sx = lx;
     }
+    sx = Math.max(4, Math.min(sx, W - totalW - 4));
+    tierLabels.forEach(tl => {
+      ctx.fillStyle = tl.color;
+      ctx.textAlign = 'left';
+      ctx.fillText(tl.text, sx, subY);
+      sx += ctx.measureText(tl.text).width + gap;
+    });
   });
 
   /* ── 범례 (하단) ── */
   const legendY = H - 14;
   const legendItems = [
-    { shape: 'diamond', color: '#dc2626', label: '전환 압력', dash: false },
-    { shape: 'circle', color: '#2563eb', label: '실행기반·역량', dash: true },
-    { shape: 'gap', color: 'rgba(220,38,38,0.15)', label: 'GAP 영역', dash: false }
+    { shape: 'diamond', color: tierColors[0], label: '전환 압력' },
+    { shape: 'square', color: tierColors[1], label: '실행 기반' },
+    { shape: 'triangle', color: tierColors[2], label: '동력/역량' },
+    { shape: 'circle', color: '#2563eb', label: '영역 평균' }
   ];
   ctx.font = fs(10) + ' Noto Sans KR'; ctx.textBaseline = 'middle';
-  const totalLegendW = legendItems.reduce((s, li) => s + ctx.measureText(li.label).width + 28, 0);
+  const totalLegendW = legendItems.reduce((s, li) => s + ctx.measureText(li.label).width + 24, 0);
   let lxPos = cx - totalLegendW / 2;
   legendItems.forEach(li => {
     const sz = 4;
-    ctx.fillStyle = li.color; ctx.strokeStyle = li.color; ctx.lineWidth = 1;
+    ctx.fillStyle = li.color; ctx.strokeStyle = '#fff'; ctx.lineWidth = 0.5;
     if (li.shape === 'diamond') {
       ctx.beginPath(); ctx.moveTo(lxPos, legendY - sz); ctx.lineTo(lxPos + sz, legendY);
       ctx.lineTo(lxPos, legendY + sz); ctx.lineTo(lxPos - sz, legendY);
       ctx.closePath(); ctx.fill();
-    } else if (li.shape === 'circle') {
-      ctx.beginPath(); ctx.arc(lxPos, legendY, sz + 1, 0, Math.PI * 2); ctx.fill();
+    } else if (li.shape === 'square') {
+      ctx.fillRect(lxPos - sz, legendY - sz, sz * 2, sz * 2);
+    } else if (li.shape === 'triangle') {
+      ctx.beginPath(); ctx.moveTo(lxPos, legendY - sz); ctx.lineTo(lxPos + sz, legendY + sz);
+      ctx.lineTo(lxPos - sz, legendY + sz); ctx.closePath(); ctx.fill();
     } else {
-      ctx.fillStyle = 'rgba(220,38,38,0.15)';
-      ctx.fillRect(lxPos - sz, legendY - sz, sz * 2 + 2, sz * 2);
-      ctx.strokeStyle = '#dc2626'; ctx.lineWidth = 0.8;
-      ctx.strokeRect(lxPos - sz, legendY - sz, sz * 2 + 2, sz * 2);
+      ctx.beginPath(); ctx.arc(lxPos, legendY, sz + 1, 0, Math.PI * 2); ctx.fill();
     }
     ctx.fillStyle = '#6b7280'; ctx.textAlign = 'left';
     ctx.fillText(li.label, lxPos + 8, legendY);
-    lxPos += ctx.measureText(li.label).width + 28;
+    lxPos += ctx.measureText(li.label).width + 24;
   });
 }
 
@@ -1170,12 +1070,11 @@ function drawQuadrant(canvasId, scores, indType) {
   ];
   qLabels.forEach(ql => { ctx.fillStyle = ql.color; ctx.fillText(ql.text, ql.x, ql.y); });
 
-  // Plot company point (G압력 × D+A압력 — 전환 압력 문항만 사용)
-  const ts = calcTierScores(scores);
-  const gPressure = ts.G.pressure;
-  const techPressure = getTechPressure(scores, indType, ts);
-  const px = margin.left + plotW * (gPressure - 1) / 4;
-  const py = margin.top + plotH * (1 - (techPressure - 1) / 4);
+  // Plot company point (G × D+A)
+  const gAvg = domainAvg(scores.G);
+  const techAvg = getTechPressure(scores, indType);
+  const px = margin.left + plotW * (gAvg - 1) / 4;
+  const py = margin.top + plotH * (1 - (techAvg - 1) / 4);
 
   // Shadow + Point
   ctx.beginPath(); ctx.arc(px, py, 14, 0, Math.PI * 2);
@@ -1188,15 +1087,15 @@ function drawQuadrant(canvasId, scores, indType) {
 
   // Axis labels
   ctx.font = '700 13px Noto Sans KR'; ctx.fillStyle = '#374151'; ctx.textAlign = 'center';
-  ctx.fillText('X\uCD95: \uD658\uACBD\uC804\uD658 \uC555\uB825 (G \uC804\uD658\uC555\uB825 \uBB38\uD56D) \u2192', W / 2, H - 10);
+  ctx.fillText('X\uCD95: \uD658\uACBD\uC804\uD658 \uC555\uB825 (G\uC601\uC5ED) \u2192', W / 2, H - 10);
   ctx.save(); ctx.translate(16, H / 2); ctx.rotate(-Math.PI / 2);
-  ctx.fillText('Y\uCD95: \uAE30\uC220\uC804\uD658 \uC555\uB825 (D+A \uC804\uD658\uC555\uB825 \uBB38\uD56D) \u2192', 0, 0);
+  ctx.fillText('Y\uCD95: \uAE30\uC220\uC804\uD658 \uC555\uB825 (D+A \uAC00\uC911\uD3C9\uADE0) \u2192', 0, 0);
   ctx.restore();
 
   // Coordinates
   const w = DA_WEIGHTS[indType] || DA_WEIGHTS['제조형'];
   ctx.font = '600 11px Noto Sans KR'; ctx.fillStyle = '#6b7280'; ctx.textAlign = 'center';
-  ctx.fillText(`G압력 ${gPressure.toFixed(1)} / D+A압력 ${techPressure.toFixed(1)} (D\u00D7${w.D}+A\u00D7${w.A})`, px, py + 26);
+  ctx.fillText(`G ${gAvg.toFixed(1)} / D+A ${techAvg.toFixed(1)} (D\u00D7${w.D}+A\u00D7${w.A})`, px, py + 26);
 }
 
 /* ── Render Report ── */
@@ -1209,11 +1108,10 @@ async function render() {
   const overallAvg = total / TOTAL_Q;
   const level = getLevel(overallAvg);
   const indType = d.company.indType || '제조형';
-  const tierData = calcTierScores(sc);
-  const tType = getTypeClassification(sc, indType, tierData);
+  const tType = getTypeClassification(sc, indType);
   const typeCfg = TYPE_CONFIG[tType];
-  const techAvg = getTechPressure(sc, indType, tierData);
-  const intensity = getTransitionIntensity(sc, tierData);
+  const techAvg = getTechPressure(sc, indType);
+  const intensity = getTransitionIntensity(sc);
   const intensityCfg = INTENSITY_CONFIG[intensity];
   const btjr = btjrScores(sc);
   const btjrGrp = btjrByGroup(sc);
@@ -1308,8 +1206,8 @@ async function render() {
   <div class="card">
     <div class="card-header">
       <span class="ch-icon">\u{1F578}</span>
-      <h2>G-DAX \uC804\uD658\uC555\uB825 vs \uC2E4\uD589\uAE30\uBC18\u00B7\uC5ED\uB7C9 \uAC41 \uBD84\uC11D</h2>
-      <span class="ch-tag">\uC774\uC911 \uB808\uC774\uB354 \u00B7 \uC555\uB825-\uAE30\uBC18 GAP \uC2DC\uAC01\uD654</span>
+      <h2>G-DAX \uC601\uC5ED\uBCC4 \uC9C4\uB2E8 \uB808\uC774\uB354</h2>
+      <span class="ch-tag">Ch.3.3 \uB808\uC774\uB354 \uCC28\uD2B8 \uC5F0\uACC4</span>
     </div>
     <div class="card-body">
       <div class="radar-wrap"><canvas id="radarChart"></canvas></div>
@@ -1468,7 +1366,7 @@ async function render() {
     <div class="card-body">
       <div class="fw-callout fw-callout-navy">
         <span class="fw-icon">\u{1F4D0}</span>
-        <div><strong>\uBD84\uB958 \uB85C\uC9C1 (G \u00D7 D+A \uBAA8\uB378):</strong> X\uCD95 = G \uC804\uD658\uC555\uB825 \uBB38\uD56D \uD3C9\uADE0(\uD658\uACBD\uC804\uD658 \uC555\uB825), Y\uCD95 = D+A \uC804\uD658\uC555\uB825 \uBB38\uD56D \uAC00\uC911\uD3C9\uADE0(\uAE30\uC220\uC804\uD658 \uC555\uB825). \uC5C5\uC885\uC720\uD615 <strong>${indType}</strong> \uAE30\uC900 D\u00D7${(DA_WEIGHTS[indType]||DA_WEIGHTS['\uC81C\uC870\uD615']).D}+A\u00D7${(DA_WEIGHTS[indType]||DA_WEIGHTS['\uC81C\uC870\uD615']).A} \uAC00\uC911\uCE58 \uC801\uC6A9. \uAE30\uC900\uC120 3.0 \uAE30\uC900 4\uBD84\uBA74 \uBD84\uB958. \uBCF8 \uAE30\uC5C5: <strong>${typeCfg.name}</strong> (G\uC555\uB825 ${tierData.G.pressure.toFixed(1)} / D+A\uC555\uB825 ${techAvg.toFixed(1)})</div>
+        <div><strong>\uBD84\uB958 \uB85C\uC9C1 (G \u00D7 D+A \uBAA8\uB378):</strong> X\uCD95 = G\uC601\uC5ED \uD3C9\uADE0(\uD658\uACBD\uC804\uD658 \uC555\uB825), Y\uCD95 = D+A \uAC00\uC911\uD3C9\uADE0(\uAE30\uC220\uC804\uD658 \uC555\uB825). \uC5C5\uC885\uC720\uD615 <strong>${indType}</strong> \uAE30\uC900 D\u00D7${(DA_WEIGHTS[indType]||DA_WEIGHTS['\uC81C\uC870\uD615']).D}+A\u00D7${(DA_WEIGHTS[indType]||DA_WEIGHTS['\uC81C\uC870\uD615']).A} \uAC00\uC911\uCE58 \uC801\uC6A9. \uAE30\uC900\uC120 3.0 \uAE30\uC900 4\uBD84\uBA74 \uBD84\uB958. \uBCF8 \uAE30\uC5C5: <strong>${typeCfg.name}</strong> (G ${domainAvgs.G.toFixed(1)} / D+A ${techAvg.toFixed(1)})</div>
       </div>
       <div class="quadrant-wrap"><canvas id="quadrantChart"></canvas></div>
       <div class="type-grid" style="margin-top:20px;">
@@ -1494,7 +1392,7 @@ async function render() {
     <div class="card-body">
       <div class="fw-callout fw-callout-red">
         <span class="fw-icon">\u{1F504}</span>
-        <div><strong>X\uC601\uC5ED(\uACE0\uC6A9\uC804\uD658)\uC758 \uC5ED\uD560:</strong> \uC804\uD658 \uC720\uD615\uC740 G \u00D7 D+A\uB85C \uACB0\uC815\uB418\uACE0, X\uC601\uC5ED\uC740 \u201C\uC804\uD658\uC744 \uC2E4\uD589\uD560 \uB54C \uC870\uC9C1\uC774 \uAC10\uB2F9\uD574\uC57C \uD560 \uBCC0\uD654\uC758 \uADDC\uBAA8\u201D\uB97C \uD310\uC815\uD569\uB2C8\uB2E4. \uAC15\uB3C4 \uD310\uC815\uC740 <strong>\uC804\uD658 \uC555\uB825(X1\u00B7X2) + \uCD94\uC9C4 \uB3D9\uB825(X5)</strong>\uB9CC\uC73C\uB85C \uC0B0\uCD9C\uD558\uBA70, \uC2E4\uD589 \uAE30\uBC18(X3\u00B7X4)\uC740 \uC5ED\uBC29\uD5A5 \uBB38\uD56D\uC73C\uB85C \uAC15\uB3C4 \uC0B0\uCD9C\uC5D0\uC11C \uC81C\uC678\uB429\uB2C8\uB2E4.</div>
+        <div><strong>X\uC601\uC5ED(\uACE0\uC6A9\uC804\uD658)\uC758 \uC5ED\uD560:</strong> \uC804\uD658 \uC720\uD615\uC740 G \u00D7 D+A\uB85C \uACB0\uC815\uB418\uACE0, X\uC601\uC5ED\uC740 \u201C\uC804\uD658\uC744 \uC2E4\uD589\uD560 \uB54C \uC870\uC9C1\uC774 \uAC10\uB2F9\uD574\uC57C \uD560 \uBCC0\uD654\uC758 \uADDC\uBAA8\u201D\uB97C \uD310\uC815\uD569\uB2C8\uB2E4. \uB3D9\uC77C\uD55C \uC804\uD658 \uC720\uD615\uC774\uB77C\uB3C4 X\uC810\uC218\uC5D0 \uB530\uB77C Task Pool \uACFC\uC81C\uC758 \uAC15\uB3C4\uC640 \uBC94\uC704\uAC00 \uB2EC\uB77C\uC9D1\uB2C8\uB2E4.</div>
       </div>
       <div style="display:flex;align-items:center;gap:20px;justify-content:center;margin:16px 0;">
         <div style="text-align:center;">
@@ -1503,8 +1401,7 @@ async function render() {
           <div style="font-size:13px;color:var(--gray-500);margin-top:2px;">${intensityCfg.desc}</div>
         </div>
         <div style="background:var(--gray-100);border-radius:12px;padding:14px 20px;font-size:13px;line-height:1.7;">
-          <div><strong>\uC804\uD658\uC555\uB825(X1\u00B7X2):</strong> ${tierData.X.pressure.toFixed(1)} &nbsp;|&nbsp; <strong>\uCD94\uC9C4\uB3D9\uB825(X5):</strong> ${tierData.X.capability.toFixed(1)} &nbsp;|&nbsp; <strong>\uC2E4\uD589\uAE30\uBC18(X3\u00B7X4):</strong> ${tierData.X.foundation.toFixed(1)}</div>
-          <div><strong>\uAC15\uB3C4 \uC810\uC218:</strong> ${((tierData.X.pressure * 2 + tierData.X.capability) / 3).toFixed(1)} / 5.0 (\uC555\uB825\u00D72 + \uB3D9\uB825\u00D71 \uAC00\uC911\uD3C9\uADE0)</div>
+          <div><strong>X\uC601\uC5ED \uD3C9\uADE0:</strong> ${domainAvgs.X.toFixed(1)} / 5.0 (\uC804\uD658\uC555\uB825 ${getPressure(domainAvgs.X)})</div>
           <div><strong>\uC804\uD658 \uC720\uD615:</strong> ${typeCfg.name} + <span style="color:${intensityCfg.color};font-weight:700;">${intensityCfg.name}</span></div>
           <div style="margin-top:6px;font-size:12px;color:var(--gray-500);">
             ${intensity === 'high' ? '\u2192 \uC9C1\uBB34 \uC7AC\uC124\uACC4, \uC804\uD658\uBC30\uCE58, \uB178\uC0AC\uD611\uB825 \uAC70\uBC84\uB10C\uC2A4 \uD544\uC218. Task Pool\uC5D0\uC11C \uC778\uB825\uAD6C\uC870 \uC804\uD658 \uACFC\uC81C\uB97C \uCD5C\uB300 \uADDC\uBAA8\uB85C \uD3B8\uC131' :
@@ -1633,7 +1530,7 @@ async function render() {
     <div class="card-body">
       <div class="fw-callout fw-callout-purple">
         <span class="fw-icon">\u{1F4A1}</span>
-        <div><strong>\uC0AC\uC804\uC9C4\uB2E8 \uAE30\uBC18 \uC608\uBE44 \uBD84\uC11D:</strong> \uC815\uBC00 SWOT\uC740 G-DAX 3\uB2E8 \uAD6C\uC870(\uC804\uD658\uC555\uB825 \u00D7 \uC2E4\uD589\uAE30\uBC18\u00B7\uC5ED\uB7C9 \uAC41 \uBD84\uC11D)\uB97C \uD1B5\uD574 \uC644\uC131\uB429\uB2C8\uB2E4. \uC544\uB798\uB294 \uC0AC\uC804\uC9C4\uB2E8 \uC751\uB2F5 \uAE30\uBC18\uC758 \uC608\uBE44 \uBD84\uC11D\uC785\uB2C8\uB2E4.</div>
+        <div><strong>\uC0AC\uC804\uC9C4\uB2E8 \uAE30\uBC18 \uC608\uBE44 \uBD84\uC11D:</strong> \uC815\uBC00 SWOT\uC740 FABRIC \uB0B4\uBD80\uD604\uD669 + G-DAX \uC0B0\uC5C5\uC804\uD658\uD658\uACBD\uC744 \uD1B5\uD574 \uC644\uC131\uB429\uB2C8\uB2E4. \uC544\uB798\uB294 \uC0AC\uC804\uC9C4\uB2E8 \uC751\uB2F5 \uAE30\uBC18\uC758 \uC608\uBE44 \uBD84\uC11D\uC785\uB2C8\uB2E4.</div>
       </div>
       <div class="swot-grid">
         <div class="swot-cell swot-s"><h4>\u{1F4AA} S (\uAC15\uC810)</h4><ul>${swotData.S.map(s => `<li>${s}</li>`).join('')}</ul></div>
@@ -1659,17 +1556,13 @@ async function render() {
       <div class="task-pool">
         ${TASK_POOL[tType].map((dir, idx) => {
           const dirColor = idx === 0 ? '#1e3a5f' : idx === 1 ? '#2563eb' : '#16a34a';
-          const dirLabel = dir.xScale && dir.xLabel ? dir.xLabel[intensity] || dir.direction : dir.direction;
-          const xBadge = dir.xScale ? `<span style="display:inline-block;margin-left:8px;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:${intensityCfg.color}15;color:${intensityCfg.color};border:1px solid ${intensityCfg.color}40;">${intensityCfg.icon} ${intensityCfg.name}</span>` : '';
           return `<div class="tp-direction">
             <div class="tp-head">
               <div class="tp-num" style="background:${dirColor}">${idx + 1}</div>
-              <div class="tp-title">\uC804\uD658\uBC29\uD5A5: ${dirLabel}${xBadge}</div>
+              <div class="tp-title">\uC804\uD658\uBC29\uD5A5: ${dir.direction}</div>
             </div>
             <div class="tp-tasks">
               ${dir.tasks.map(t => {
-                const taskName = (dir.xScale && t.xName) ? (t.xName[intensity] || t.name) : t.name;
-                const taskDesc = (dir.xScale && t.xDesc) ? (t.xDesc[intensity] || t.desc) : t.desc;
                 const relDomains = ['G','D','A','X'].filter(d => t.gdax.includes(d));
                 const weakDomains = relDomains.filter(d => domainAvgs[d] < 3.0);
                 const urgentDomains = relDomains.filter(d => domainAvgs[d] < 2.0);
@@ -1679,7 +1572,7 @@ async function render() {
                 } else if (weakDomains.length > 0) {
                   badge = `<span class="tp-badge tp-badge-priority">\u26A0\uFE0F \uC6B0\uC120\uAC1C\uC120 (${weakDomains.map(d => d + ' ' + domainAvgs[d].toFixed(1)).join(', ')})</span>`;
                 }
-                return `<div class="tp-task${urgentDomains.length > 0 ? ' tp-urgent' : weakDomains.length > 0 ? ' tp-weak' : ''}"><div class="tp-task-header">\u25B8 ${taskName} <span class="tp-gdax">${t.gdax}</span>${badge}</div>${taskDesc ? `<div class="tp-desc">${taskDesc}</div>` : ''}</div>`;
+                return `<div class="tp-task${urgentDomains.length > 0 ? ' tp-urgent' : weakDomains.length > 0 ? ' tp-weak' : ''}"><div class="tp-task-header">\u25B8 ${t.name} <span class="tp-gdax">${t.gdax}</span>${badge}</div>${t.desc ? `<div class="tp-desc">${t.desc}</div>` : ''}</div>`;
               }).join('')}
             </div>
           </div>`;
@@ -1728,6 +1621,7 @@ async function render() {
     padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:16px;
     box-shadow:0 -4px 20px rgba(0,0,0,0.15);
   ">
+    <a href="/guide.html" target="_blank" style="color:#fff; font-size:13px; text-decoration:underline; opacity:0.85;">📖 보고서 보는 법</a>
     <span style="color:#fff;font-size:14px;font-weight:500;">📋 G-DAX 준비도 진단 결과 리포트</span>
     <button id="pdfBtn" onclick="downloadPDF()" style="
       background:#fff;color:#1e3a5f;border:none;padding:10px 28px;
@@ -1736,13 +1630,6 @@ async function render() {
     " onmouseover="this.style.background='#f0f4f8'" onmouseout="this.style.background='#fff'">
       📥 PDF 다운로드 (A4)
     </button>
-    <a href="/guide.html" target="_blank" style="
-      background:rgba(255,255,255,0.15);color:#fff;border:2px solid rgba(255,255,255,0.3);
-      padding:8px 20px;border-radius:8px;font-size:14px;font-weight:600;
-      text-decoration:none;transition:all .2s;
-    " onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
-      📖 보고서 보는 법
-    </a>
   </div>
   `;
 
@@ -1816,7 +1703,7 @@ function generateRecommendations(sc, avgs, tType, btjr) {
 
   // 전환 유형 기반 추천
   recs.push({ domain: typeCfg.name, title: `${typeCfg.name} \uB9DE\uCDA4 \uCEE8\uC124\uD305 \uD504\uB85C\uADF8\uB7A8`,
-    desc: `${typeCfg.desc}. \uC815\uBC00 \uC9C4\uB2E8(G-DAX 3\uB2E8 \uAD6C\uC870 \uBD84\uC11D)\uC744 \uD1B5\uD574 \uAE30\uC5C5 \uB9DE\uCDA4 \uC804\uD658\uACFC\uC81C\uB97C \uC124\uACC4\uD569\uB2C8\uB2E4.`,
+    desc: `${typeCfg.desc}. \uC815\uBC00 \uC9C4\uB2E8(FABRIC + G-DAX)\uC744 \uD1B5\uD574 \uAE30\uC5C5 \uB9DE\uCDA4 \uC804\uD658\uACFC\uC81C\uB97C \uC124\uACC4\uD569\uB2C8\uB2E4.`,
     color: '#1e3a5f', priority: 3, tags: ['\uC804\uD658\uC720\uD615'] });
 
   recs.sort((a,b) => a.priority - b.priority);
