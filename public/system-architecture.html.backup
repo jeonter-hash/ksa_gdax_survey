@@ -72,6 +72,7 @@
   .t-grp-p { background:#fee2e2; color:#dc2626; } .t-grp-i { background:#dbeafe; color:#2563eb; }
   .t-grp-d { background:#fef3c7; color:#b45309; } .t-grp-c { background:#ede9fe; color:#7c3aed; }
   .t-grp-x { background:#dcfce7; color:#16a34a; }
+  .t-rev { background:#fef2f2; color:#991b1b; border:1px solid #fca5a5; }
 
   /* ── Callout ── */
   .co { padding:14px 18px; border-radius:10px; font-size:12px; line-height:1.7; margin:14px 0; display:flex; gap:10px; align-items:flex-start; }
@@ -131,7 +132,7 @@
       <span class="cover-chip">🤖 A AI전환</span>
       <span class="cover-chip">🔄 X 고용전환</span>
     </div>
-    <div class="cover-meta">v2.1 · 2026.02.21 · 4영역 × 5문항 = 20문항 · BTJR 전환 영향 경로 · 3단 구조 분류 · 전환압력 기반 100점 환산</div>
+    <div class="cover-meta">v2.0 · 2026.02.17 · 4영역 × 5문항 = 20문항 · BTJR 전환 영향 경로 · 3단 구조 분류</div>
   </div>
 </div>
 
@@ -162,7 +163,7 @@
 <div class="card">
   <div class="card-hd hd-sys"><span class="icon">🏗️</span><h2>G-DAX 준비도 진단 시스템이란?</h2><span class="tag">System Overview</span></div>
   <div class="card-bd">
-    <p class="desc">G-DAX(Green-Digital-AI-eXployment)는 한국표준협회(KSA) 산업일자리전환 컨설팅에서 사용하는 <strong>기업 전환 준비도 진단 프레임워크</strong>입니다. G-DAX(4대 전환 축 진단) + BTJR(4대 전환 영향 경로) 통합 구조로 설계되어, 기업의 전환 압력 수준과 대응 준비도를 측정하고 전환과제를 자동 도출합니다.</p>
+    <p class="desc">G-DAX(Green-Digital-AI-eXployment)는 한국표준협회(KSA) 산업일자리전환 컨설팅에서 사용하는 <strong>기업 전환 준비도 진단 프레임워크</strong>입니다. G·D·A·X 4대 영역의 전환 압력과 대응 준비도를 3단 구조(전환 압력 → 실행 기반 → 동력/역량)로 진단하고, 4분류 전환유형과 BTJR 전환 영향 경로를 통해 산업일자리 전환이 기업에 미치는 영향을 모델링하며 전환과제를 도출합니다.</p>
 
     <div class="co co-navy"><span class="co-icon">📐</span><div><strong>시스템 구성 요소:</strong> 설문지(HTML) → 데이터 수집 → URL 파라미터(Base64 인코딩) → 결과보고서(HTML) → PDF 출력(window.print()). 전체 클라이언트 사이드 완결형 아키텍처로 서버 불필요.</div></div>
 
@@ -170,7 +171,7 @@
     <table>
       <tr><th style="width:200px">파일</th><th>역할</th><th style="width:80px">용량</th></tr>
       <tr><td><strong>GDAX_준비도진단_설문지</strong></td><td>기업 정보 수집 + 20문항 리커트 척도 + 추가 니즈 + 담당자 정보 → Base64 인코딩 후 결과보고서로 전달</td><td>46KB</td></tr>
-      <tr><td><strong>GDAX_준비도진단_결과보고서</strong></td><td>URL 파라미터 파싱 → 점수 계산 → 12개 분석 카드 렌더링 → PDF 출력 (window.print())</td><td>122KB</td></tr>
+      <tr><td><strong>GDAX_준비도진단_결과보고서</strong></td><td>URL 파라미터 파싱 → 점수 계산 → 11개 분석 카드 렌더링 → PDF 출력</td><td>85KB</td></tr>
     </table>
   </div>
 </div>
@@ -179,21 +180,44 @@
 <div class="sec-title" id="framework"><span class="sec-num">2</span>진단 프레임워크</div>
 
 <div class="card">
-  <div class="card-hd hd-sys"><span class="icon">🔬</span><h2>G-DAX + BTJR 통합 진단 구조</h2><span class="tag">Integrated Framework</span></div>
+  <div class="card-hd hd-sys"><span class="icon">🔬</span><h2>G-DAX 3단 진단 체계</h2><span class="tag">3-Tier Diagnostic Framework</span></div>
   <div class="card-bd">
-    <div class="grid-2">
-      <div class="mini-card" style="border-color:var(--navy);">
-        <h4 style="color:var(--navy);">G-DAX (4대 전환 축 진단)</h4>
-        <p>G(Green/친환경) · D(Digital/디지털) · A(AI/인공지능) · X(eXployment/고용전환) — 4대 외부 전환 축의 <strong>압력 수준</strong>과 <strong>기업 대응 준비도</strong>를 20문항(영역별 5문항)으로 측정. 각 문항은 전환 압력 / 실행 기반 / 동력·역량의 3단 구조로 분류됩니다.</p>
+    <p class="desc">G-DAX는 4대 영역(G·D·A·X) × 5문항 = 20문항을 <strong>3단 구조</strong>로 분류하여, 외부 전환 압력의 강도와 내부 대응 준비도의 갭(Gap)을 체계적으로 식별합니다. 이 진단 결과는 <strong>4분류 전환유형</strong>과 <strong>BTJR 전환 영향 경로</strong>를 통해 산업일자리 전환이 기업에 미치는 영향을 모델링하고 전환과제를 도출합니다.</p>
+
+    <div class="flow">
+      <div class="flow-box" style="background:#fee2e2;color:#dc2626;border:2px solid #dc2626;">🔥 전환 압력<br><small>외부 변화 강도 측정</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box" style="background:#dbeafe;color:#2563eb;border:2px solid #2563eb;">🏗️ 실행 기반<br><small>내부 인프라·체계 평가</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box" style="background:#fef3c7;color:#b45309;border:2px solid #b45309;">⚡ 동력/역량<br><small>성장·인재·추진력 진단</small></div>
+    </div>
+
+    <div class="co co-navy"><span class="co-icon">📐</span><div><strong>진단 → 분류 → 과제 도출 프로세스:</strong><br>
+      ① <strong>3단 구조 진단</strong> — 20문항을 전환 압력·실행 기반·동력/역량으로 분류하여 압력-기반 갭 식별<br>
+      ② <strong>4분류 전환유형</strong> — G축(환경전환) × D+A축(기술전환) 기준 4분면 분류 (구조전환형·공정혁신형·가치창출형·강소기반형)<br>
+      ③ <strong>BTJR 영향 경로</strong> — 사업구조(B) → 기술운영(T) → 직무역량(J) → 노사관계(R) 연쇄 경로로 전환 영향 모델링<br>
+      ④ <strong>전환과제 도출</strong> — 전환유형별 Task Pool에서 맞춤형 과제 자동 생성 + 복합 우선순위 스코어링
+    </div></div>
+
+    <h3>G-DAX 4대 진단 영역</h3>
+    <div class="grid-4">
+      <div class="mini-card" style="border-color:var(--green);">
+        <h4 style="color:var(--green);">🌱 G 친환경전환</h4>
+        <p>탄소중립·ESG·에너지 전환 압력과 환경관리 체계 수준을 진단</p>
       </div>
-      <div class="mini-card" style="border-color:var(--btjr);">
-        <h4 style="color:var(--btjr);">BTJR (4대 전환 영향 경로)</h4>
-        <p>B(Business Structure/사업구조) · T(Technology & Operations/기술운영) · J(Job & Competency/직무역량) · R(Labor Relations/노사관계) — G-DAX 20문항이 BTJR 4경로에 1/n 균등 분배 매핑되어, 전환이 기업 내부에 미치는 <strong>영향 경로와 전환과제</strong>를 자동 도출합니다.</p>
+      <div class="mini-card" style="border-color:var(--digi);">
+        <h4 style="color:var(--digi);">💻 D 디지털전환</h4>
+        <p>DX 인프라·데이터 활용·디지털 역량 수준을 진단</p>
+      </div>
+      <div class="mini-card" style="border-color:var(--ai);">
+        <h4 style="color:var(--ai);">🤖 A AI전환</h4>
+        <p>AI 적용가능성·자동화 효과·데이터 축적·직무전환 대응을 진단</p>
+      </div>
+      <div class="mini-card" style="border-color:var(--trans);">
+        <h4 style="color:var(--trans);">🔄 X 고용전환</h4>
+        <p>인력구조·직무변화·노사관계·전환교육 체계를 진단</p>
       </div>
     </div>
-    <div class="co co-navy" style="margin-top:10px;"><span class="co-icon">🔗</span><div>
-      <strong>G-DAX + BTJR 통합 로직:</strong> G-DAX 4영역 진단 → 3단 구조 분류(압력/기반/역량) → 갭 분석 → 전환 유형 4분류 → BTJR 영향 경로 분석 → 유형별 Task Pool + 고용전환 강도 조절 → 복합 우선순위 스코어링 → 맞춤형 과제 추천
-    </div></div>
 
     <h3>데이터 흐름</h3>
     <div class="flow">
@@ -201,7 +225,7 @@
       <span class="flow-arrow">→</span>
       <div class="flow-box flow-btjr">🔄 Base64<br><small>URL 전달</small></div>
       <span class="flow-arrow">→</span>
-      <div class="flow-box flow-navy">📊 결과보고서<br><small>12개 카드</small></div>
+      <div class="flow-box flow-navy">📊 결과보고서<br><small>11개 카드</small></div>
       <span class="flow-arrow">→</span>
       <div class="flow-box flow-btjr">📥 PDF<br><small>window.print()</small></div>
     </div>
@@ -242,16 +266,17 @@
 <div class="card">
   <div class="card-hd hd-g"><span class="icon">🌱</span><h2>G영역 문항 상세</h2><span class="tag">5문항 · 탄소중립·ESG·에너지</span></div>
   <div class="card-bd">
-    <div class="co co-green"><span class="co-icon">🔗</span><div><strong>BTJR 연결:</strong> G영역 5문항은 B(사업구조)·T(기술운영) 경로에 주로 매핑됩니다. G1→B, G2→B·T, G3→T, G4→J·R, G5→B</div></div>
+    <div class="co co-green"><span class="co-icon">🔗</span><div><strong>3단 구조 연결:</strong> G영역은 전환 압력(G1~G3) → 실행 기반(G4) → 성장 동력(G5)의 3단 구조로 구성됩니다. G4는 역방향 문항으로, 높은 점수가 높은 준비도를 의미합니다.</div></div>
 
     <table class="tbl-head-green">
-      <tr><th style="width:60px">코드</th><th style="width:100px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th></tr>
+      <tr><th style="width:60px">코드</th><th style="width:100px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th><th style="width:50px">역방향</th></tr>
       <tr>
         <td><strong>G1</strong></td>
         <td>탄소 리스크</td>
         <td>우리 회사의 주력 제품·서비스가 탄소 감축 정책(탄소중립기본법, EU CBAM 등)에 따라 시장 축소 또는 사업 재편이 필요한 상황이다.</td>
         <td><span class="t t-grp-p">전환 압력</span></td>
         <td><span class="t t-B">B</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>G2</strong></td>
@@ -259,6 +284,7 @@
         <td>원청사·바이어로부터 ESG 경영, 탄소 배출량 보고, RE100 이행 등을 요구받고 있거나 가까운 시일 내 요구가 예상된다.</td>
         <td><span class="t t-grp-p">전환 압력</span></td>
         <td><span class="t t-B">B</span> <span class="t t-T">T</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>G3</strong></td>
@@ -266,6 +292,7 @@
         <td>에너지 비용(전기료·연료비)이 제조원가·운영비의 상당 부분을 차지하며, 친환경 에너지 전환(태양광·ESS 등)을 검토 중이다.</td>
         <td><span class="t t-grp-p">전환 압력</span></td>
         <td><span class="t t-T">T</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>G4</strong></td>
@@ -273,6 +300,7 @@
         <td>환경 규제(배출권거래제, 폐기물 규제, 유해물질 관리 등) 대응을 위한 사내 전담 인력이나 관리 체계가 마련되어 있다.</td>
         <td><span class="t t-grp-i">실행 기반</span></td>
         <td><span class="t t-J">J</span> <span class="t t-R">R</span></td>
+        <td><span class="t t-rev">역방향</span></td>
       </tr>
       <tr>
         <td><strong>G5</strong></td>
@@ -280,6 +308,7 @@
         <td>친환경 전환(저탄소 공정, 친환경 소재, 순환경제 등)이 새로운 매출원이나 사업 기회가 될 수 있다고 판단한다.</td>
         <td><span class="t t-grp-d">성장 동력</span></td>
         <td><span class="t t-B">B</span></td>
+        <td>—</td>
       </tr>
     </table>
   </div>
@@ -291,16 +320,17 @@
 <div class="card">
   <div class="card-hd hd-d"><span class="icon">💻</span><h2>D영역 문항 상세</h2><span class="tag">5문항 · DX인프라·데이터·디지털역량</span></div>
   <div class="card-bd">
-    <div class="co co-blue"><span class="co-icon">🔗</span><div><strong>BTJR 연결:</strong> D영역 5문항은 T(기술운영)·J(직무역량) 경로에 주로 매핑됩니다. D1→T, D2→B·T, D3→T, D4→T·J, D5→J·R</div></div>
+    <div class="co co-blue"><span class="co-icon">🔗</span><div><strong>3단 구조 연결:</strong> D영역은 전환 압력(D1~D2) → 실행 기반(D3, D4) → 인재 역량(D5)의 3단 구조로 구성됩니다. D3는 역방향 문항으로, 높은 점수가 높은 준비도를 의미합니다.</div></div>
 
     <table class="tbl-head-digi">
-      <tr><th style="width:60px">코드</th><th style="width:110px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th></tr>
+      <tr><th style="width:60px">코드</th><th style="width:110px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th><th style="width:50px">역방향</th></tr>
       <tr>
         <td><strong>D1</strong></td>
         <td>DX 격차</td>
         <td>경쟁사 대비 우리 회사의 디지털화 수준(ERP/MES/SCM 등)이 뒤처져 있어 생산성·품질 경쟁력이 약화되고 있다.</td>
         <td><span class="t t-grp-p">전환 압력</span></td>
         <td><span class="t t-T">T</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>D2</strong></td>
@@ -308,6 +338,7 @@
         <td>스마트공장·IoT·클라우드 등 디지털 인프라 도입 계획이 있고, 이를 위한 예산 또는 정부지원 연계를 준비 중이다.</td>
         <td><span class="t t-grp-p">전환 압력</span></td>
         <td><span class="t t-B">B</span> <span class="t t-T">T</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>D3</strong></td>
@@ -315,20 +346,23 @@
         <td>핵심 업무(생산·재고·고객·회계)를 전산 시스템으로 통합 관리하고 있으며, 부서 간 데이터 연동이 원활하다.</td>
         <td><span class="t t-grp-i">실행 기반</span></td>
         <td><span class="t t-T">T</span></td>
+        <td><span class="t t-rev">역방향</span></td>
       </tr>
       <tr>
         <td><strong>D4</strong></td>
         <td>데이터 활용</td>
-        <td>데이터 기반 의사결정(품질 분석, 수요 예측, 원가 관리 등)을 위한 데이터 수집·분석 체계가 잘 구축되어 있다.</td>
+        <td>데이터 기반 의사결정(품질 분석, 수요 예측, 원가 관리 등)의 필요성을 느끼지만, 데이터 수집·분석 체계가 미흡하다.</td>
         <td><span class="t t-grp-i">실행 기반</span></td>
         <td><span class="t t-T">T</span> <span class="t t-J">J</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>D5</strong></td>
         <td>디지털역량</td>
-        <td>직원들이 디지털 기기·SW를 능숙하게 활용하고 있으며, DX 추진에 필요한 디지털 리터러시를 충분히 갖추고 있다.</td>
+        <td>직원들이 디지털 기기·SW 활용에 어려움을 느끼고 있어, DX 추진 시 체계적인 디지털 리터러시 교육이 필요하다.</td>
         <td><span class="t t-grp-c">인재 역량</span></td>
         <td><span class="t t-J">J</span> <span class="t t-R">R</span></td>
+        <td>—</td>
       </tr>
     </table>
   </div>
@@ -340,16 +374,17 @@
 <div class="card">
   <div class="card-hd hd-a"><span class="icon">🤖</span><h2>A영역 문항 상세</h2><span class="tag">5문항 · AI도입·자동화·직무전환</span></div>
   <div class="card-bd">
-    <div class="co co-purple"><span class="co-icon">🔗</span><div><strong>BTJR 연결:</strong> A영역 5문항은 T(기술운영)·J(직무역량) 경로에 주로 매핑됩니다. A1→T, A2→T·J, A3→T, A4→J·R, A5→J</div></div>
+    <div class="co co-purple"><span class="co-icon">🔗</span><div><strong>3단 구조 연결:</strong> A영역은 전환 압력(A1~A2) → 실행 기반(A3) → 인재 역량(A4, A5)의 3단 구조로 구성됩니다. A3는 역방향 문항으로, 높은 점수가 높은 준비도를 의미합니다.</div></div>
 
     <table class="tbl-head-ai">
-      <tr><th style="width:60px">코드</th><th style="width:110px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th></tr>
+      <tr><th style="width:60px">코드</th><th style="width:110px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th><th style="width:50px">역방향</th></tr>
       <tr>
         <td><strong>A1</strong></td>
         <td>AI 적용가능성</td>
         <td>우리 업종에서 AI(인공지능)를 활용하여 업무 효율을 높이는 사례가 등장하고 있으며, 도입을 검토할 필요가 있다.</td>
         <td><span class="t t-grp-p">전환 압력</span></td>
         <td><span class="t t-T">T</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>A2</strong></td>
@@ -357,6 +392,7 @@
         <td>우리 회사의 반복·단순 업무(검사, 입력, 분류 등)에 AI/로봇을 적용하면 상당한 생산성 향상이 기대된다.</td>
         <td><span class="t t-grp-p">전환 압력</span></td>
         <td><span class="t t-T">T</span> <span class="t t-J">J</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>A3</strong></td>
@@ -364,6 +400,7 @@
         <td>AI 도입에 필요한 학습 데이터(품질, 공정, 고객 데이터 등)가 체계적으로 축적·관리되고 있다.</td>
         <td><span class="t t-grp-i">실행 기반</span></td>
         <td><span class="t t-T">T</span></td>
+        <td><span class="t t-rev">역방향</span></td>
       </tr>
       <tr>
         <td><strong>A4</strong></td>
@@ -371,6 +408,7 @@
         <td>AI·자동화가 도입되면 일부 직무가 변화할 수 있으며, 이에 대한 인력 재배치·교육 계획을 마련하고 있다.</td>
         <td><span class="t t-grp-c">인재 역량</span></td>
         <td><span class="t t-J">J</span> <span class="t t-R">R</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>A5</strong></td>
@@ -378,6 +416,7 @@
         <td>생성형 AI(ChatGPT, Copilot 등)를 업무에 활용하면 직원 생산성이 높아질 것으로 기대하며, 도입을 검토 중이다.</td>
         <td><span class="t t-grp-c">인재 역량</span></td>
         <td><span class="t t-J">J</span></td>
+        <td>—</td>
       </tr>
     </table>
   </div>
@@ -389,16 +428,17 @@
 <div class="card">
   <div class="card-hd hd-x"><span class="icon">🔄</span><h2>X영역 문항 상세</h2><span class="tag">5문항 · 인력구조·직무변화·노사관계</span></div>
   <div class="card-bd">
-    <div class="co co-red"><span class="co-icon">🔗</span><div><strong>BTJR 연결:</strong> X영역 5문항은 J(직무역량)·R(노사관계) 경로에 주로 매핑됩니다. X1→J·R, X2→J, X3→R, X4→J·R, X5→B·R</div></div>
+    <div class="co co-red"><span class="co-icon">🔗</span><div><strong>3단 구조 연결:</strong> X영역은 전환 압력(X1~X2) → 실행 기반(X3, X4) → 추진 동력(X5)의 3단 구조로 구성됩니다. X3, X4는 역방향 문항으로, 높은 점수가 높은 준비도를 의미합니다.</div></div>
 
     <table class="tbl-head-trans">
-      <tr><th style="width:60px">코드</th><th style="width:110px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th></tr>
+      <tr><th style="width:60px">코드</th><th style="width:110px">라벨</th><th>설문 문항 (전체 원문)</th><th style="width:70px">그룹</th><th style="width:80px">BTJR</th><th style="width:50px">역방향</th></tr>
       <tr>
         <td><strong>X1</strong></td>
         <td>인력 리스크</td>
         <td>구인난·핵심인력 유출·고령화로 인한 기술전수 단절이 시급한 문제이거나, 가까운 미래에 심각해질 것으로 예상된다.</td>
         <td><span class="t t-grp-p">전환 압력</span></td>
         <td><span class="t t-J">J</span> <span class="t t-R">R</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>X2</strong></td>
@@ -406,6 +446,7 @@
         <td>신기술(스마트공장, AI 등) 도입에 따라 기존 직원의 직무 내용이 변화하거나, 새로운 역할이 필요해지고 있다.</td>
         <td><span class="t t-grp-p">전환 압력</span></td>
         <td><span class="t t-J">J</span></td>
+        <td>—</td>
       </tr>
       <tr>
         <td><strong>X3</strong></td>
@@ -413,6 +454,7 @@
         <td>직무전환·근로조건 변경·신기술 도입 등 변화 사안에 대해 노사 간 소통이 원활하고 갈등 관리 체계가 갖춰져 있다.</td>
         <td><span class="t t-grp-i">실행 기반</span></td>
         <td><span class="t t-R">R</span></td>
+        <td><span class="t t-rev">역방향</span></td>
       </tr>
       <tr>
         <td><strong>X4</strong></td>
@@ -420,6 +462,7 @@
         <td>직원의 직무전환·역량 향상을 위한 체계적인 교육훈련 프로그램이 운영되고 있다.</td>
         <td><span class="t t-grp-i">실행 기반</span></td>
         <td><span class="t t-J">J</span> <span class="t t-R">R</span></td>
+        <td><span class="t t-rev">역방향</span></td>
       </tr>
       <tr>
         <td><strong>X5</strong></td>
@@ -427,6 +470,7 @@
         <td>경영진이 고용구조 전환(신규 직무 창출, 인력 재배치, 조직개편 등)을 핵심 경영 과제로 인식하고 추진 의지가 있다.</td>
         <td><span class="t t-grp-x">추진 동력</span></td>
         <td><span class="t t-B">B</span> <span class="t t-R">R</span></td>
+        <td>—</td>
       </tr>
     </table>
   </div>
@@ -454,30 +498,30 @@
       <tr>
         <td style="color:var(--green);font-weight:700;">🌱 G 친환경</td>
         <td>G1 탄소리스크, G2 공급망압력, G3 에너지전환</td>
-        <td>G4 환경관리체계</td>
+        <td>G4 환경관리체계 <span class="t t-rev">역</span></td>
         <td><span class="t t-grp-d">성장 동력</span> G5 Green기회</td>
       </tr>
       <tr>
         <td style="color:var(--digi);font-weight:700;">💻 D 디지털</td>
         <td>D1 DX격차, D2 DX투자계획</td>
-        <td>D3 시스템통합도, D4 데이터활용</td>
+        <td>D3 시스템통합도 <span class="t t-rev">역</span>, D4 데이터활용</td>
         <td><span class="t t-grp-c">인재 역량</span> D5 디지털역량</td>
       </tr>
       <tr>
         <td style="color:var(--ai);font-weight:700;">🤖 A AI</td>
         <td>A1 AI적용가능성, A2 자동화효과</td>
-        <td>A3 데이터축적</td>
+        <td>A3 데이터축적 <span class="t t-rev">역</span></td>
         <td><span class="t t-grp-c">인재 역량</span> A4 직무전환대응, A5 생성형AI활용</td>
       </tr>
       <tr>
         <td style="color:var(--trans);font-weight:700;">🔄 X 고용</td>
         <td>X1 인력리스크, X2 직무재편필요</td>
-        <td>X3 노사소통, X4 전환교육체계</td>
+        <td>X3 노사소통 <span class="t t-rev">역</span>, X4 전환교육체계 <span class="t t-rev">역</span></td>
         <td><span class="t t-grp-x">추진 동력</span> X5 경영진의지</td>
       </tr>
     </table>
 
-    <div class="co co-red"><span class="co-icon">⚠️</span><div><strong>점수 해석 방향:</strong> <strong>전환 압력</strong> 그룹 문항은 높은 점수 = 높은 전환 압력(시급성)을 의미합니다. <strong>실행 기반·역량·동력</strong> 그룹 문항은 높은 점수 = 높은 준비도(긍정적)를 의미합니다. 준비도는 실행 기반 + 역량/동력 그룹의 <strong>원점수 평균</strong>으로 산출합니다.</div></div>
+    <div class="co co-red"><span class="co-icon">⚠️</span><div><strong>역방향(reverse) 문항 해석:</strong> G4, D3, A3, X3, X4 총 5개 문항은 높은 점수 = 높은 준비도(좋은 것)를 의미합니다. 나머지 15개 문항은 높은 점수 = 높은 전환 압력(시급성)을 의미합니다. 결과보고서에서 준비도(readiness) 산출 시 역방향 문항의 점수를 반전(6 - score)하여 계산합니다.</div></div>
   </div>
 </div>
 
@@ -528,7 +572,7 @@
       </tr>
     </table>
 
-    <div class="co co-blue"><span class="co-icon">📊</span><div><strong>BTJR 분리 분석 (v3 신규):</strong> btjrByGroup() 함수가 전환 압력 문항과 실행 기반/역량 문항을 분리하여 각각의 BTJR 점수를 산출합니다. "전환 압력 문항 → BTJR" vs "실행 기반/역량 문항 → BTJR" 비교 패널로 표시됩니다.</div></div>
+    <div class="co co-blue"><span class="co-icon">📊</span><div><strong>BTJR 분리 분석:</strong> btjrByGroup() 함수가 전환 압력 문항과 실행 기반/역량 문항을 분리하여 각각의 BTJR 점수를 산출합니다. "전환 압력 문항 → BTJR" vs "실행 기반/역량 문항 → BTJR" 비교 패널로 표시됩니다.</div></div>
   </div>
 </div>
 
@@ -536,83 +580,83 @@
 <div class="sec-title" id="report"><span class="sec-num">6</span>결과보고서 카드 구조</div>
 
 <div class="card">
-  <div class="card-hd hd-sys"><span class="icon">📊</span><h2>결과보고서 12개 분석 카드</h2><span class="tag">Report Card Structure v2.1</span></div>
+  <div class="card-hd hd-sys"><span class="icon">📊</span><h2>결과보고서 11개 분석 카드</h2><span class="tag">Report Card Structure</span></div>
   <div class="card-bd">
-    <p class="desc">결과보고서는 render() 함수에서 12개 분석 카드를 순차 렌더링합니다. 각 카드는 G-DAX + BTJR 통합 프레임워크의 분석 흐름에 따라 배치됩니다.</p>
+    <p class="desc">결과보고서는 render() 함수에서 11개 분석 카드를 순차 렌더링합니다. 각 카드는 G-DAX 3단 진단 구조·4분류 전환유형·BTJR 경로의 특정 분석 영역과 연결됩니다.</p>
 
     <table>
       <tr><th style="width:50px">#</th><th style="width:220px">카드 이름</th><th>내용 설명</th><th style="width:130px">연결 챕터</th></tr>
       <tr>
         <td><strong>1</strong></td>
         <td>🏢 기업 정보 요약</td>
-        <td>회사명, 대표자, 소재지, 업종, 업종유형, 설립연도, 근로자수, 매출을 테이블로 표시</td>
-        <td>Ch.1 기업개요</td>
+        <td>회사명, 대표자, 소재지, 업종, 업종유형, 근로자수, 매출, 설립연도를 테이블로 표시</td>
+        <td>기업 기본정보</td>
       </tr>
       <tr>
         <td><strong>2</strong></td>
         <td>📊 종합 진단 결과</td>
-        <td><strong>전환 압력 문항만</strong> 합산 → 100점 환산. 전환 압력 등급(A~D). 4대 영역별 <strong>전환 압력 문항 평균</strong> 바차트 + 高/中/低 표시. 프레임워크 연계 callout 포함</td>
-        <td>Ch.3 전환압력 점수</td>
+        <td>총점(100점 만점), 전체 평균, 등급(A~D), 4대 영역별 평균 바차트, 압력 수준(高/中/低), 전환 유형·강도 배지</td>
+        <td>G-DAX 통합 점수</td>
       </tr>
       <tr>
         <td><strong>3</strong></td>
         <td>🕸 전환압력 vs 실행기반·역량 갭 분석</td>
-        <td><strong>통합 레이아웃:</strong> 좌측=이중 폴리곤 레이더(전환압력 빨강 vs 실행기반·역량 파랑, GAP 영역 분홍), 우측=갭 매트릭스 테이블(영역별 압력/준비도/Gap/판정(긴급·중점관리·모니터링·양호)/우선순위(★))</td>
-        <td>Ch.3.3 갭 통합</td>
+        <td>G·D·A·X 4축 이중 레이더(빨간색=전환 압력, 파란색=실행기반·역량) + GAP 영역 시각화. 압력이 기반보다 높은 영역을 면적으로 표시</td>
+        <td>이중 레이더 갭</td>
       </tr>
       <tr>
-        <td><strong>4</strong></td>
+        <td><strong>3.5</strong></td>
         <td>📊 구조별 소계 분석</td>
-        <td>영역(G/D/A/X) × 그룹(전환압력/실행기반/동력·역량) 교차 매트릭스. 색상 코딩(≥3.5 적색, ≥2.5 황색, &lt;2.5 녹색). 압력-기반 갭 인사이트 + 역량 부족 하이라이트 자동 생성</td>
+        <td>영역(G/D/A/X) × 그룹(전환압력/실행기반/동력·역량) 교차 매트릭스. 색상 코딩(≥3.5 적색, ≥2.5 황색, &lt;2.5 녹색). 압력-기반 갭 인사이트 + 역량 부족 하이라이트</td>
         <td>3단 구조 교차</td>
       </tr>
       <tr>
-        <td><strong>5</strong></td>
+        <td><strong>4</strong></td>
         <td>🔍 영역별 상세 진단</td>
-        <td>G·D·A·X 각 영역: 헤더(영역평균, 압력高/中/低, 준비도), 그룹 라벨(전환압력/실행기반/동력·역량) + 그룹 소계 평균, 문항별 점수 도트(1~5), BTJR 태그(<span class="t t-B">B</span><span class="t t-T">T</span><span class="t t-J">J</span><span class="t t-R">R</span>)</td>
+        <td>G·D·A·X 각 영역의 5문항별 점수, BTJR 매핑, 그룹 라벨, 소계 평균 표시. 역방향 문항에 "역" 배지</td>
         <td>G-DAX 항목코드 × BTJR</td>
       </tr>
       <tr>
-        <td><strong>6</strong></td>
-        <td>🏷 전환 유형 분류</td>
-        <td>G × D+A 모델 4분면 Canvas 차트. "우리 기업" 포인트 표시 + 좌표값(G압력/D+A압력). 업종별 D/A 가중치 적용. 4개 유형 카드(활성화 표시). 분류 로직 callout 포함</td>
-        <td>Ch.3.4 전환유형</td>
+        <td><strong>5</strong></td>
+        <td>🏭 전환 유형 진단</td>
+        <td>G × D+A 모델 기반 4분류. <strong>전환 압력 문항만</strong>으로 산출 (G→G1·G2·G3, D→D1·D2, A→A1·A2). 업종별 D/A 가중치 반영</td>
+        <td>4분류 전환유형</td>
       </tr>
       <tr>
-        <td><strong>7</strong></td>
-        <td>💥 X영역: 고용전환 강도 판정</td>
-        <td>X영역 전환압력(X1·X2) + 추진동력(X5) <strong>가중평균(압력×2+동력×1)/3</strong> 기반 3등급. 실행기반(X3·X4)은 제외. 강도 점수·전환유형+강도 결합 표시. Task Pool 강도 조절 역할 설명</td>
+        <td><strong>6</strong></td>
+        <td>⚡ 고용전환 강도</td>
+        <td>X영역 <strong>전환 압력(X1·X2) + 추진 동력(X5)</strong> 가중평균 기반 3등급. 실행 기반(X3·X4)은 역방향 문항으로 제외. Task Pool 인력 과제의 방향명·과제명·설명을 강도에 따라 3단계 조절</td>
         <td>고용전환 강도</td>
       </tr>
       <tr>
+        <td><strong>7</strong></td>
+        <td>🔄 BTJR 전환 영향 경로</td>
+        <td>B→T→J→R 흐름 박스 + 경로별 평균 점수 바차트 + 전환 압력 vs 실행기반/역량 BTJR 분리 비교 패널</td>
+        <td>BTJR 전환경로</td>
+      </tr>
+      <tr>
         <td><strong>8</strong></td>
-        <td>🔗 BTJR 전환 영향 경로 분석</td>
-        <td>B→T→J→R 흐름도(경로별 압력·동력/실행·역량 점수) + <strong>경로별 상세 카드 4장:</strong> 갭 바(압력 vs 준비 비교, Gap 판정 ⚠긴급/🟡주의/✅양호), 압력·동력 문항 테이블, 실행·역량 문항 테이블 분리 표시. 1/n 균등 분배 가중 매핑. BTJR 플로우 박스 CSS 인쇄 최적화(컴팩트 사이즈)</td>
-        <td>Ch.3.6 전환경로</td>
+        <td>📈 준비도 갭 분석</td>
+        <td>calcTierScores 기반 영역별 전환 압력 vs 실행기반·역량 갭 매트릭스. 영역별 압력 수준·준비도 수준·갭 상태·우선도 교차 표시</td>
+        <td>3단 구조 갭</td>
       </tr>
       <tr>
         <td><strong>9</strong></td>
-        <td>🧩 Cross-SWOT 예비 분석</td>
-        <td>G-DAX 3단 구조(전환압력 × 실행기반·역량 갭) 기반 자동 SWOT. 강점(실행기반·역량 4점↑)·약점(실행기반·역량 2점↓)·기회(준비도 높음+압력 높음)·위협(압력 높음). <strong>"사전진단 기반 예비 분석"</strong> 명시</td>
-        <td>Ch.3.5 SWOT</td>
+        <td>🧩 Cross-SWOT 분석</td>
+        <td>G-DAX 점수 기반 자동 생성 SWOT. 강점(역방향 高)·약점(역방향 低)·기회(압력 高)·위협(압력 低+역량 低)</td>
+        <td>Cross-SWOT 분석</td>
       </tr>
       <tr>
         <td><strong>10</strong></td>
-        <td>📋 전환 유형별 전환과제 추천</td>
-        <td>전환 유형별 표준 Task Pool에서 3~4개 전환 방향 및 세부 과제 자동 생성. G-DAX 항목코드 연결. <strong>xScale 과제:</strong> 고용전환 강도(대/중/소)에 따라 과제명·설명·방향이 동적 변경. 강도 배지(🔥/⚡/✅) 표시. 🚨시급 / ⚠️우선개선 배지</td>
-        <td>Ch.4 Task Pool</td>
+        <td>🎯 전환과제 방향성</td>
+        <td>전환 유형별 Task Pool에서 3~4개 전환 방향 및 세부 과제 자동 생성. 인력 관련 방향은 <strong>X강도(high/medium/low)에 따라 방향명·과제명·설명이 3단계 자동 조절</strong>. G-DAX 항목코드 연결</td>
+        <td>전환과제 Task Pool</td>
       </tr>
       <tr>
         <td><strong>11</strong></td>
-        <td>💡 맞춤형 추천 사항</td>
-        <td>압력×갭차×역량 복합 스코어링(pAvg × (1+pressureGap×0.5) × (1+capWeakness×0.3))으로 자동 정렬. 영역별 전환과제 + Gap 해소 과제 + BTJR 연쇄 영향 + 전환유형 맞춤 컨설팅. 우선점수·관련 태그(G,D,A,X,B,T,J,R) 표시</td>
+        <td>🚀 우선순위 추천</td>
+        <td>압력×갭차×역량 복합 스코어링(pAvg × (1+pressureGap×0.5) × (1+capWeakness×0.3))으로 자동 정렬된 전환과제 추천 목록. 우선점수 표시</td>
         <td>압력×갭×역량 스코어링</td>
-      </tr>
-      <tr>
-        <td><strong>12</strong></td>
-        <td>🎯 희망 지원 분야</td>
-        <td>설문 시 선택한 정부지원 희망 분야(사업재편, 교육훈련, 스마트공장 등) 칩 형태로 표시. needs 배열 기반 조건부 렌더링</td>
-        <td>설문 Sec.6 연계</td>
       </tr>
     </table>
   </div>
@@ -629,22 +673,24 @@
     <table>
       <tr><th>지표</th><th>산출 방식</th><th>범위</th></tr>
       <tr><td><strong>영역 평균</strong></td><td>domainAvg(scores[k]) = 5문항 합산 / 5</td><td>1.0 ~ 5.0</td></tr>
-      <tr><td><strong>총점 (참고)</strong></td><td>20문항 전체 합산 (카드 미표시)</td><td>20 ~ 100</td></tr>
+      <tr><td><strong>총점</strong></td><td>20문항 전체 합산</td><td>20 ~ 100</td></tr>
       <tr><td><strong>전체 평균</strong></td><td>총점 / 20</td><td>1.0 ~ 5.0</td></tr>
+      <tr><td><strong>100점 환산</strong></td><td>총점 / 100 × 100</td><td>20 ~ 100</td></tr>
     </table>
 
-    <h3>종합 진단 점수 (100점 환산) — 전환 압력 기반 ⭐</h3>
-    <div class="co co-navy"><span class="co-icon">⚠️</span><div>
-      <strong>v2.1 핵심 변경:</strong> 100점 환산은 20문항 전체가 아닌 <strong>전환 압력 그룹 문항만</strong> 합산하여 산출합니다.<br>
-      이유: "외부 전환 압력이 얼마나 높은가"를 단일 숫자로 표현하기 위함.
+    <h3>통합 3단 구조 점수 — calcTierScores()</h3>
+    <div class="co co-navy"><span class="co-icon">🔑</span><div>
+      <strong>핵심 통합 함수:</strong> 레이더 차트·전환유형 분류·고용전환 강도·구조별 소계가 모두 이 함수의 결과를 공유합니다.<br><br>
+      각 영역(G·D·A·X)별로 다음 값을 산출:<br>
+      • <strong>pressure</strong> = 전환 압력 그룹 문항만의 평균 (G: G1·G2·G3, D: D1·D2, A: A1·A2, X: X1·X2)<br>
+      • <strong>foundation</strong> = 실행 기반 그룹 문항만의 평균 (G: G4, D: D3·D4, A: A3·A4, X: X3·X4)<br>
+      • <strong>capability</strong> = 동력/역량 그룹 문항만의 평균 (G: G5, D: D5, A: A5, X: X5)<br>
+      • <strong>readiness</strong> = (실행 기반 + 동력/역량) 통합 평균<br>
+      • <strong>gap</strong> = max(pressure − readiness, 0)<br><br>
+      <strong>전환유형 분류:</strong> X축 = G.pressure, Y축 = D.pressure × 가중치 + A.pressure × 가중치<br>
+      <strong>고용전환 강도:</strong> (X.pressure × 2 + X.capability) / 3 (압력 2 : 동력 1 가중)<br>
+      <strong>레이더 차트:</strong> 빨간 폴리곤 = pressure, 파란 폴리곤 = readiness, GAP = 면적 차이
     </div></div>
-    <table>
-      <tr><th>지표</th><th>산출 방식</th><th>범위</th></tr>
-      <tr><td><strong>전환 압력 합산</strong></td><td>4영역의 '전환 압력' 그룹 문항만 합산 (G:G1~G3, D:D1~D2, A:A1~A2, X:X1~X2 = 총 9문항)</td><td>9 ~ 45</td></tr>
-      <tr><td><strong>100점 환산</strong></td><td><code>pressureTotalSum / (pressureTotalCnt × 5) × 100</code></td><td>20 ~ 100</td></tr>
-      <tr><td><strong>전환 압력 전체 평균</strong></td><td><code>pressureTotalSum / pressureTotalCnt</code></td><td>1.0 ~ 5.0</td></tr>
-    </table>
-    <p class="desc">※ 등급 판정(getLevel)과 압력 수준(getPressure)은 이 전환 압력 전체 평균에 적용됩니다.</p>
 
     <h3>등급 판정 (getLevel)</h3>
     <table>
@@ -663,30 +709,27 @@
       <tr><td>낮음</td><td>&lt; 2.5</td><td>低</td></tr>
     </table>
 
-    <h3>준비도 산출 (getReadiness) — 그룹 기반 ⭐</h3>
-    <div class="co co-navy"><span class="co-icon">⚠️</span><div>
-      <strong>핵심:</strong> 준비도는 <strong>실행 기반 + 역량/동력 그룹 문항의 원점수 평균</strong>으로 산출합니다. 점수 반전 없이 원점수를 그대로 사용합니다.<br>
-      높은 점수 = 내부 기반이 잘 갖춰져 있음 (문항 자체가 준비도 문맥으로 설계됨).
-    </div></div>
-    <table>
-      <tr><th>영역</th><th>준비도 대상 그룹</th><th>해당 문항</th><th>산출식</th></tr>
-      <tr><td>G</td><td>실행 기반 + 성장 동력</td><td>G4, G5</td><td>(G4 + G5) / 2</td></tr>
-      <tr><td>D</td><td>실행 기반 + 인재 역량</td><td>D3, D4, D5</td><td>(D3 + D4 + D5) / 3</td></tr>
-      <tr><td>A</td><td>실행 기반 + 인재 역량</td><td>A3, A4, A5</td><td>(A3 + A4 + A5) / 3</td></tr>
-      <tr><td>X</td><td>실행 기반 + 추진 동력</td><td>X3, X4, X5</td><td>(X3 + X4 + X5) / 3</td></tr>
-    </table>
-    <p class="desc">※ calcTierScores()에서도 동일 로직 사용: readiness = (실행기반 합계 + 3번째그룹 합계) / (실행기반 문항수 + 3번째그룹 문항수)</p>
+    <h3>준비도 산출 — 두 가지 방식</h3>
 
-    <h3>갭 매트릭스 판정 기준 (v2.1 신규)</h3>
+    <p class="desc"><strong>① calcTierScores 기반 readiness (레이더·갭 분석 등 주요 시각화):</strong> 실행 기반 그룹 + 동력/역량 그룹의 통합 평균으로 산출. 전환 압력과 대비하여 GAP을 도출합니다.</p>
     <table>
-      <tr><th>판정</th><th>조건</th><th>색상</th></tr>
-      <tr><td><strong>🔴 긴급</strong></td><td>압력 高 AND 준비도 ≤ 2.5</td><td>빨강</td></tr>
-      <tr><td><strong>🟡 중점관리</strong></td><td>압력 高 AND 준비도 ≤ 3.5</td><td>노랑</td></tr>
-      <tr><td><strong>🟢 모니터링</strong></td><td>압력 中 (준비도 무관)</td><td>초록</td></tr>
-      <tr><td><strong>⚪ 양호</strong></td><td>그 외</td><td>회색</td></tr>
+      <tr><th>영역</th><th>실행 기반 문항</th><th>동력/역량 문항</th><th>readiness 산출식</th></tr>
+      <tr><td>G</td><td>G4</td><td>G5</td><td>(G4 + G5) / 2</td></tr>
+      <tr><td>D</td><td>D3, D4</td><td>D5</td><td>(D3 + D4 + D5) / 3</td></tr>
+      <tr><td>A</td><td>A3, A4</td><td>A5</td><td>(A3 + A4 + A5) / 3</td></tr>
+      <tr><td>X</td><td>X3, X4</td><td>X5</td><td>(X3 + X4 + X5) / 3</td></tr>
     </table>
 
-    <h3>복합 우선순위 스코어링 (v3 신규)</h3>
+    <p class="desc" style="margin-top:16px;"><strong>② getReadiness 레거시 (SWOT 생성 등):</strong> 역방향 문항의 점수를 반전(6 - score)하여 "내부 준비도" 지표로 활용합니다.</p>
+    <table>
+      <tr><th>영역</th><th>준비도 문항</th><th>산출식</th></tr>
+      <tr><td>G</td><td>G4 (환경관리체계)</td><td>(6 - G4점수) → 1문항 평균</td></tr>
+      <tr><td>D</td><td>D3 (시스템통합도)</td><td>(6 - D3점수) → 1문항 평균</td></tr>
+      <tr><td>A</td><td>A3 (데이터축적)</td><td>(6 - A3점수) → 1문항 평균</td></tr>
+      <tr><td>X</td><td>X3, X4 (노사소통, 전환교육)</td><td>((6-X3) + (6-X4)) / 2</td></tr>
+    </table>
+
+    <h3>복합 우선순위 스코어링</h3>
     <div class="co co-navy"><span class="co-icon">🎯</span><div>
       <strong>산출 공식:</strong><br>
       <code>score = pAvg × (1 + pressureGap × 0.5) × (1 + capWeakness × 0.3)</code><br><br>
@@ -705,47 +748,46 @@
 <div class="card">
   <div class="card-hd hd-sys"><span class="icon">🏭</span><h2>G × (D+A) 4분면 분류 모델</h2><span class="tag">Type Classification Logic</span></div>
   <div class="card-bd">
-    <p class="desc">X축 = G 영역 평균(환경전환 압력), Y축 = D+A 가중평균(기술전환 압력). 기준점 3.0을 중심으로 4개 전환 유형을 분류합니다. X영역은 분류 축이 아닌 "고용전환 강도 조절자"로, 분류 이후 Task Pool의 인력 과제 강도를 조절합니다.</p>
+    <p class="desc">X축 = G 영역 <strong>전환 압력 문항(G1·G2·G3) 평균</strong>(환경전환 압력), Y축 = D+A <strong>전환 압력 문항(D1·D2, A1·A2) 가중평균</strong>(기술전환 압력). 실행 기반·동력/역량 문항은 분류에서 제외하여 순수 압력만 반영합니다. 기준점 3.0을 중심으로 4개 전환 유형을 분류합니다. X영역은 분류 축이 아닌 "고용전환 강도 조절자"로, 분류 이후 Task Pool의 인력 과제 강도를 3단계(high/medium/low)로 조절합니다.</p>
 
     <table>
-      <tr><th style="width:130px">전환 유형</th><th style="width:50px">아이콘</th><th style="width:170px">분류 조건</th><th>설명</th></tr>
+      <tr><th style="width:130px">전환 유형</th><th style="width:50px">아이콘</th><th style="width:170px">분류 조건 (전환 압력 문항만)</th><th>설명</th></tr>
       <tr style="background:#fef2f2;">
         <td><strong>구조전환형</strong></td><td>🏭</td>
-        <td>G ≥ 3.0 <strong>AND</strong> D+A ≥ 3.0</td>
-        <td>Green + Digital/AI 동시 전환 + 대규모 인력 재편이 필요한 유형. 가장 광범위한 전환 과제 수반.</td>
+        <td>G압력 ≥ 3.0 <strong>AND</strong> D+A압력 ≥ 3.0</td>
+        <td>Green + Digital/AI 동시 전환 + 복합 인력 재편이 필요한 유형. 가장 광범위한 전환 과제 수반.</td>
       </tr>
       <tr style="background:#eff6ff;">
         <td><strong>공정혁신형</strong></td><td>⚙️</td>
-        <td>G &lt; 3.0 <strong>AND</strong> D+A ≥ 3.0</td>
+        <td>G압력 &lt; 3.0 <strong>AND</strong> D+A압력 ≥ 3.0</td>
         <td>Digital/AI 전환 집중 + 운영 고도화. 환경 압력은 낮으나 기술 전환 시급.</td>
       </tr>
       <tr style="background:#f0fdf4;">
         <td><strong>가치창출형</strong></td><td>🌱</td>
-        <td>G ≥ 3.0 <strong>AND</strong> D+A &lt; 3.0</td>
+        <td>G압력 ≥ 3.0 <strong>AND</strong> D+A압력 &lt; 3.0</td>
         <td>Green 전환 집중 + 친환경 가치 혁신. 기술 압력은 낮으나 환경 전환 시급.</td>
       </tr>
       <tr style="background:#f9fafb;">
         <td><strong>강소기반형</strong></td><td>🚀</td>
-        <td>G &lt; 3.0 <strong>AND</strong> D+A &lt; 3.0</td>
+        <td>G압력 &lt; 3.0 <strong>AND</strong> D+A압력 &lt; 3.0</td>
         <td>선택적 고도화 + 미래 경쟁력 확보. 현재 압력은 낮으나 선제적 투자 필요.</td>
       </tr>
     </table>
 
-    <h3>고용전환 강도 등급 (X영역 가중평균 기반) ⭐</h3>
-    <div class="co co-navy"><span class="co-icon">⚠️</span><div>
-      <strong>v2.1 핵심 변경:</strong> 고용전환 강도는 X영역 단순 평균이 아닌, <strong>전환 압력(X1·X2)과 추진 동력(X5)의 가중평균</strong>으로 산출합니다.<br>
-      실행 기반(X3·X4)은 내부준비도 문항이므로 강도 산출에서 제외됩니다.<br><br>
-      <strong>산출 공식:</strong> <code>intensityScore = (pressure × 2 + momentum × 1) / 3</code><br>
-      • pressure = X 전환 압력 평균 (X1·X2 평균)<br>
-      • momentum = X 추진 동력 (X5)<br>
-      • 가중치: 압력 2 : 동력 1 — 외부 압력을 더 중시
+    <h3>고용전환 강도 등급 (X영역 전환 압력 + 추진 동력)</h3>
+    <div class="co co-navy"><span class="co-icon">⚡</span><div>
+      <strong>산출 공식:</strong> <code>intensityScore = (X.pressure × 2 + X.capability) / 3</code><br>
+      X 전환 압력(X1·X2) 가중치 2, 추진 동력(X5) 가중치 1. 실행 기반(X3·X4)은 역방향 문항이므로 강도 산출에서 제외.
     </div></div>
     <table>
-      <tr><th>등급</th><th>가중평균 기준</th><th>아이콘</th><th>설명</th></tr>
-      <tr><td><strong>대규모 고용전환</strong></td><td>≥ 3.5</td><td>🔥</td><td>인력구조 재편·노사협력 필수. Task Pool에서 인력 관련 과제 강도 최대(xScale='대').</td></tr>
-      <tr><td><strong>중규모 고용전환</strong></td><td>≥ 2.5</td><td>⚡</td><td>단계적 인력 전환·교육 강화. 점진적 직무 재설계 필요(xScale='중').</td></tr>
-      <tr><td><strong>소규모 고용전환</strong></td><td>&lt; 2.5</td><td>✅</td><td>점진적 역량 개발 중심. 급격한 인력 구조 변화 불필요(xScale='소').</td></tr>
+      <tr><th>등급</th><th>강도 점수</th><th>아이콘</th><th>설명</th></tr>
+      <tr><td><strong>대규모 고용전환</strong></td><td>≥ 3.5</td><td>🔥</td><td>인력구조 재편·노사협력 필수. Task Pool 인력 방향을 최대 강도로 편성 (예: 복합 인력구조 전환).</td></tr>
+      <tr><td><strong>중규모 고용전환</strong></td><td>≥ 2.5</td><td>⚡</td><td>단계적 인력 전환·교육 강화. Task Pool 인력 방향을 중간 강도로 조절 (예: 단계적 인력 전환·교육 강화).</td></tr>
+      <tr><td><strong>소규모 고용전환</strong></td><td>&lt; 2.5</td><td>✅</td><td>점진적 역량 개발 중심. Task Pool 인력 방향을 최소 강도로 편성 (예: 점진적 인력 역량 개발).</td></tr>
     </table>
+
+    <h3>X강도 × Task Pool 연동 구조</h3>
+    <p class="desc">Task Pool 내 인력 관련 방향(xScale: true)은 X강도에 따라 <strong>방향명(xLabel), 과제명(xName), 설명문(xDesc)</strong>이 3단계로 자동 전환됩니다. 비인력 방향(xScale: false)은 강도와 무관하게 고정 출력됩니다.</p>
   </div>
 </div>
 
@@ -755,7 +797,7 @@
 <div class="card">
   <div class="card-hd hd-sys"><span class="icon">🎯</span><h2>유형별 전환과제 방향성 및 세부 Task</h2><span class="tag">Type-specific Task Pool</span></div>
   <div class="card-bd">
-    <p class="desc">전환 유형 분류 결과에 따라 해당 유형의 Task Pool에서 전환 방향성과 세부 과제가 자동 생성됩니다. 각 과제는 G-DAX 항목코드와 매핑되어 진단 결과와 연계됩니다.</p>
+    <p class="desc">전환 유형 분류 결과에 따라 해당 유형의 Task Pool에서 전환 방향성과 세부 과제가 자동 생성됩니다. 각 과제는 G-DAX 항목코드와 매핑되어 진단 결과와 연계됩니다. <strong>인력 관련 방향(🔄 표시)은 X강도에 따라 방향명·과제명·설명이 3단계(high/medium/low)로 자동 조절</strong>됩니다. 아래 표는 X강도 = high(대규모) 기준입니다.</p>
 
     <h3>🏭 구조전환형 Task Pool</h3>
     <table class="tbl-head-navy">
@@ -763,9 +805,9 @@
       <tr><td rowspan="3"><strong>친환경·디지털 이중전환</strong></td><td>친환경 운영 체계 전환</td><td>G1~G5</td><td class="td-desc">탄소배출 모니터링 시스템 도입, 에너지 효율화 설비 교체, 친환경 원자재 전환 등 운영 전반의 그린 전환을 추진. 환경규제 대응과 ESG 경영 기반을 동시에 구축.</td></tr>
       <tr><td>디지털 운영 플랫폼 구축</td><td>D1~D5</td><td class="td-desc">ERP·MES·SCM 등 핵심 운영 시스템의 클라우드 전환과 데이터 통합 플랫폼 구축. 실시간 의사결정 지원 체계와 디지털 워크플로우 자동화 포함.</td></tr>
       <tr><td>AI 도입 기반 조성</td><td>A1~A5</td><td class="td-desc">AI 활용 전략 수립, 데이터 거버넌스 체계 구축, 파일럿 프로젝트 추진을 통해 AI 도입의 조직적 기반 마련. 현장 수용성 확보와 단계적 확산 로드맵 포함.</td></tr>
-      <tr><td rowspan="2"><strong>대규모 인력구조 전환</strong></td><td>직무 재설계 및 전환배치</td><td>X2, X4</td><td class="td-desc">이중전환으로 변화하는 직무를 분석하여 직무기술서를 재설계하고, 영향받는 인력의 전환배치 경로 설계. 직무 매칭 시스템과 내부 공모제 활용.</td></tr>
+      <tr><td rowspan="2"><strong>🔄 복합(디지털, 그린) 인력구조 전환</strong><br><span style="font-size:11px;color:#6b7280;">medium: 단계적 인력 전환·교육 강화<br>low: 점진적 인력 역량 개발</span></td><td>직무 재설계 및 전환배치</td><td>X2, X4</td><td class="td-desc">이중전환으로 변화하는 직무를 분석하여 직무기술서를 재설계하고, 영향받는 인력의 전환배치 경로 설계. 직무 매칭 시스템과 내부 공모제 활용.</td></tr>
       <tr><td>전환 교육훈련 체계 구축</td><td>X4, X5</td><td class="td-desc">그린·디지털·AI 3대 영역의 직무전환 교육과정 설계, 단계별 역량 인증 체계 구축. OJT·멘토링·이러닝 등 다양한 학습 경로 제공.</td></tr>
-      <tr><td rowspan="2"><strong>노사협력 기반 변화관리</strong></td><td>노사 공동 전환 거버넌스</td><td>X1, X3</td><td class="td-desc">노사 공동 전환위원회 구성, 전환 과정 의사결정에 근로자 대표 참여하는 거버넌스 체계 수립. 정기 소통 채널과 갈등 조정 메커니즘 포함.</td></tr>
+      <tr><td rowspan="2"><strong>🔄 노사협력 기반 변화관리</strong><br><span style="font-size:11px;color:#6b7280;">medium: 변화관리 소통 체계 구축<br>low: 조직 내 변화 소통 강화</span></td><td>노사 공동 전환 거버넌스</td><td>X1, X3</td><td class="td-desc">노사 공동 전환위원회 구성, 전환 과정 의사결정에 근로자 대표 참여하는 거버넌스 체계 수립. 정기 소통 채널과 갈등 조정 메커니즘 포함.</td></tr>
       <tr><td>심리 안정 및 변화 수용</td><td>X3, X5</td><td class="td-desc">대규모 전환에 따른 구성원 불안을 관리하는 심리 지원 프로그램 운영. 변화관리 커뮤니케이션, EAP, 전환 성공 사례 공유 등 포함.</td></tr>
     </table>
 
@@ -775,7 +817,7 @@
       <tr><td rowspan="3"><strong>디지털 기반 스마트 오퍼레이션</strong></td><td>핵심 운영 시스템 통합</td><td>D2~D5</td><td class="td-desc">분산된 레거시 시스템을 통합하여 실시간 데이터 흐름 확보. API 기반 시스템 연동, MDM, 통합 대시보드 구축으로 운영 가시성 확보.</td></tr>
       <tr><td>AI 기반 운영 최적화</td><td>A1~A5</td><td class="td-desc">예측 정비, 수요 예측, 품질 자동 검사 등 AI를 활용한 운영 프로세스 최적화. 현장 데이터 수집 → 모델 학습 → 의사결정 지원 순환 체계.</td></tr>
       <tr><td>프로세스 디지털 재설계</td><td>D1, D3</td><td class="td-desc">수작업·문서 기반 업무를 디지털 워크플로우로 재설계. RPA 도입, 전자결재 고도화, 비대면 협업 환경 구축으로 업무 효율성 극대화.</td></tr>
-      <tr><td rowspan="2"><strong>디지털 인력 역량 전환</strong></td><td>디지털 직무 역량 체계</td><td>X1, X2</td><td class="td-desc">디지털 전환에 필요한 직무별 역량 프레임워크 수립. 현재 수준 진단 → 갭 분석 → 맞춤형 교육의 체계 운영. 데이터 리터러시부터 전문 기술까지 단계별 경로.</td></tr>
+      <tr><td rowspan="2"><strong>🔄 대규모 디지털 인력 전환</strong><br><span style="font-size:11px;color:#6b7280;">medium: 디지털 인력 역량 전환<br>low: 디지털 기초 역량 개발</span></td><td>디지털 직무 역량 체계</td><td>X1, X2</td><td class="td-desc">디지털 전환에 필요한 직무별 역량 프레임워크 수립. 현재 수준 진단 → 갭 분석 → 맞춤형 교육의 체계 운영. 데이터 리터러시부터 전문 기술까지 단계별 경로.</td></tr>
       <tr><td>DX 전담 조직 구축</td><td>X4, X5</td><td class="td-desc">디지털 전환 주도 전담 조직(CoE) 신설, 내부 DX 전문 인력 양성. 현업 부서 협업 체계, 애자일 운영 방식, 성과 측정 KPI 포함.</td></tr>
       <tr><td><strong>기반 유지·보완 (Green)</strong></td><td>친환경 관리 기본 체계 정비</td><td>G1~G3</td><td class="td-desc">환경 법규 준수를 위한 기본 관리 체계 정비. 폐기물 관리, 에너지 사용량 모니터링, 환경 인허가 관리 등 규제 대응 최소 요건 충족.</td></tr>
     </table>
@@ -786,7 +828,7 @@
       <tr><td rowspan="3"><strong>친환경 가치 전환</strong></td><td>탄소중립 로드맵</td><td>G1~G5</td><td class="td-desc">2030·2050 탄소중립 목표에 맞춘 단계별 감축 로드맵. Scope 1·2·3 배출량 산정, 감축 목표 설정, 이행 과제 도출, 모니터링 체계 포함.</td></tr>
       <tr><td>친환경 운영 체계</td><td>G3, G4</td><td class="td-desc">생산·물류·조달 전 과정에 친환경 운영 원칙 적용. 순환경제 원칙 기반 자원 효율화, 친환경 공급망 관리, 녹색구매 정책 도입.</td></tr>
       <tr><td>ESG 경영 체계</td><td>G5</td><td class="td-desc">ESG 전략 수립, 공시 체계 구축, 이해관계자 소통 전략. K-ESG, GRI, TCFD 등 주요 프레임워크 대응 관리 체계 포함.</td></tr>
-      <tr><td rowspan="2"><strong>그린 인력 역량 전환</strong></td><td>그린 직무 역량 개발</td><td>X2, X4</td><td class="td-desc">친환경 전환에 필요한 직무별 그린 역량 정의, 맞춤형 교육 프로그램 개발. 환경 관리사, 에너지 진단사 등 전문 자격 취득 지원.</td></tr>
+      <tr><td rowspan="2"><strong>🔄 대규모 그린 인력 전환</strong><br><span style="font-size:11px;color:#6b7280;">medium: 그린 인력 역량 전환<br>low: 그린 기초 역량 개발</span></td><td>그린 직무 역량 개발</td><td>X2, X4</td><td class="td-desc">친환경 전환에 필요한 직무별 그린 역량 정의, 맞춤형 교육 프로그램 개발. 환경 관리사, 에너지 진단사 등 전문 자격 취득 지원.</td></tr>
       <tr><td>친환경 변화관리</td><td>X3, X5</td><td class="td-desc">그린 전환에 대한 구성원 인식 제고와 행동 변화 유도. 친환경 캠페인, 그린 오피스 운동, 환경 성과 인센티브 등 참여형 프로그램.</td></tr>
       <tr><td><strong>기반 유지·보완 (Digital)</strong></td><td>디지털 기초 역량 확보</td><td>D1, D4</td><td class="td-desc">디지털 기본 인프라와 구성원 디지털 리터러시 확보. 클라우드 기반 협업 도구 도입, 정보보안 기본 체계, 전 직원 디지털 기초 교육.</td></tr>
     </table>
@@ -796,7 +838,7 @@
       <tr><th>전환 방향</th><th>세부 과제</th><th>G-DAX</th><th>상세 설명</th></tr>
       <tr><td rowspan="2"><strong>미래 경쟁력 선제 확보</strong></td><td>AI·데이터 고도화</td><td>A1~A5</td><td class="td-desc">구축된 AI 기반을 고도화하여 자율 의사결정, 생성형 AI 활용, 데이터 기반 신규 비즈니스 모델 추진. AI 윤리 가이드라인과 거버넌스 체계 고도화.</td></tr>
       <tr><td>차세대 운영 모델 설계</td><td>D2~D5</td><td class="td-desc">디지털 트윈, IoT 기반 스마트 팩토리, 자율 운영 시스템 등 차세대 운영 모델 설계. 기존 디지털 인프라 활용 혁신적 운영 방식 선제 도입.</td></tr>
-      <tr><td rowspan="2"><strong>핵심 인력 유지·강화</strong></td><td>핵심 인재 리텐션</td><td>X1, X5</td><td class="td-desc">전환 과정에서 핵심 인재 이탈 방지 리텐션 전략. 경력 개발 경로 설계, 핵심 인재 보상 체계, 조직 몰입도 관리 프로그램.</td></tr>
+      <tr><td rowspan="2"><strong>🔄 핵심 인력 대규모 재편</strong><br><span style="font-size:11px;color:#6b7280;">medium: 핵심 인력 유지·강화<br>low: 핵심 인력 선제적 관리</span></td><td>핵심 인재 리텐션</td><td>X1, X5</td><td class="td-desc">전환 과정에서 핵심 인재 이탈 방지 리텐션 전략. 경력 개발 경로 설계, 핵심 인재 보상 체계, 조직 몰입도 관리 프로그램.</td></tr>
       <tr><td>선제적 역량 개발</td><td>X2, X4</td><td class="td-desc">미래 직무 변화를 예측하여 선제적 역량 개발. 기술 트렌드 기반 역량 예측, 사내 벤처·학습 조직 활성화, 외부 전문기관 협력 교육.</td></tr>
       <tr><td><strong>친환경 기초 체계</strong></td><td>환경 규제 기본 대응</td><td>G1, G4</td><td class="td-desc">현행 환경 규제 요건 충족 기본 대응 체계 정비. 환경 법규 모니터링, 배출 기준 준수 관리, 환경 사고 예방 및 비상 대응 체계.</td></tr>
     </table>
@@ -805,10 +847,7 @@
 
 <!-- ═══ Footer ═══ -->
 <div style="text-align:center;padding:40px 24px 60px;font-size:12px;color:var(--g500);border-top:1px solid var(--g200);margin-top:40px;">
-  <strong style="color:var(--navy);">G-DAX 시스템 구조 레퍼런스 v2.1</strong><br>
-  산업일자리전환 준비도 진단 · G-DAX + BTJR 통합 프레임워크<br>
-  4영역 × 5문항 = 20문항 · 전환압력 기반 100점 환산 · BTJR 전환 영향 경로 · 3단 구조 분류 · 복합 우선순위 스코어링<br>
-  2026.02.21 · 한국표준협회(KSA) 산업일자리전환 컨설팅
+  <strong style="color:var(--navy);">G-DAX 시스템 구조 레퍼런스 v2.1</strong>
 </div>
 
 </div><!-- /page -->
