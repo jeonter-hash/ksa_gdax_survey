@@ -26,24 +26,22 @@
     background: var(--gray-50); color: var(--gray-900); line-height: 1.6;
   }
 
-  /* ── Cover (compact) ── */
+  /* ── Cover ── */
   .cover {
     background: linear-gradient(135deg, var(--navy) 0%, #1e40af 40%, #7c3aed 70%, #dc2626 100%);
-    color: #fff; padding: 14px 24px 12px; text-align: center; position: relative; overflow: hidden;
+    color: #fff; padding: 36px 24px 32px; text-align: center; position: relative; overflow: hidden;
   }
   .cover::before {
     content: ''; position: absolute; inset: 0;
     background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2l3 3.5-3 3z'/%3E%3C/g%3E%3C/svg%3E");
   }
-  .cover-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
-  .cover h1 { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 0; }
-  .cover .company-name { font-size: 18px; font-weight: 700; opacity: 0.95; margin-bottom: 0; }
-  .cover .cover-sep { opacity: 0.5; font-size: 16px; }
-  .cover-date { font-size: 12px; opacity: 0.7; }
-  .cover-gdax { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
-  .cover-gdax .gd-chip { padding: 3px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; background: rgba(255,255,255,0.12); backdrop-filter: blur(4px); }
-  .cover-type { display: inline-block; padding: 3px 14px; border-radius: 6px; font-size: 12px; font-weight: 700; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); }
-  .cover-row2 { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; width: 100%; margin-top: 6px; }
+  .cover-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .cover h1 { font-size: 30px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 6px; }
+  .cover .company-name { font-size: 22px; font-weight: 300; opacity: 0.9; margin-bottom: 16px; }
+  .cover-date { font-size: 13px; opacity: 0.7; }
+  .cover-gdax { display: flex; gap: 8px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
+  .cover-gdax .gd-chip { padding: 6px 16px; border-radius: 10px; font-size: 13px; font-weight: 700; background: rgba(255,255,255,0.12); backdrop-filter: blur(4px); }
+  .cover-type { display: inline-block; margin-top: 14px; padding: 6px 20px; border-radius: 8px; font-size: 14px; font-weight: 700; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); }
 
   /* ── Container ── */
   .page { max-width: 960px; margin: 0 auto; padding: 30px 24px; }
@@ -99,14 +97,6 @@
   /* ── Radar Chart ── */
   .radar-wrap { display: flex; justify-content: center; padding: 10px 0; }
   .radar-wrap canvas { max-width: 520px; width: 100%; }
-  .gap-unified { display: flex; flex-direction: column; gap: 12px; }
-  .gap-radar-side { width: 100%; }
-  .gap-radar-side .radar-wrap { padding: 0; }
-  .gap-radar-side .radar-wrap canvas { max-width: 520px; }
-  .gap-matrix-side { width: 100%; }
-  .gap-matrix-side .matrix { font-size: 12px; }
-  .gap-matrix-side .matrix th { padding: 8px 10px; font-size: 11px; }
-  .gap-matrix-side .matrix td { padding: 7px 10px; font-size: 12px; }
 
   /* ── Domain Detail Card ── */
   .domain-detail { margin-bottom: 20px; padding: 20px; border-radius: 12px; border: 1px solid var(--gray-200); }
@@ -209,13 +199,13 @@
   .tc-strong.active .tc-condition { background: #dbeafe; color: #1e40af; }
 
   /* ── BTJR Impact ── */
-  .btjr-flow { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; margin: 14px 0; }
-  .btjr-box { padding: 10px 14px; border-radius: 10px; text-align: center; min-width: 110px; color: #fff; position: relative; }
-  .btjr-box .b-initial { font-size: 22px; font-weight: 900; }
-  .btjr-box .b-kr { font-size: 11px; font-weight: 600; margin-top: 1px; }
-  .btjr-box .b-score { font-size: 10px; opacity: 0.9; margin-top: 2px; }
-  .btjr-box .b-level { font-size: 9px; opacity: 0.8; margin-top: 1px; }
-  .btjr-arrow { font-size: 20px; color: var(--gray-300); padding: 0 6px; }
+  .btjr-flow { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; margin: 20px 0; }
+  .btjr-box { padding: 16px 20px; border-radius: 12px; text-align: center; min-width: 140px; color: #fff; position: relative; }
+  .btjr-box .b-initial { font-size: 28px; font-weight: 900; }
+  .btjr-box .b-kr { font-size: 13px; font-weight: 600; margin-top: 2px; }
+  .btjr-box .b-score { font-size: 12px; opacity: 0.9; margin-top: 4px; }
+  .btjr-box .b-level { font-size: 10px; opacity: 0.8; margin-top: 2px; }
+  .btjr-arrow { font-size: 24px; color: var(--gray-300); padding: 0 8px; }
   .btjr-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
   @media(max-width:600px) { .btjr-split { grid-template-columns: 1fr; } }
   .btjr-split-card { border-radius: 10px; padding: 14px; border: 1px solid var(--gray-200); }
@@ -226,34 +216,6 @@
   .btjr-mini-bar .bmb-track { flex: 1; height: 16px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
   .btjr-mini-bar .bmb-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; font-size: 10px; font-weight: 700; color: #fff; min-width: 28px; }
   .btjr-split-insight { margin-top: 8px; font-size: 10px; color: var(--gray-500); line-height: 1.5; }
-  .btjr-detail { margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .btjr-detail-card { border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden; }
-  .btjr-detail-header { display: flex; align-items: center; gap: 8px; padding: 5px 10px; font-weight: 700; font-size: 11px; color: #fff; }
-  .btjr-detail-header .bdh-score { margin-left: auto; font-size: 11px; }
-  .btjr-detail-body { display: flex; gap: 6px; padding: 4px 6px; }
-  .btjr-detail-body > div { flex: 1; min-width: 0; }
-  .btjr-side-label { font-size: 9px; font-weight: 700; margin-bottom: 2px; display: flex; align-items: center; gap: 4px; }
-  .btjr-side-label span.sl-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
-  .btjr-side-label span.sl-avg { margin-left: auto; font-size: 10px; }
-  .btjr-detail-table { width: 100%; border-collapse: collapse; font-size: 9px; }
-  .btjr-detail-table th { background: var(--gray-50); padding: 2px 4px; text-align: left; font-weight: 600; color: var(--gray-500); font-size: 8px; }
-  .btjr-detail-table td { padding: 2px 4px; border-bottom: 1px solid var(--gray-50); font-size: 9px; }
-  .btjr-detail-table tr:last-child td { border-bottom: none; }
-  .btjr-detail-table .td-code { font-weight: 700; }
-  .btjr-detail-table .td-group { font-size: 7px; border-radius: 3px; padding: 0px 3px; display: inline-block; white-space: nowrap; }
-  .btjr-detail-table .td-score { text-align: center; font-weight: 600; }
-  .btjr-detail-table .td-wscore { text-align: center; font-weight: 700; }
-  .td-grp-pressure { background: #fef2f2; color: #dc2626; }
-  .td-grp-growth { background: #fffbeb; color: #b45309; }
-  .td-grp-drive { background: #f0fdf4; color: #16a34a; }
-  .td-grp-infra { background: #eff6ff; color: #2563eb; }
-  .td-grp-talent { background: #f5f3ff; color: #7c3aed; }
-  .btjr-gap-bar { display: flex; align-items: center; gap: 4px; padding: 3px 10px; background: var(--gray-50); font-size: 9px; font-weight: 600; }
-  .btjr-gap-track { flex: 1; height: 10px; background: #e5e7eb; border-radius: 5px; position: relative; overflow: hidden; }
-  .btjr-gap-fill-p { position: absolute; left: 0; top: 0; height: 100%; border-radius: 5px 0 0 5px; }
-  .btjr-gap-fill-r { position: absolute; right: 0; top: 0; height: 100%; border-radius: 0 5px 5px 0; }
-  .btjr-gap-label { font-size: 9px; font-weight: 700; min-width: 60px; text-align: right; }
-  .btjr-detail-footer { display: flex; justify-content: space-between; padding: 3px 10px; font-size: 9px; font-weight: 600; border-top: 1px solid var(--gray-100); }
   .btjr-B { background: linear-gradient(135deg, #2563eb, #3b82f6); }
   .btjr-T { background: linear-gradient(135deg, #16a34a, #22c55e); }
   .btjr-J { background: linear-gradient(135deg, #b45309, #d97706); }
@@ -364,17 +326,14 @@
 
     #pdfBar, .demo-banner { display: none !important; }
 
-    /* ── 커버: 컴팩트 한줄 ── */
-    .cover { break-after: auto; page-break-after: auto; padding: 10px 14px 8px; margin-bottom: 0; }
-    .cover-inner { gap: 8px; }
-    .cover h1 { font-size: 14px; margin-bottom: 0; }
-    .cover .company-name { font-size: 14px; margin-bottom: 0; }
-    .cover .cover-sep { font-size: 12px; }
-    .cover-date { font-size: 9px; }
-    .cover-row2 { margin-top: 3px; gap: 6px; }
-    .cover-gdax { gap: 4px; }
-    .cover-gdax .gd-chip { padding: 2px 8px; font-size: 9px; }
-    .cover-type { padding: 2px 10px; font-size: 9px; }
+    /* ── 커버: 다음 콘텐츠와 같은 페이지 ── */
+    .cover { break-after: auto; page-break-after: auto; padding: 30px 20px 16px; margin-bottom: 0; }
+    .cover h1 { font-size: 24px; margin-bottom: 4px; }
+    .cover .company-name { font-size: 18px; margin-bottom: 10px; }
+    .cover-date { font-size: 11px; }
+    .cover-gdax { margin-top: 12px; gap: 6px; }
+    .cover-gdax .gd-chip { padding: 4px 12px; font-size: 11px; }
+    .cover-type { margin-top: 10px; padding: 4px 14px; font-size: 12px; }
 
     /* ── 본문 ── */
     .page { max-width: 100%; padding: 0; }
@@ -419,10 +378,6 @@
     .quadrant-wrap { padding: 4px 0; }
     .radar-wrap canvas, .radar-wrap img.chart-img { max-width: 380px; max-height: 380px; }
     .quadrant-wrap canvas, .quadrant-wrap img.chart-img { max-width: 320px; }
-    .gap-unified { gap: 8px; }
-    .gap-radar-side .radar-wrap canvas { max-width: 400px; max-height: 400px; }
-    .gap-matrix-side .matrix th { padding: 5px 6px; font-size: 9px; }
-    .gap-matrix-side .matrix td { padding: 5px 6px; font-size: 10px; }
 
     /* ── 영역별 상세 ── */
     .dd-header { margin-bottom: 2px; }
@@ -440,13 +395,13 @@
     .domain-detail:last-child { margin-bottom: 0; }
 
     /* ── BTJR (한 페이지 3섹션 — 최대 활용) ── */
-    .btjr-flow { margin: 10px 0; }
-    .btjr-box { padding: 8px 12px; min-width: 90px; border-radius: 8px; }
-    .btjr-box .b-initial { font-size: 18px; }
-    .btjr-box .b-kr { font-size: 9px; }
-    .btjr-box .b-score { font-size: 9px; }
-    .btjr-box .b-level { font-size: 8px; }
-    .btjr-arrow { font-size: 16px; padding: 0 4px; }
+    .btjr-flow { margin: 14px 0; }
+    .btjr-box { padding: 12px 16px; min-width: 100px; border-radius: 10px; }
+    .btjr-box .b-initial { font-size: 26px; }
+    .btjr-box .b-kr { font-size: 11px; }
+    .btjr-box .b-score { font-size: 11px; }
+    .btjr-box .b-level { font-size: 10px; }
+    .btjr-arrow { font-size: 20px; padding: 0 6px; }
     .btjr-split { gap: 10px; margin-top: 14px; }
     .btjr-split-card { padding: 12px; }
     .btjr-split-card h4 { font-size: 12px; margin-bottom: 8px; }
@@ -455,15 +410,6 @@
     .btjr-mini-bar .bmb-track { height: 16px; }
     .btjr-mini-bar .bmb-fill { font-size: 10px; }
     .btjr-split-insight { font-size: 10px; }
-    .btjr-detail { grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
-    .btjr-detail-card { break-inside: avoid; }
-    .btjr-detail-header { padding: 3px 8px; font-size: 9px; }
-    .btjr-detail-table { font-size: 8px; }
-    .btjr-detail-table th { padding: 1px 3px; font-size: 7px; }
-    .btjr-detail-table td { padding: 1px 3px; }
-    .btjr-gap-bar { padding: 2px 8px; font-size: 8px; }
-    .btjr-gap-track { height: 8px; }
-    .btjr-detail-footer { padding: 2px 8px; font-size: 8px; }
 
     /* ── 매트릭스 ── */
     .matrix th, .matrix td { padding: 6px 8px; font-size: 11px; }
@@ -539,22 +485,22 @@ const DOMAIN_CONFIG = {
       { code: 'G1', label: '탄소 리스크', text: '탄소 감축 정책으로 인한 매출 감소 우려', btjr: ['B'], group: '전환 압력' },
       { code: 'G2', label: '공급망 압력', text: '원청사/바이어의 RE100·탄소배출 요구 수준', btjr: ['B','T'], group: '전환 압력' },
       { code: 'G3', label: '에너지 전환', text: '에너지 비용 비중 및 친환경 에너지 전환 필요성', btjr: ['T'], group: '전환 압력' },
-      { code: 'G4', label: '환경관리체계', text: '환경 규제 대응 전담 인력·체계 구축 수준', btjr: ['J','R'], group: '실행 기반' },
+      { code: 'G4', label: '환경관리체계', text: '환경 규제 대응 전담 인력·체계 구축 수준', btjr: ['J','R'], reverse: true, group: '실행 기반' },
       { code: 'G5', label: 'Green 기회', text: '탄소중립 관련 신규 사업기회 인식 및 추진 의지', btjr: ['B'], group: '성장 동력' }
     ]},
   D: { name: '디지털전환', en: 'Digital Transformation', icon: '\u{1F4BB}', color: '#2563eb',
     questions: [
       { code: 'D1', label: 'DX 격차', text: '경쟁사 대비 자동화·디지털 시스템 경쟁력 우려', btjr: ['T'], group: '전환 압력' },
       { code: 'D2', label: 'DX 투자계획', text: '스마트공장·IoT·클라우드 도입 계획 및 예산 확보', btjr: ['B','T'], group: '전환 압력' },
-      { code: 'D3', label: '시스템통합도', text: 'ERP/MES 등 전산 시스템 실시간 관리 수준', btjr: ['T'], group: '실행 기반' },
-      { code: 'D4', label: '데이터 활용', text: '데이터 수집·분석 체계가 잘 구축되어 있는 수준', btjr: ['T','J'], group: '실행 기반' },
-      { code: 'D5', label: '디지털역량', text: '직원들의 디지털 기기·SW 활용 능숙도 및 리터러시 보유 수준', btjr: ['J','R'], group: '인재 역량' }
+      { code: 'D3', label: '시스템통합도', text: 'ERP/MES 등 전산 시스템 실시간 관리 수준', btjr: ['T'], reverse: true, group: '실행 기반' },
+      { code: 'D4', label: '데이터 활용', text: '데이터 기반 의사결정 체계 구축 여부', btjr: ['T','J'], group: '실행 기반' },
+      { code: 'D5', label: '디지털역량', text: '디지털 기술 활용 직원 역량 및 교육 수준', btjr: ['J','R'], group: '인재 역량' }
     ]},
   A: { name: 'AI전환', en: 'AI Transformation', icon: '\u{1F916}', color: '#7c3aed',
     questions: [
       { code: 'A1', label: 'AI 적용가능성', text: '업종 내 AI 활용 사례 등장 및 도입 검토 필요성', btjr: ['T'], group: '전환 압력' },
       { code: 'A2', label: '자동화 효과', text: '반복·단순 업무에 AI/로봇 자동화 효과 예상', btjr: ['T','J'], group: '전환 압력' },
-      { code: 'A3', label: '데이터 축적', text: 'AI 도입을 위한 데이터 축적 체계 수준', btjr: ['T'], group: '실행 기반' },
+      { code: 'A3', label: '데이터 축적', text: 'AI 도입을 위한 데이터 축적 체계 수준', btjr: ['T'], reverse: true, group: '실행 기반' },
       { code: 'A4', label: '직무전환대응', text: 'AI·자동화 도입 시 직무 변화 대응 계획 여부', btjr: ['J','R'], group: '인재 역량' },
       { code: 'A5', label: '생성형AI활용', text: '생성형 AI(ChatGPT 등) 업무 활용 가능성 인식', btjr: ['J'], group: '인재 역량' }
     ]},
@@ -562,8 +508,8 @@ const DOMAIN_CONFIG = {
     questions: [
       { code: 'X1', label: '인력 리스크', text: '구인난·핵심인력 고령화로 인한 기술전수 시급성', btjr: ['J','R'], group: '전환 압력' },
       { code: 'X2', label: '직무재편필요', text: '신기술 도입에 따른 직원 직무 변화 필요 정도', btjr: ['J'], group: '전환 압력' },
-      { code: 'X3', label: '노사 소통', text: '직무전환·근로조건 변경 시 노사 소통 수준', btjr: ['R'], group: '실행 기반' },
-      { code: 'X4', label: '전환교육체계', text: '체계적 전환 교육훈련 프로그램 운영 수준', btjr: ['J','R'], group: '실행 기반' },
+      { code: 'X3', label: '노사 소통', text: '직무전환·근로조건 변경 시 노사 소통 수준', btjr: ['R'], reverse: true, group: '실행 기반' },
+      { code: 'X4', label: '전환교육체계', text: '체계적 전환 교육훈련 프로그램 운영 수준', btjr: ['J','R'], reverse: true, group: '실행 기반' },
       { code: 'X5', label: '경영진의지', text: '경영진의 고용구조 전환 핵심 과제 인식 및 추진 의지', btjr: ['B','R'], group: '추진 동력' }
     ]}
 };
@@ -751,8 +697,6 @@ const TASK_POOL = {
 /* ── Parse URL Data or Use Demo ── */
 async function getData() {
   const params = new URLSearchParams(window.location.search);
-  
-  // 1. DB 조회 모드: ?id=123
   const id = params.get('id');
   if (id) {
     try {
@@ -760,30 +704,19 @@ async function getData() {
       if (!res.ok) throw new Error('Not found');
       const json = await res.json();
       return {
-        data: {
-          company: json.company,
-          scores: json.scores,
-          needs: json.needs,
-          contact: json.contact
-        },
-        isDemo: false,
-        meta: json.meta
+        data: { company: json.company, scores: json.scores,
+                needs: json.needs, contact: json.contact },
+        isDemo: false, meta: json.meta
       };
-    } catch(e) {
-      console.error('DB fetch failed:', e);
-      // fall through to next mode
-    }
+    } catch (e) { /* fall through */ }
   }
-  
-  // 2. Base64 모드: ?data=...
   const raw = params.get('data');
   if (raw) {
     try {
       return { data: JSON.parse(decodeURIComponent(escape(atob(raw)))), isDemo: false };
     } catch(e) { /* fall through */ }
   }
-  
-  // 3. Demo data - 5문항 × 4영역 = 20문항
+  // Demo data - 5문항 × 4영역 = 20문항
   return {
     data: {
       company: { name: '(주)한빛테크', ceo: '이한빛', location: '경기도 안산시',
@@ -884,7 +817,7 @@ function getTypeClassification(scores, indType, tierData) {
 function getTransitionIntensity(scores, tierData) {
   const ts = tierData || calcTierScores(scores);
   // X 전환 압력(X1,X2) + 추진 동력(X5)의 가중 평균
-  // 실행 기반(X3,X4)은 내부준비도 문항으로 강도 산출에서 제외
+  // 실행 기반(X3,X4)은 역방향 문항으로 강도 산출에서 제외
   const pressure = ts.X.pressure;   // X1,X2 평균
   const momentum = ts.X.capability; // X5 (추진 동력)
   const intensityScore = (pressure * 2 + momentum) / 3;  // 압력 2:동력 1 가중
@@ -893,20 +826,17 @@ function getTransitionIntensity(scores, tierData) {
   return 'low';
 }
 
-/* ── BTJR 가중 점수 계산 (1/n 균등 분배, 전환압력+성장동력+추진동력 문항만) ── */
+/* ── BTJR 가중 점수 계산 (문항별 BTJR 매핑 가중치) ── */
 function btjrScores(scores) {
   const sums = { B: 0, T: 0, J: 0, R: 0 };
   const cnts = { B: 0, T: 0, J: 0, R: 0 };
-  const pressureGroups = ['\uC804\uD658 \uC555\uB825', '\uC131\uC7A5 \uB3D9\uB825', '\uCD94\uC9C4 \uB3D9\uB825'];
 
   Object.keys(DOMAIN_CONFIG).forEach(dk => {
     DOMAIN_CONFIG[dk].questions.forEach((q, i) => {
-      if (!pressureGroups.includes(q.group)) return;  // 실행기반·인재역량 제외
       const val = scores[dk][i];
-      const w = 1 / q.btjr.length;  // 1/n 균등 분배
       q.btjr.forEach(bk => {
-        sums[bk] += val * w;
-        cnts[bk] += w;
+        sums[bk] += val;
+        cnts[bk]++;
       });
     });
   });
@@ -918,23 +848,16 @@ function btjrScores(scores) {
   return result;
 }
 
-/* ── 그룹별 BTJR 분리 계산 (1/n 균등 분배, 성장·추진동력은 양측 포함) ── */
+/* ── 그룹별 BTJR 분리 계산 (전환 압력 문항 vs 실행 기반/역량 문항) ── */
 function btjrByGroup(scores) {
   const pressure = { B: { s: 0, c: 0 }, T: { s: 0, c: 0 }, J: { s: 0, c: 0 }, R: { s: 0, c: 0 } };
   const readiness = { B: { s: 0, c: 0 }, T: { s: 0, c: 0 }, J: { s: 0, c: 0 }, R: { s: 0, c: 0 } };
-  const pressureGroups = ['\uC804\uD658 \uC555\uB825', '\uC131\uC7A5 \uB3D9\uB825', '\uCD94\uC9C4 \uB3D9\uB825'];
-  const readyGroups = ['\uC2E4\uD589 \uAE30\uBC18', '\uC778\uC7AC \uC5ED\uB7C9', '\uC131\uC7A5 \uB3D9\uB825', '\uCD94\uC9C4 \uB3D9\uB825'];
 
   Object.keys(DOMAIN_CONFIG).forEach(dk => {
     DOMAIN_CONFIG[dk].questions.forEach((q, i) => {
       const val = scores[dk][i];
-      const w = 1 / q.btjr.length;
-      if (pressureGroups.includes(q.group)) {
-        q.btjr.forEach(bk => { pressure[bk].s += val * w; pressure[bk].c += w; });
-      }
-      if (readyGroups.includes(q.group)) {
-        q.btjr.forEach(bk => { readiness[bk].s += val * w; readiness[bk].c += w; });
-      }
+      const target = q.group === '전환 압력' ? pressure : readiness;
+      q.btjr.forEach(bk => { target[bk].s += val; target[bk].c++; });
     });
   });
 
@@ -946,13 +869,12 @@ function btjrByGroup(scores) {
   return { pressure: calc(pressure), readiness: calc(readiness) };
 }
 
-/* ── 그룹 기반 내부준비도 계산 (실행 기반 + 인재 역량 + 성장 동력 + 추진 동력) ── */
+/* ── 역방향 문항 준비도 계산 ── */
 function getReadiness(domain, scores) {
   const questions = DOMAIN_CONFIG[domain].questions;
-  const readyGroups = ['실행 기반', '인재 역량', '성장 동력', '추진 동력'];
   let sum = 0, cnt = 0;
   questions.forEach((q, i) => {
-    if (readyGroups.includes(q.group)) { sum += scores[domain][i]; cnt++; }
+    if (q.reverse) { sum += scores[domain][i]; cnt++; }
   });
   return cnt > 0 ? sum / cnt : 0;
 }
@@ -961,12 +883,11 @@ function getReadiness(domain, scores) {
 function generateSWOT(scores, domainAvgs) {
   const strengths = [], weaknesses = [], opportunities = [], threats = [];
 
-  // S/W: 내부 역량 (실행기반·인재역량·성장동력·추진동력 그룹 기반)
-  const readyGroups = ['실행 기반', '인재 역량', '성장 동력', '추진 동력'];
+  // S/W: 내부 역량 (역방향 문항 기반)
   Object.keys(DOMAIN_CONFIG).forEach(dk => {
     const cfg = DOMAIN_CONFIG[dk];
     cfg.questions.forEach((q, i) => {
-      if (readyGroups.includes(q.group)) {
+      if (q.reverse) {
         if (scores[dk][i] >= 4) strengths.push(`${q.code} ${q.label}: ${cfg.name} 영역 내부 역량 우수`);
         else if (scores[dk][i] <= 2) weaknesses.push(`${q.code} ${q.label}: ${cfg.name} 영역 내부 역량 미흡`);
       }
@@ -987,7 +908,7 @@ function generateSWOT(scores, domainAvgs) {
     if (pressure === '\u9AD8') {
       threats.push(`${cfg.icon} ${cfg.name}: 전환압력 高 — 시급한 대응 필요`);
     }
-    // 내부 준비도 양호 영역은 기회
+    // 역방향 문항 점수 높은 영역은 기회
     const readiness = getReadiness(dk, scores);
     if (readiness >= 3.5 && avg >= 3.0) {
       opportunities.push(`${cfg.icon} ${cfg.name}: 높은 압력이나 내부 준비도 양호 → 선제 대응 가능`);
@@ -1000,7 +921,7 @@ function generateSWOT(scores, domainAvgs) {
   if (domainAvgs.X >= 3.5) threats.push('핵심인력 이탈·기술전수 단절 리스크');
 
   return {
-    S: strengths.length > 0 ? strengths.slice(0, 3) : ['내부 역량 정밀 평가 필요'],
+    S: strengths.length > 0 ? strengths.slice(0, 3) : ['역방향 문항 기준 내부 역량 평가 필요'],
     W: weaknesses.length > 0 ? weaknesses.slice(0, 3) : ['정밀 진단을 통한 약점 식별 필요'],
     O: opportunities.length > 0 ? opportunities.slice(0, 3) : ['정부 산업전환 지원사업 활용 기회'],
     T: threats.length > 0 ? threats.slice(0, 3) : ['산업 전환 가속화에 따른 잠재적 위협 존재']
@@ -1316,23 +1237,6 @@ async function render() {
   const domainAvgs = {};
   Object.keys(sc).forEach(k => domainAvgs[k] = domainAvg(sc[k]));
 
-  // 전환압력 문항만 합산 (100점 환산용)
-  const pressureOnly = {};
-  let pressureTotalSum = 0, pressureTotalCnt = 0;
-  ['G','D','A','X'].forEach(k => {
-    let pSum = 0, pCnt = 0;
-    DOMAIN_CONFIG[k].questions.forEach((q, i) => {
-      if (q.group === '\uC804\uD658 \uC555\uB825') { pSum += sc[k][i]; pCnt++; }
-    });
-    pressureOnly[k] = { sum: pSum, cnt: pCnt, avg: pCnt > 0 ? pSum / pCnt : 0 };
-    pressureTotalSum += pSum;
-    pressureTotalCnt += pCnt;
-  });
-  const pressureMaxP = pressureTotalCnt * 5;
-  const pressureScore100 = pressureMaxP > 0 ? Math.round(pressureTotalSum / pressureMaxP * 100) : 0;
-  const pressureAvgAll = pressureTotalCnt > 0 ? pressureTotalSum / pressureTotalCnt : 0;
-  const pressureLevel = getLevel(pressureAvgAll);
-
   // Regenerate SWOT with proper avgs
   const swotData = generateSWOT(sc, domainAvgs);
 
@@ -1340,23 +1244,19 @@ async function render() {
   const foundedLabel = d.company.founded ? d.company.founded + '\uB144' : '-';
 
   document.getElementById('app').innerHTML = `
-  <!-- COVER (compact) -->
+  <!-- COVER -->
   <div class="cover">
     <div class="cover-inner">
       <h1>\uC0B0\uC5C5\uC77C\uC790\uB9AC\uC804\uD658 \uC900\uBE44\uB3C4 \uC9C4\uB2E8</h1>
-      <span class="cover-sep">|</span>
       <div class="company-name">${d.company.name}</div>
-      <span class="cover-sep">|</span>
-      <div class="cover-date">${dateStr}</div>
-      <div class="cover-row2">
-        <div class="cover-gdax">
-          <span class="gd-chip">\u{1F331} G ${domainAvgs.G.toFixed(1)}</span>
-          <span class="gd-chip">\u{1F4BB} D ${domainAvgs.D.toFixed(1)}</span>
-          <span class="gd-chip">\u{1F916} A ${domainAvgs.A.toFixed(1)}</span>
-          <span class="gd-chip">\u{1F504} X ${domainAvgs.X.toFixed(1)}</span>
-        </div>
-        <div class="cover-type">${typeCfg.icon} ${typeCfg.name} \u00B7 ${intensityCfg.icon} ${intensityCfg.name}</div>
+      <div class="cover-date">\uC9C4\uB2E8\uC77C: ${dateStr}</div>
+      <div class="cover-gdax">
+        <span class="gd-chip">\u{1F331} G ${domainAvgs.G.toFixed(1)}</span>
+        <span class="gd-chip">\u{1F4BB} D ${domainAvgs.D.toFixed(1)}</span>
+        <span class="gd-chip">\u{1F916} A ${domainAvgs.A.toFixed(1)}</span>
+        <span class="gd-chip">\u{1F504} X ${domainAvgs.X.toFixed(1)}</span>
       </div>
+      <div class="cover-type">\uC804\uD658 \uC720\uD615: ${typeCfg.icon} ${typeCfg.name} \u00B7 ${intensityCfg.icon} ${intensityCfg.name}</div>
     </div>
   </div>
 
@@ -1386,30 +1286,30 @@ async function render() {
     <div class="card-header">
       <span class="ch-icon">\u{1F4CA}</span>
       <h2>\uC885\uD569 \uC9C4\uB2E8 \uACB0\uACFC</h2>
-      <span class="ch-tag">\uC804\uD658\uC555\uB825 \uBB38\uD56D \uAE30\uBC18 100\uC810 \uD658\uC0B0</span>
+      <span class="ch-tag">G-DAX 4\uB300 \uC601\uC5ED \xD7 5\uBB38\uD56D = 20\uBB38\uD56D \uD1B5\uD569</span>
     </div>
     <div class="card-body">
       <div class="fw-callout fw-callout-navy">
         <span class="fw-icon">\u{1F4D0}</span>
-        <div><strong>\uD504\uB808\uC784\uC6CC\uD06C \uC5F0\uACC4:</strong> G-DAX \uC804\uD658 \uC900\uBE44\uB3C4 \uC9C4\uB2E8 (Ch.3) \u2014 \uC885\uD569 \uC810\uC218\uB294 \uC804\uD658\uC555\uB825 \uBB38\uD56D\uB9CC \uD569\uC0B0\uD558\uC5EC 100\uC810\uC73C\uB85C \uD658\uC0B0\uD55C \uAC12\uC785\uB2C8\uB2E4. \uC601\uC5ED\uBCC4 \uB9C9\uB300\uB294 \uAC01 \uC601\uC5ED\uC758 \uC804\uD658\uC555\uB825 \uBB38\uD56D \uD3C9\uADE0\uC744 \uD45C\uC2DC\uD569\uB2C8\uB2E4.</div>
+        <div><strong>\uD504\uB808\uC784\uC6CC\uD06C \uC5F0\uACC4:</strong> G-DAX \uC804\uD658 \uC900\uBE44\uB3C4 \uC9C4\uB2E8 (Ch.3) \u2014 \uC810\uC218\uAC00 \uB192\uC744\uC218\uB85D \uC804\uD658 \uC555\uB825\uC774 \uB192\uC74C\uC744 \uC758\uBBF8\uD569\uB2C8\uB2E4. \uC5ED\uBC29\uD5A5 \uBB38\uD56D(G4,D3,A3,X3,X4)\uC740 \uC810\uC218\uAC00 \uB192\uC744\uC218\uB85D \uC900\uBE44\uB3C4\uAC00 \uB192\uC74C\uC744 \uB098\uD0C0\uB0C5\uB2C8\uB2E4.</div>
       </div>
       <div class="score-hero">
         <div class="score-circle-wrap">
-          <div class="score-circle" style="background:linear-gradient(135deg, ${pressureLevel.color}22, ${pressureLevel.color}11); border: 3px solid ${pressureLevel.color};">
-            <div class="big-num" style="color:${pressureLevel.color}">${pressureScore100}</div>
-            <div class="max-label" style="color:${pressureLevel.color}">/ 100\uC810</div>
+          <div class="score-circle" style="background:linear-gradient(135deg, ${level.color}22, ${level.color}11); border: 3px solid ${level.color};">
+            <div class="big-num" style="color:${level.color}">${total}</div>
+            <div class="max-label" style="color:${level.color}">/ ${maxP}\uC810</div>
           </div>
-          <div class="score-level" style="color:${pressureLevel.color};">\uC804\uD658 \uC555\uB825: ${pressureLevel.text} (${pressureLevel.grade})</div>
+          <div class="score-level" style="color:${level.color};">\uC804\uD658 \uC555\uB825: ${level.text} (${level.grade})</div>
         </div>
         <div class="score-bars">
           ${['G','D','A','X'].map(k => {
-            const pAvg = pressureOnly[k].avg;
-            const pct = (pAvg / 5 * 100).toFixed(0);
+            const avg = domainAvgs[k];
+            const pct = (avg / 5 * 100).toFixed(0);
             const cfg = DOMAIN_CONFIG[k];
             return `<div class="sbar-item">
               <div class="sbar-label"><span class="sbar-icon" style="background:${cfg.color}"></span>${cfg.icon} ${k} ${cfg.name}</div>
-              <div class="sbar-track"><div class="sbar-fill" style="width:${pct}%;background:${cfg.color}">${pAvg.toFixed(1)}</div></div>
-              <div class="sbar-score" style="color:${cfg.color}">${getPressure(pAvg)}</div>
+              <div class="sbar-track"><div class="sbar-fill" style="width:${pct}%;background:${cfg.color}">${avg.toFixed(1)}</div></div>
+              <div class="sbar-score" style="color:${cfg.color}">${getPressure(avg)}</div>
             </div>`;
           }).join('')}
         </div>
@@ -1417,76 +1317,15 @@ async function render() {
     </div>
   </div>
 
-  <!-- 3. G-DAX 전환압력 vs 실행기반·역량 갭 통합 분석 -->
+  <!-- 3. Radar Chart -->
   <div class="card">
     <div class="card-header">
       <span class="ch-icon">\u{1F578}</span>
       <h2>G-DAX \uC804\uD658\uC555\uB825 vs \uC2E4\uD589\uAE30\uBC18\u00B7\uC5ED\uB7C9 \uAC2D \uBD84\uC11D</h2>
-      <span class="ch-tag">\uC774\uC911 \uB808\uC774\uB354 \u00B7 \uC555\uB825\u00D7\uC900\uBE44\uB3C4 \uB9E4\uD2B8\uB9AD\uC2A4 \uD1B5\uD569</span>
+      <span class="ch-tag">\uC774\uC911 \uB808\uC774\uB354 \u00B7 \uC555\uB825-\uAE30\uBC18 GAP \uC2DC\uAC01\uD654</span>
     </div>
     <div class="card-body">
-      <div class="fw-callout fw-callout-red">
-        <span class="fw-icon">\u26A0\uFE0F</span>
-        <div><strong>\uD574\uC11D \uAC00\uC774\uB4DC:</strong> \uBE68\uAC04 \uD3F4\uB9AC\uACE4 = \uC804\uD658\uC555\uB825 \uBB38\uD56D \uD3C9\uADE0, \uD30C\uB780 \uD3F4\uB9AC\uACE4 = \uC2E4\uD589\uAE30\uBC18+\uC5ED\uB7C9+\uC131\uC7A5+\uB3D9\uB825 \uBB38\uD56D \uAC00\uC911\uD3C9\uADE0. \uBE68\uAC04\u2013\uD30C\uB780 \uC0AC\uC774 \uBD84\uD64D \uC601\uC5ED\uC774 GAP\uC774\uBA70, \uC555\uB825\uC774 \uB192\uACE0 \uC900\uBE44\uB3C4\uAC00 \uB0AE\uC740 \uC601\uC5ED\uC774 \uAC00\uC7A5 \uC2DC\uAE09\uD55C \uB300\uC751 \uC601\uC5ED\uC785\uB2C8\uB2E4.</div>
-      </div>
-      <div class="gap-unified">
-        <div class="gap-radar-side">
-          <div class="radar-wrap"><canvas id="radarChart"></canvas></div>
-        </div>
-        <div class="gap-matrix-side">
-          <div class="matrix-wrap">
-            <table class="matrix" style="font-size:12px;">
-              <thead>
-                <tr><th>G-DAX \uC601\uC5ED</th><th>\uC804\uD658\uC555\uB825</th><th>\uB0B4\uBD80\uC900\uBE44\uB3C4</th><th>Gap</th><th>\uD310\uC815</th><th>\uC6B0\uC120</th></tr>
-              </thead>
-              <tbody>
-                ${['G','D','A','X'].map(k => {
-                  const cfg = DOMAIN_CONFIG[k];
-                  const grpAvg = {};
-                  cfg.questions.forEach((q, qi) => {
-                    if (!q.group) return;
-                    if (!grpAvg[q.group]) grpAvg[q.group] = { s: 0, c: 0 };
-                    grpAvg[q.group].s += sc[k][qi]; grpAvg[q.group].c++;
-                  });
-                  const pressureGroups = ['\uC804\uD658 \uC555\uB825'];
-                  let pSum = 0, pCnt = 0;
-                  pressureGroups.forEach(g => { if (grpAvg[g]) { pSum += grpAvg[g].s; pCnt += grpAvg[g].c; } });
-                  const pAvg = pCnt > 0 ? pSum / pCnt : 0;
-                  const pLevel = pAvg >= 3.5 ? '\u9AD8' : pAvg >= 2.5 ? '\u4E2D' : '\u4F4E';
-                  const readyGroups = ['\uC2E4\uD589 \uAE30\uBC18', '\uC778\uC7AC \uC5ED\uB7C9', '\uC131\uC7A5 \uB3D9\uB825', '\uCD94\uC9C4 \uB3D9\uB825'];
-                  let rSum = 0, rCnt = 0;
-                  readyGroups.forEach(g => { if (grpAvg[g]) { rSum += grpAvg[g].s; rCnt += grpAvg[g].c; } });
-                  const rAvg = rCnt > 0 ? rSum / rCnt : 0;
-                  const gap = pAvg - rAvg;
-                  const gapVal = gap.toFixed(1);
-                  let gapClass, gapText, priority;
-                  if (rCnt > 0) {
-                    if (pLevel === '\u9AD8' && rAvg <= 2.5) { gapClass = 'cell-high'; gapText = '\uAE34\uAE09'; priority = '\u2605\u2605\u2605'; }
-                    else if (pLevel === '\u9AD8' && rAvg <= 3.5) { gapClass = 'cell-med'; gapText = '\uC911\uC810\uAD00\uB9AC'; priority = '\u2605\u2605'; }
-                    else if (pLevel === '\u4E2D') { gapClass = 'cell-med'; gapText = '\uBAA8\uB2C8\uD130\uB9C1'; priority = '\u2605'; }
-                    else { gapClass = 'cell-low'; gapText = '\uC591\uD638'; priority = '-'; }
-                  } else {
-                    gapClass = 'cell-med'; gapText = '\uC9C4\uB2E8\uD544\uC694'; priority = '\u2605';
-                  }
-                  return `<tr>
-                    <td style="font-weight:700;color:${cfg.color}">${cfg.icon} ${k} ${cfg.name}</td>
-                    <td><span style="color:#dc2626;font-weight:700;">${pLevel}</span> ${pAvg.toFixed(1)}</td>
-                    <td><span style="color:#2563eb;">${rAvg.toFixed(1)}</span></td>
-                    <td style="font-weight:700;color:${gap > 1 ? '#dc2626' : gap > 0.5 ? '#b45309' : '#16a34a'};">${gapVal}</td>
-                    <td class="${gapClass}">${gapText}</td>
-                    <td>${priority}</td>
-                  </tr>`;
-                }).join('')}
-              </tbody>
-            </table>
-          </div>
-          <div style="margin-top:8px;display:flex;gap:6px;font-size:10px;color:var(--gray-500);flex-wrap:wrap;">
-            <span>\u{1F534} \uC804\uD658\uC555\uB825</span>
-            <span>\u{1F535} \uC2E4\uD589\uAE30\uBC18\u00B7\uC5ED\uB7C9</span>
-            <span style="color:#dc2626;">\u25A0 GAP \uC601\uC5ED</span>
-          </div>
-        </div>
-      </div>
+      <div class="radar-wrap"><canvas id="radarChart"></canvas></div>
     </div>
   </div>
 
@@ -1610,7 +1449,7 @@ async function render() {
                   dots += `<div class="q-dot ${j <= val ? 'filled' : 'empty'}">${j}</div>`;
                 }
                 const btags = q.btjr.map(b => `<span class="btag btag-${b}">${b}</span>`).join('');
-                const revMark = '';
+                const revMark = q.reverse ? ' \u{1F504}' : '';
                 let groupHtml = '';
                 if (q.group && q.group !== lastGroup) {
                   lastGroup = q.group;
@@ -1700,87 +1539,99 @@ async function render() {
     <div class="card-body">
       <div class="fw-callout fw-callout-blue">
         <span class="fw-icon">\u{1F504}</span>
-        <div><strong>BTJR \uACBD\uB85C:</strong> \uC0AC\uC5C5\uAD6C\uC870(B)\uAC00 \uBC14\uB00C\uBA74 \u2192 \uAE30\uC220\uC6B4\uC601(T)\uC774 \uC804\uD658\uB418\uACE0 \u2192 \uC9C1\uBB34\uC5ED\uB7C9(J)\uC774 \uC7AC\uD3B8\uB418\uBA70 \u2192 \uB178\uC0AC\uAD00\uACC4(R)\uC758 \uB4EB\uBC1B\uCE68\uC774 \uD544\uC218. \uAC01 \uACBD\uB85C\uBCC4\uB85C \uC804\uD658\uC555\uB825\u00B7\uB3D9\uB825 \uBB38\uD56D\uACFC \uC2E4\uD589\uAE30\uBC18\u00B7\uC5ED\uB7C9 \uBB38\uD56D\uC744 \uBD84\uB9AC \uBE44\uAD50\uD569\uB2C8\uB2E4.</div>
+        <div><strong>BTJR \uACBD\uB85C:</strong> \uC0AC\uC5C5\uAD6C\uC870(B)\uAC00 \uBC14\uB00C\uBA74 \u2192 \uAE30\uC220\uC6B4\uC601(T)\uC774 \uC804\uD658\uB418\uACE0 \u2192 \uC9C1\uBB34\uC5ED\uB7C9(J)\uC774 \uC7AC\uD3B8\uB418\uBA70 \u2192 \uB178\uC0AC\uAD00\uACC4(R)\uC758 \uB4EB\uBC1B\uCE68\uC774 \uD544\uC218. \uAC01 \uC810\uC218\uB294 G-DAX \uBB38\uD56D\uBCC4 BTJR \uAC00\uC911\uCE58 \uB9E4\uD551\uC73C\uB85C \uC0B0\uCD9C\uB418\uC5C8\uC2B5\uB2C8\uB2E4.</div>
       </div>
       <div class="btjr-flow">
         ${['B','T','J','R'].map((k, i) => {
           const cfg = BTJR_CONFIG[k];
-          const pScore = parseFloat(btjrGrp.pressure[k]);
-          const rScore = parseFloat(btjrGrp.readiness[k]);
-          const pLevel = pScore >= 3.5 ? '\u9AD8' : pScore >= 2.5 ? '\u4E2D' : '\u4F4E';
+          const score = parseFloat(btjr[k]);
+          const btjrLevel = score >= 3.5 ? '\u9AD8' : score >= 2.5 ? '\u4E2D' : '\u4F4E';
           return `${i > 0 ? '<div class="btjr-arrow">\u2192</div>' : ''}
           <div class="btjr-box btjr-${k}">
             <div class="b-initial">${k}</div>
             <div class="b-kr">${cfg.name}</div>
-            <div class="b-score" style="font-size:10px;">\uC555\uB825\u00B7\uB3D9\uB825 <strong>${pScore}</strong> | \uC2E4\uD589\u00B7\uC5ED\uB7C9 <strong>${rScore}</strong></div>
-            <div class="b-level">${pLevel}</div>
+            <div class="b-score">\uC804\uD658\uC555\uB825 ${btjr[k]}</div>
+            <div class="b-level">${btjrLevel}</div>
           </div>`;
         }).join('')}
       </div>
-      <!-- BTJR 경로별 압력 vs 준비 세부 비교 -->
-      <div class="btjr-detail">
-        ${['B','T','J','R'].map(bk => {
-          const bcfg = BTJR_CONFIG[bk];
-          const groupCssMap = {'\uC804\uD658 \uC555\uB825':'td-grp-pressure','\uC2E4\uD589 \uAE30\uBC18':'td-grp-infra','\uC131\uC7A5 \uB3D9\uB825':'td-grp-growth','\uC778\uC7AC \uC5ED\uB7C9':'td-grp-talent','\uCD94\uC9C4 \uB3D9\uB825':'td-grp-drive'};
-          const pressureGroups = ['\uC804\uD658 \uC555\uB825', '\uC131\uC7A5 \uB3D9\uB825', '\uCD94\uC9C4 \uB3D9\uB825'];
-          const readyGroups = ['\uC2E4\uD589 \uAE30\uBC18', '\uC778\uC7AC \uC5ED\uB7C9', '\uC131\uC7A5 \uB3D9\uB825', '\uCD94\uC9C4 \uB3D9\uB825'];
-          let pRows = [], rRows = [];
-          let pSum = 0, pCnt = 0, rSum = 0, rCnt = 0;
-          ['G','D','A','X'].forEach(dk => {
-            DOMAIN_CONFIG[dk].questions.forEach((q, qi) => {
-              if (!q.btjr.includes(bk)) return;
-              const val = sc[dk][qi];
-              const w = 1 / q.btjr.length;
-              const ws = val * w;
-              const row = { code: q.code, label: q.label, group: q.group, val, w, ws, icon: DOMAIN_CONFIG[dk].icon };
-              if (pressureGroups.includes(q.group)) { pRows.push(row); pSum += ws; pCnt += w; }
-              if (readyGroups.includes(q.group)) { rRows.push(row); rSum += ws; rCnt += w; }
-            });
-          });
-          const pAvg = pCnt > 0 ? (pSum / pCnt).toFixed(1) : '0';
-          const rAvg = rCnt > 0 ? (rSum / rCnt).toFixed(1) : '0';
-          const gap = (pCnt > 0 && rCnt > 0) ? (parseFloat(pAvg) - parseFloat(rAvg)).toFixed(1) : '0';
-          const gapAbs = Math.abs(parseFloat(gap));
-          const gapTag = gapAbs > 1 ? '\u26A0\uAE34\uAE09' : gapAbs > 0.5 ? '\u{1F7E1}\uC8FC\uC758' : '\u2705\uC591\uD638';
-          const gapColor = gapAbs > 1 ? '#dc2626' : gapAbs > 0.5 ? '#b45309' : '#16a34a';
-          const pPct = (parseFloat(pAvg) / 5 * 100).toFixed(0);
-          const rPct = (parseFloat(rAvg) / 5 * 100).toFixed(0);
+      <!-- BTJR 압력 vs 실행 기반 분리 비교 -->
+      <div class="btjr-split">
+        <div class="btjr-split-card" style="background:#fef2f2;border-color:#fca5a5">
+          <h4><span class="bsc-dot" style="background:#ef4444"></span>\uC804\uD658 \uC555\uB825 \uBB38\uD56D \u2192 BTJR</h4>
+          ${['B','T','J','R'].map(k => {
+            const v = parseFloat(btjrGrp.pressure[k]);
+            const pct = (v / 5 * 100).toFixed(0);
+            return `<div class="btjr-mini-bar">
+              <span class="bmb-label" style="color:${BTJR_CONFIG[k].color}">${k} ${BTJR_CONFIG[k].name}</span>
+              <div class="bmb-track"><div class="bmb-fill" style="width:${pct}%;background:${BTJR_CONFIG[k].color}">${v}</div></div>
+            </div>`;
+          }).join('')}
+          <div class="btjr-split-insight">\uC0B0\uC5C5\uC804\uD658 \uC555\uB825\uC774 BTJR \uAC01 \uACBD\uB85C\uC5D0 \uBBF8\uCE58\uB294 \uC601\uD5A5\uB3C4</div>
+        </div>
+        <div class="btjr-split-card" style="background:#eff6ff;border-color:#bfdbfe">
+          <h4><span class="bsc-dot" style="background:#2563eb"></span>\uC2E4\uD589 \uAE30\uBC18/\uC5ED\uB7C9 \uBB38\uD56D \u2192 BTJR</h4>
+          ${['B','T','J','R'].map(k => {
+            const v = parseFloat(btjrGrp.readiness[k]);
+            const pct = (v / 5 * 100).toFixed(0);
+            return `<div class="btjr-mini-bar">
+              <span class="bmb-label" style="color:${BTJR_CONFIG[k].color}">${k} ${BTJR_CONFIG[k].name}</span>
+              <div class="bmb-track"><div class="bmb-fill" style="width:${pct}%;background:${BTJR_CONFIG[k].color}">${v}</div></div>
+            </div>`;
+          }).join('')}
+          <div class="btjr-split-insight">\uB0B4\uBD80 \uC2E4\uD589 \uC5ED\uB7C9\uC774 BTJR \uAC01 \uACBD\uB85C\uC5D0 \uBBF8\uCE58\uB294 \uC900\uBE44\uB3C4</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          const mkRow = (r) => `<tr><td>${r.icon}</td><td class="td-code">${r.code}</td><td>${r.label}</td><td><span class="td-group ${groupCssMap[r.group]||''}">${r.group}</span></td><td class="td-score">${r.val}</td></tr>`;
+  <!-- 7. \uC804\uD658\uC555\uB825 \xD7 \uC900\uBE44\uB3C4 \uB9E4\uD2B8\uB9AD\uC2A4 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="ch-icon">\u{1F4D0}</span>
+      <h2>\uC804\uD658\uC555\uB825 \xD7 \uB0B4\uBD80\uC900\uBE44\uB3C4 \uB9E4\uD2B8\uB9AD\uC2A4</h2>
+      <span class="ch-tag">\uC5ED\uBC29\uD5A5 \uBB38\uD56D(G4,D3,A3,X3,X4) \uAE30\uBC18 \uBD84\uC11D</span>
+    </div>
+    <div class="card-body">
+      <div class="fw-callout fw-callout-red">
+        <span class="fw-icon">\u26A0\uFE0F</span>
+        <div><strong>\uD574\uC11D \uAC00\uC774\uB4DC:</strong> \uC804\uD658\uC555\uB825\uC740 \uC21C\uBC29\uD5A5 \uBB38\uD56D \uD3C9\uADE0, \uB0B4\uBD80\uC900\uBE44\uB3C4\uB294 \uC5ED\uBC29\uD5A5 \uBB38\uD56D(\u{1F504}) \uD3C9\uADE0\uC73C\uB85C \uC0B0\uCD9C. \uC555\uB825\uC774 \uB192\uACE0 \uC900\uBE44\uB3C4\uAC00 \uB0AE\uC740 \uC601\uC5ED\uC774 \uAC00\uC7A5 \uC2DC\uAE09\uD55C \uB300\uC751 \uC601\uC5ED\uC785\uB2C8\uB2E4.</div>
+      </div>
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <thead>
+            <tr><th>G-DAX \uC601\uC5ED</th><th>\uC804\uD658\uC555\uB825<br>(\uC21C\uBC29\uD5A5 \uD3C9\uADE0)</th><th>\uB0B4\uBD80\uC900\uBE44\uB3C4<br>(\uC5ED\uBC29\uD5A5\u{1F504} \uD3C9\uADE0)</th><th>Gap \uD574\uC11D</th><th>\uC6B0\uC120\uC21C\uC704</th></tr>
+          </thead>
+          <tbody>
+            ${['G','D','A','X'].map(k => {
+              const cfg = DOMAIN_CONFIG[k];
+              const avg = domainAvgs[k];
+              const pressure = getPressure(avg);
+              const readiness = getReadiness(k, sc);
+              const readLabel = readiness > 0 ? readiness.toFixed(1) : 'N/A';
+              const readLevel = readiness >= 4 ? '\uB192\uC74C' : readiness >= 3 ? '\uBCF4\uD1B5' : readiness > 0 ? '\uB0AE\uC74C' : '-';
 
-          return `<div class="btjr-detail-card">
-            <div class="btjr-detail-header" style="background:${bcfg.color}">
-              <span style="font-size:14px;font-weight:900;">${bk}</span>
-              <span>${bcfg.name}</span>
-              <span class="bdh-score">${pAvg} vs ${rAvg}</span>
-            </div>
-            <div class="btjr-gap-bar">
-              <span style="color:#dc2626;">\uC555\uB825 ${pAvg}</span>
-              <div class="btjr-gap-track">
-                <div class="btjr-gap-fill-p" style="width:${pPct}%;background:linear-gradient(90deg,#fca5a5,#ef4444);"></div>
-                <div class="btjr-gap-fill-r" style="width:${rPct}%;background:linear-gradient(90deg,#3b82f6,#93c5fd);"></div>
-              </div>
-              <span style="color:#2563eb;">\uC900\uBE44 ${rAvg}</span>
-              <span class="btjr-gap-label" style="color:${gapColor};">Gap ${gap} ${gapTag}</span>
-            </div>
-            <div class="btjr-detail-body">
-              <div>
-                <div class="btjr-side-label" style="color:#dc2626;"><span class="sl-dot" style="background:#ef4444;"></span>\uC555\uB825\u00B7\uB3D9\uB825<span class="sl-avg">${pAvg}</span></div>
-                <table class="btjr-detail-table">
-                  <thead><tr><th></th><th>\uBB38\uD56D</th><th>\uD56D\uBAA9</th><th>\uADF8\uB8F9</th><th>\uC810\uC218</th></tr></thead>
-                  <tbody>${pRows.length > 0 ? pRows.map(mkRow).join('') : '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);font-size:8px;padding:4px;">-</td></tr>'}</tbody>
-                </table>
-              </div>
-              <div>
-                <div class="btjr-side-label" style="color:#2563eb;"><span class="sl-dot" style="background:#2563eb;"></span>\uC2E4\uD589\u00B7\uC5ED\uB7C9<span class="sl-avg">${rAvg}</span></div>
-                <table class="btjr-detail-table">
-                  <thead><tr><th></th><th>\uBB38\uD56D</th><th>\uD56D\uBAA9</th><th>\uADF8\uB8F9</th><th>\uC810\uC218</th></tr></thead>
-                  <tbody>${rRows.length > 0 ? rRows.map(mkRow).join('') : '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);font-size:8px;padding:4px;">-</td></tr>'}</tbody>
-                </table>
-              </div>
-            </div>
-          </div>`;
-        }).join('')}
+              let gapClass, gapText, priority;
+              if (readiness > 0) {
+                const gap = avg - readiness;
+                if (pressure === '\u9AD8' && readiness <= 2.5) { gapClass = 'cell-high'; gapText = '\uAE34\uAE09 \uB300\uC751 \uD544\uC694'; priority = '\u2605\u2605\u2605'; }
+                else if (pressure === '\u9AD8' && readiness <= 3.5) { gapClass = 'cell-med'; gapText = '\uC911\uC810 \uAD00\uB9AC \uD544\uC694'; priority = '\u2605\u2605'; }
+                else if (pressure === '\u4E2D') { gapClass = 'cell-med'; gapText = '\uBAA8\uB2C8\uD130\uB9C1'; priority = '\u2605'; }
+                else { gapClass = 'cell-low'; gapText = '\uC591\uD638'; priority = '-'; }
+              } else {
+                gapClass = 'cell-med'; gapText = '\uC815\uBC00\uC9C4\uB2E8 \uD544\uC694'; priority = '\u2605';
+              }
+
+              return `<tr>
+                <td style="font-weight:700;color:${cfg.color}">${cfg.icon} ${k} ${cfg.name}</td>
+                <td><strong>${pressure}</strong> (${avg.toFixed(1)})</td>
+                <td>${readLevel} (${readLabel})</td>
+                <td class="${gapClass}">${gapText}</td>
+                <td>${priority}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -1900,10 +1751,9 @@ async function render() {
       📥 PDF 다운로드 (A4)
     </button>
     <a href="/guide.html" target="_blank" style="
-      background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);
-      padding:10px 28px;border-radius:8px;font-size:14px;font-weight:700;
-      text-decoration:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;
-      transition:all .2s;
+      background:rgba(255,255,255,0.15);color:#fff;border:2px solid rgba(255,255,255,0.3);
+      padding:8px 20px;border-radius:8px;font-size:14px;font-weight:600;
+      text-decoration:none;transition:all .2s;
     " onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
       📖 보고서 보는 법
     </a>
@@ -2009,13 +1859,7 @@ function generateRecommendations(sc, avgs, tType, btjr) {
 }
 
 // Initialize
-render().then(() => {
-  // autopdf 파라미터 처리
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('autopdf') === '1') {
-    setTimeout(() => downloadPDF(), 1000);
-  }
-});
+render();
 
 /* ── PDF 다운로드 (window.print 방식) ── */
 function downloadPDF() {
