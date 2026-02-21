@@ -415,7 +415,20 @@
 
 <div class="footer">
   <strong>위탁기관</strong> 고용노동부 &nbsp;|&nbsp; <strong>운영기관</strong> 한국표준협회 산업일자리전환지원센터<br>
-  G-DAX 준비도 진단 v2.0 &nbsp;|&nbsp; FABRIC × G-DAX × BTJR 통합 프레임워크
+  G-DAX 준비도 진단 v2.0 &nbsp;|&nbsp; FABRIC × G-DAX × BTJR 통합 프레임워크<br>
+  <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+    <a href="/myreport.html" style="color:#fff;text-decoration:none;font-weight:600;opacity:0.9;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+      📋 이전 진단 결과 조회
+    </a>
+    &nbsp;|&nbsp;
+    <a href="/guide.html" style="color:#fff;text-decoration:none;font-weight:600;opacity:0.9;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+      📖 보고서 보는 법 가이드
+    </a>
+    &nbsp;|&nbsp;
+    <a href="/" style="color:#fff;text-decoration:none;font-weight:600;opacity:0.9;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+      🏠 메인으로
+    </a>
+  </div>
 </div>
 
 <script>
@@ -434,7 +447,7 @@ function toggleCk(el){setTimeout(()=>{const c=el.querySelector('input[type="chec
 function selRC(el){el.parentElement.querySelectorAll('.rc').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');el.querySelector('input').checked=true}
 
 /* ── Submit ── */
-function submitSurvey(){
+async function submitSurvey(){
   const reqs=document.querySelectorAll('[data-required]');
   let ok=true;
   reqs.forEach(inp=>{if(!inp.value.trim()){inp.style.borderColor='#dc2626';ok=false}else{inp.style.borderColor=''}});
@@ -454,8 +467,29 @@ function submitSurvey(){
   DOMAINS.forEach(d=>{data.scores[d]=[];for(let i=1;i<=ITEMS_PER;i++){data.scores[d].push(parseInt(document.querySelector(`input[name="${d}${i}"]:checked`).value))}});
   document.querySelectorAll('input[name="needs"]:checked').forEach(cb=>{data.needs.push(cb.value)});
 
-  const enc=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-  window.open('GDAX_준비도진단_결과보고서.html?data='+enc,'_blank');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ 제출 중...';
+
+  try {
+    const res = await fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.success) {
+      window.location.href = '/report.html?id=' + result.assessmentId;
+    } else {
+      alert('저장에 실패했습니다: ' + (result.error || '다시 시도해 주세요.'));
+    }
+  } catch (e) {
+    alert('네트워크 오류가 발생했습니다. 다시 시도해 주세요.');
+    console.error('Submit error:', e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '📊 진단 제출 및 결과 리포트 받기';
+  }
 }
 </script>
 </body>
