@@ -130,6 +130,8 @@
 
   .footer{text-align:center;padding:28px 24px;font-size:12px;color:var(--g500);border-top:1px solid var(--g200);background:#fff;line-height:1.7}
   .footer strong{color:var(--g700)}
+  .footer-link{color:var(--digi);text-decoration:none;font-weight:600;margin:0 8px}
+  .footer-link:hover{text-decoration:underline}
 
   /* delay */
   .sec:nth-child(1){animation-delay:.05s} .sec:nth-child(2){animation-delay:.1s} .sec:nth-child(3){animation-delay:.15s}
@@ -276,13 +278,13 @@
       <div class="btjr-hint"><span class="btjr-tag btjr-T">→ T 기술운영</span></div>
     </div>
 
-    <div class="qi"><div class="qt"><span class="qn">4</span>데이터 기반 의사결정(품질 분석, 수요 예측, 원가 관리 등)을 위한 데이터 수집·분석 체계가 잘 구축되어 있다. <span class="dtag bd-D">D4 데이터 활용</span></div>
+    <div class="qi"><div class="qt"><span class="qn">4</span>데이터 기반 의사결정(품질 분석, 수요 예측, 원가 관리 등)의 필요성을 느끼지만, 데이터 수집·분석 체계가 미흡하다. <span class="dtag bd-D">D4 데이터 활용</span></div>
       <div class="lk" data-name="D4"><div class="lo"><input type="radio" name="D4" id="D4_1" value="1"><label for="D4_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="D4" id="D4_2" value="2"><label for="D4_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="D4" id="D4_3" value="3"><label for="D4_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="D4" id="D4_4" value="4"><label for="D4_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="D4" id="D4_5" value="5"><label for="D4_5"><span class="ls">5</span>매우 그렇다</label></div></div>
       <div class="btjr-hint"><span class="btjr-tag btjr-T">→ T 기술운영</span><span class="btjr-tag btjr-J">→ J 직무역량</span></div>
     </div>
 
     <div class="q-group"><span class="q-group-tag" style="background:#7c3aed">인재 역량</span><span class="q-group-desc">디지털 리터러시·직원 역량</span></div>
-    <div class="qi"><div class="qt"><span class="qn">5</span>직원들이 디지털 기기·SW를 능숙하게 활용하고 있으며, DX 추진에 필요한 디지털 리터러시를 충분히 갖추고 있다. <span class="dtag bd-D">D5 디지털 역량</span></div>
+    <div class="qi"><div class="qt"><span class="qn">5</span>직원들이 디지털 기기·SW 활용에 어려움을 느끼고 있어, DX 추진 시 체계적인 디지털 리터러시 교육이 필요하다. <span class="dtag bd-D">D5 디지털 역량</span></div>
       <div class="lk" data-name="D5"><div class="lo"><input type="radio" name="D5" id="D5_1" value="1"><label for="D5_1"><span class="ls">1</span>전혀 아님</label></div><div class="lo"><input type="radio" name="D5" id="D5_2" value="2"><label for="D5_2"><span class="ls">2</span>아님</label></div><div class="lo"><input type="radio" name="D5" id="D5_3" value="3"><label for="D5_3"><span class="ls">3</span>보통</label></div><div class="lo"><input type="radio" name="D5" id="D5_4" value="4"><label for="D5_4"><span class="ls">4</span>그렇다</label></div><div class="lo"><input type="radio" name="D5" id="D5_5" value="5"><label for="D5_5"><span class="ls">5</span>매우 그렇다</label></div></div>
       <div class="btjr-hint"><span class="btjr-tag btjr-J">→ J 직무역량</span><span class="btjr-tag btjr-R">→ R 노사관계</span></div>
     </div>
@@ -415,7 +417,11 @@
 
 <div class="footer">
   <strong>위탁기관</strong> 고용노동부 &nbsp;|&nbsp; <strong>운영기관</strong> 한국표준협회 산업일자리전환지원센터<br>
-  G-DAX 준비도 진단 v2.0 &nbsp;|&nbsp; FABRIC × G-DAX × BTJR 통합 프레임워크
+  G-DAX 준비도 진단 v2.0 &nbsp;|&nbsp; FABRIC × G-DAX × BTJR 통합 프레임워크<br>
+  <div style="margin-top:12px">
+    <a href="/myreport.html" class="footer-link">🔍 이전 진단 결과 확인하기</a> |
+    <a href="/guide.html" target="_blank" class="footer-link">📖 보고서 보는 법 가이드</a>
+  </div>
 </div>
 
 <script>
@@ -434,7 +440,7 @@ function toggleCk(el){setTimeout(()=>{const c=el.querySelector('input[type="chec
 function selRC(el){el.parentElement.querySelectorAll('.rc').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');el.querySelector('input').checked=true}
 
 /* ── Submit ── */
-function submitSurvey(){
+async function submitSurvey(){
   const reqs=document.querySelectorAll('[data-required]');
   let ok=true;
   reqs.forEach(inp=>{if(!inp.value.trim()){inp.style.borderColor='#dc2626';ok=false}else{inp.style.borderColor=''}});
@@ -454,8 +460,29 @@ function submitSurvey(){
   DOMAINS.forEach(d=>{data.scores[d]=[];for(let i=1;i<=ITEMS_PER;i++){data.scores[d].push(parseInt(document.querySelector(`input[name="${d}${i}"]:checked`).value))}});
   document.querySelectorAll('input[name="needs"]:checked').forEach(cb=>{data.needs.push(cb.value)});
 
-  const enc=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-  window.open('GDAX_준비도진단_결과보고서.html?data='+enc,'_blank');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ 제출 중...';
+
+  try {
+    const res = await fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.success) {
+      window.location.href = '/report.html?id=' + result.assessmentId;
+    } else {
+      alert('저장에 실패했습니다: ' + (result.error || '다시 시도해 주세요.'));
+    }
+  } catch (e) {
+    alert('네트워크 오류가 발생했습니다. 다시 시도해 주세요.');
+    console.error('Submit error:', e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '📊 진단 제출 및 결과 리포트 받기';
+  }
 }
 </script>
 </body>
