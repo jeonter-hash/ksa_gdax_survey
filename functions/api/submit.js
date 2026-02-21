@@ -1,6 +1,6 @@
 /**
  * POST /api/submit
- * 설문 응답 저장 및 서버 계산 처리
+ * 설문 응답 저장 및 서버 계산 처리 (2차 수정 로직)
  */
 
 // 업종별 D/A 가중치
@@ -10,36 +10,129 @@ const DA_WEIGHTS = {
   '기술형':  { D: 0.35, A: 0.65 }
 };
 
+// DOMAIN_CONFIG - 프론트엔드와 동일한 구조
+const DOMAIN_CONFIG = {
+  G: {
+    questions: [
+      { group: '전환 압력' },  // G1
+      { group: '전환 압력' },  // G2
+      { group: '전환 압력' },  // G3
+      { group: '실행 기반' },  // G4
+      { group: '성장 동력' }   // G5
+    ]
+  },
+  D: {
+    questions: [
+      { group: '전환 압력' },  // D1
+      { group: '전환 압력' },  // D2
+      { group: '실행 기반' },  // D3
+      { group: '실행 기반' },  // D4
+      { group: '인재 역량' }   // D5
+    ]
+  },
+  A: {
+    questions: [
+      { group: '전환 압력' },  // A1
+      { group: '전환 압력' },  // A2
+      { group: '실행 기반' },  // A3
+      { group: '인재 역량' },  // A4
+      { group: '인재 역량' }   // A5
+    ]
+  },
+  X: {
+    questions: [
+      { group: '전환 압력' },  // X1
+      { group: '전환 압력' },  // X2
+      { group: '실행 기반' },  // X3
+      { group: '실행 기반' },  // X4
+      { group: '추진 동력' }   // X5
+    ]
+  }
+};
+
+// 통합 3단 구조 점수 계산
+function calcTierScores(scores) {
+  const domains = ['G','D','A','X'];
+  const TIER3_LABEL = { G: '성장 동력', D: '인재 역량', A: '인재 역량', X: '추진 동력' };
+  const result = {};
+  
+  domains.forEach(dk => {
+    const qs = DOMAIN_CONFIG[dk].questions;
+    const tiers = {};
+    
+    qs.forEach((q, qi) => {
+      const g = q.group;
+      if (!tiers[g]) tiers[g] = { s: 0, c: 0 };
+      tiers[g].s += scores[dk][qi];
+      tiers[g].c++;
+    });
+    
+    const t3Name = TIER3_LABEL[dk];
+    const pressure = tiers['전환 압력'] ? tiers['전환 압력'].s / tiers['전환 압력'].c : 0;
+    const foundation = tiers['실행 기반'] ? tiers['실행 기반'].s / tiers['실행 기반'].c : 0;
+    const capability = tiers[t3Name] ? tiers[t3Name].s / tiers[t3Name].c : 0;
+    
+    // 실행 기반 + 동력/역량 통합 평균
+    const fItems = tiers['실행 기반'] ? tiers['실행 기반'].c : 0;
+    const cItems = tiers[t3Name] ? tiers[t3Name].c : 0;
+    const fSum = tiers['실행 기반'] ? tiers['실행 기반'].s : 0;
+    const cSum = tiers[t3Name] ? tiers[t3Name].s : 0;
+    const readiness = (fItems + cItems) > 0 ? (fSum + cSum) / (fItems + cItems) : 0;
+    
+    result[dk] = {
+      pressure,
+      foundation,
+      capability,
+      readiness,
+      gap: Math.max(pressure - readiness, 0)
+    };
+  });
+  
+  return result;
+}
+
+// D+A 전환 압력 가중평균 계산 (tech_avg)
+function getTechPressure(scores, indType, tierData) {
+  const ts = tierData || calcTierScores(scores);
+  const dPressure = ts.D.pressure;
+  const aPressure = ts.A.pressure;
+  const w = DA_WEIGHTS[indType] || DA_WEIGHTS['제조형'];
+  return dPressure * w.D + aPressure * w.A;
+}
+
+// 전환 유형 분류 (G × D+A 모델) - 전환 압력만 사용
+function getTransitionType(scores, indType, tierData) {
+  const ts = tierData || calcTierScores(scores);
+  const gPressure = ts.G.pressure;
+  const techPressure = getTechPressure(scores, indType, ts);
+  const threshold = 3.0;
+  
+  const highGreen = gPressure >= threshold;
+  const highTech = techPressure >= threshold;
+  
+  if (highGreen && highTech) return 'struct';   // 구조전환형
+  if (!highGreen && highTech) return 'process';  // 공정혁신형
+  if (highGreen && !highTech) return 'value';    // 가치창출형
+  return 'strong';                                // 강소기반형
+}
+
+// 고용전환 강도 판정 - X 전환 압력(X1,X2) + 추진 동력(X5)
+function getTransitionIntensity(scores, tierData) {
+  const ts = tierData || calcTierScores(scores);
+  // X 전환 압력(X1,X2) + 추진 동력(X5)의 가중 평균
+  // 실행 기반(X3,X4)은 내부준비도 문항으로 강도 산출에서 제외
+  const pressure = ts.X.pressure;   // X1,X2 평균
+  const momentum = ts.X.capability; // X5 (추진 동력)
+  const intensityScore = (pressure * 2 + momentum) / 3;  // 압력 2:동력 1 가중
+  
+  if (intensityScore >= 3.5) return 'high';
+  if (intensityScore >= 2.5) return 'medium';
+  return 'low';
+}
+
 // 평균 계산
 function avg(arr) {
   return arr.reduce((a, b) => a + b, 0) / arr.length;
-}
-
-// D+A 가중평균 계산 (tech_avg)
-function getTechAvg(dScores, aScores, indType) {
-  const dAvg = avg(dScores);
-  const aAvg = avg(aScores);
-  const w = DA_WEIGHTS[indType] || DA_WEIGHTS['제조형'];
-  return dAvg * w.D + aAvg * w.A;
-}
-
-// 전환 유형 분류 (G × D+A 모델)
-function getTransitionType(gAvg, techAvg) {
-  const threshold = 3.0;
-  const highG = gAvg >= threshold;
-  const highTech = techAvg >= threshold;
-  
-  if (highG && highTech) return 'struct';   // 구조전환형
-  if (!highG && highTech) return 'process';  // 공정혁신형
-  if (highG && !highTech) return 'value';    // 가치창출형
-  return 'strong';                            // 강소기반형
-}
-
-// 고용전환 강도 판정
-function getTransitionIntensity(xAvg) {
-  if (xAvg >= 3.5) return 'high';
-  if (xAvg >= 2.5) return 'medium';
-  return 'low';
 }
 
 export async function onRequestPost(context) {
@@ -90,15 +183,14 @@ export async function onRequestPost(context) {
       companyId = insertResult.meta.last_row_id;
     }
     
-    // 2. 서버 계산 수행
+    // 2. 서버 계산 수행 (2차 수정 로직)
+    const tierData = calcTierScores(scores);
     const gAvg = avg(scores.G);
-    const dAvg = avg(scores.D);
-    const aAvg = avg(scores.A);
+    const techAvg = getTechPressure(scores, company.indType || '제조형', tierData);
     const xAvg = avg(scores.X);
-    const techAvg = getTechAvg(scores.D, scores.A, company.indType || '제조형');
     const totalScore = scores.G.concat(scores.D, scores.A, scores.X).reduce((a, b) => a + b, 0);
-    const transitionType = getTransitionType(gAvg, techAvg);
-    const transitionIntensity = getTransitionIntensity(xAvg);
+    const transitionType = getTransitionType(scores, company.indType || '제조형', tierData);
+    const transitionIntensity = getTransitionIntensity(scores, tierData);
     
     // 3. assessments에 INSERT
     const assessmentResult = await env.DB.prepare(`
@@ -137,6 +229,7 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({
       success: true,
       assessmentId,
+      companyId,
       reportUrl: `/report.html?id=${assessmentId}`
     }), {
       status: 200,
