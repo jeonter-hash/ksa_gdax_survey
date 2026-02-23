@@ -511,103 +511,28 @@
   <div class="container">
     <div class="hero-tag">2026 산업일자리전환 컨설팅</div>
     <h1>대한민국 산업 대전환,<br><span>G-DAX</span>로 구조화하고<br>정부지원으로 대응하세요</h1>
-    <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:32px;">
-      <a href="https://gdax-system.pages.dev/survey" class="cta-btn">G-DAX 준비도 무료 진단</a>
-      <a href="https://bjpuqz1k85ih.jp.larksuite.com/docx/KuJqdqRgkoD8vQxP5RSjkE19poZ?from=from_copylink" class="cta-btn">산업일자리전환 사업 소개</a>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="num">1,000만</span>
+        <span class="label">2044년까지 감소하는<br>생산가능인구</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">80%</span>
+        <span class="label">CBAM을 인지하지<br>못하는 중소기업</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">75.5%</span>
+        <span class="label">스마트팩토리 도입 기업 중<br>'기초 수준'에 머무는 비율</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">0.72</span>
+        <span class="label">세계 최저<br>합계출산율</span>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ════════════ SECTION 1: 왜 지금 전환이 필요한가? ════════════ -->
-<section>
-  <div class="container">    <h2 class="section-title">왜 지금 전환이 필요한가?</h2>
-
-    <!-- 핵심 수치 4개 카드 — 인구구조 변화 -->
-    <div class="card-grid cols-4" style="margin-bottom: 40px;">
-      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid var(--employ);">
-        <div style="font-size:40px; font-weight:900; color:var(--employ); line-height:1;">0.72</div>
-        <div style="font-size:13px; color:var(--muted); margin-top:8px;">세계 최저<br>합계출산율 (2024)</div>
-      </div>
-      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid #FF9800;">
-        <div style="font-size:40px; font-weight:900; color:#FF9800; line-height:1;">2025</div>
-        <div style="font-size:13px; color:var(--muted); margin-top:8px;">초고령사회 진입<br>(65세+ 인구 20% 초과)</div>
-      </div>
-      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid var(--digital);">
-        <div style="font-size:40px; font-weight:900; color:var(--digital); line-height:1;">-1,000<span style="font-size:20px; font-weight:400;">만</span></div>
-        <div style="font-size:13px; color:var(--muted); margin-top:8px;">2044년까지 감소하는<br>생산가능인구(15~64세)</div>
-      </div>
-      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid var(--green);">
-        <div style="font-size:40px; font-weight:900; color:var(--green); line-height:1;">52.0<span style="font-size:20px; font-weight:400;">%</span></div>
-        <div style="font-size:13px; color:var(--muted); margin-top:8px;">2060년 노인부양비<br>(생산인구 2명당 노인 1명)</div>
-      </div>
-    </div>
-
-    <!-- G-DAX 영향 카드 2x2 -->
-    <div class="card-grid" style="margin-bottom: 40px;">
-      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
-        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#2E7D32,#66BB6A); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">G</div>
-        <div>
-          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">Green 압력 증가</div>
-          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">탈탄소 투자 여력이 인력 감소로 제약됩니다. 자동화 연계 없이는 규제 대응이 불가능해지고 있습니다.</p>
-        </div>
-      </div>
-      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
-        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#1565C0,#42A5F5); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">D</div>
-        <div>
-          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">Digital 필요성 증폭</div>
-          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">줄어드는 인력을 디지털 기술로 보완해야 하는 구조적 압력이 DX를 가속시키고 있습니다.</p>
-        </div>
-      </div>
-      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
-        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#6A1B9A,#AB47BC); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">A</div>
-        <div>
-          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">AI 수요 급증</div>
-          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">숙련 인력 감소분을 AI가 대체하는 '인력 대체형 AI 수요'가 제조 AX를 견인합니다.</p>
-        </div>
-      </div>
-      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
-        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#C62828,#EF5350); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">X</div>
-        <div>
-          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">고용전환 불가피</div>
-          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">생산가능인구 급감과 기술전환 가속이 겹쳐, 재교육 없는 기업은 인력 확보 자체가 불가합니다.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 결론 박스 -->
-    <div style="background:linear-gradient(135deg, #FFF5F5 0%, #FED7D7 100%); border-radius:16px; padding:36px 40px; border:1px solid #FEB2B2;">
-      <h3 style="font-size:20px; font-weight:800; color:var(--employ); margin-bottom:12px; text-align:center;">결론: 전략적 고용전환(eXployment)이 생존의 조건입니다</h3>
-      <p style="font-size:15px; color:#553333; line-height:1.8; text-align:center; max-width:700px; margin:0 auto;">G·D·A 전환은 가속되고, 이를 실행할 인력은 줄어듭니다. <strong>기존 인력의 직무전환·재교육·재배치 없이는 어떤 전환도 실행 불가능합니다.</strong> 이것이 eXployment, 즉 전략적 고용전환이 단순한 HR 이슈가 아니라 기업 생존 전략의 핵심인 이유입니다.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ SECTION 2: 정부지원 컨설팅 ════════════ -->
-<section>
-  <div class="container">    <h2 class="section-title">정부지원 산업일자리전환 컨설팅으로 대응하세요</h2>
-
-    <div class="support-cards">
-      <div class="support-card">
-        <div class="sup-icon" style="background:#E8F5E9; color:var(--green);">📋</div>
-        <h4>기업 진단</h4>
-        <p>FABRIC(씨줄) × G-DAX(날줄) 입체진단으로 기업의 현 위치와 전환 방향을 구조적으로 분석</p>
-      </div>
-      <div class="support-card">
-        <div class="sup-icon" style="background:#E8F0FE; color:var(--digital);">🎯</div>
-        <h4>전환과제 설계</h4>
-        <p>진단 결과 기반 맞춤형 전환과제 도출, 단기·중기·장기 실행 로드맵 수립, KPI 설정</p>
-      </div>
-      <div class="support-card">
-        <div class="sup-icon" style="background:#F3E5F5; color:var(--ai);">🔗</div>
-        <h4>정부지원사업 연계</h4>
-        <p>고용노동부(산업전환 고용안정 지원금, 직무전환 훈련), 중소벤처기업부(스마트공장, 기술혁신), 산업통상자원부(탄소중립, 산업혁신) 등 부처별 최적 지원사업 매칭</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ════════════ SECTION 3: G-DAX란? ════════════ -->
+<!-- ════════════ SECTION 1: G-DAX란? ════════════ -->
 <section>
   <div class="container">    <h2 class="section-title">G-DAX란 무엇인가?</h2>
 
@@ -715,9 +640,98 @@
   </div>
 </section>
 
-<!-- ════════════ SECTION 4: 산업전환 컨설팅 로드맵 ════════════ -->
+<!-- ════════════ SECTION 2: 왜 지금 전환이 필요한가? ════════════ -->
 <section>
-  <div class="container">    <h2 class="section-title">산업전환 컨설팅 로드맵</h2>
+  <div class="container">    <h2 class="section-title">왜 지금 전환이 필요한가?</h2>
+
+    <!-- 핵심 수치 4개 카드 — 인구구조 변화 -->
+    <div class="card-grid cols-4" style="margin-bottom: 40px;">
+      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid var(--employ);">
+        <div style="font-size:40px; font-weight:900; color:var(--employ); line-height:1;">0.72</div>
+        <div style="font-size:13px; color:var(--muted); margin-top:8px;">세계 최저<br>합계출산율 (2024)</div>
+      </div>
+      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid #FF9800;">
+        <div style="font-size:40px; font-weight:900; color:#FF9800; line-height:1;">2025</div>
+        <div style="font-size:13px; color:var(--muted); margin-top:8px;">초고령사회 진입<br>(65세+ 인구 20% 초과)</div>
+      </div>
+      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid var(--digital);">
+        <div style="font-size:40px; font-weight:900; color:var(--digital); line-height:1;">-1,000<span style="font-size:20px; font-weight:400;">만</span></div>
+        <div style="font-size:13px; color:var(--muted); margin-top:8px;">2044년까지 감소하는<br>생산가능인구(15~64세)</div>
+      </div>
+      <div class="card" style="text-align:center; padding:28px 20px; border-top:4px solid var(--green);">
+        <div style="font-size:40px; font-weight:900; color:var(--green); line-height:1;">52.0<span style="font-size:20px; font-weight:400;">%</span></div>
+        <div style="font-size:13px; color:var(--muted); margin-top:8px;">2060년 노인부양비<br>(생산인구 2명당 노인 1명)</div>
+      </div>
+    </div>
+
+    <!-- G-DAX 영향 카드 2x2 -->
+    <div class="card-grid" style="margin-bottom: 40px;">
+      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
+        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#2E7D32,#66BB6A); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">G</div>
+        <div>
+          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">Green 압력 증가</div>
+          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">탈탄소 투자 여력이 인력 감소로 제약됩니다. 자동화 연계 없이는 규제 대응이 불가능해지고 있습니다.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
+        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#1565C0,#42A5F5); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">D</div>
+        <div>
+          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">Digital 필요성 증폭</div>
+          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">줄어드는 인력을 디지털 기술로 보완해야 하는 구조적 압력이 DX를 가속시키고 있습니다.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
+        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#6A1B9A,#AB47BC); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">A</div>
+        <div>
+          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">AI 수요 급증</div>
+          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">숙련 인력 감소분을 AI가 대체하는 '인력 대체형 AI 수요'가 제조 AX를 견인합니다.</p>
+        </div>
+      </div>
+      <div class="card" style="display:flex; gap:16px; align-items:flex-start; padding:24px;">
+        <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#C62828,#EF5350); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; font-weight:900; font-size:20px;">X</div>
+        <div>
+          <div style="font-size:16px; font-weight:700; color:var(--pri); margin-bottom:4px;">고용전환 불가피</div>
+          <p style="font-size:14px; color:var(--muted); line-height:1.65; margin:0;">생산가능인구 급감과 기술전환 가속이 겹쳐, 재교육 없는 기업은 인력 확보 자체가 불가합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 결론 박스 -->
+    <div style="background:linear-gradient(135deg, #FFF5F5 0%, #FED7D7 100%); border-radius:16px; padding:36px 40px; border:1px solid #FEB2B2;">
+      <h3 style="font-size:20px; font-weight:800; color:var(--employ); margin-bottom:12px; text-align:center;">결론: 전략적 고용전환(eXployment)이 생존의 조건입니다</h3>
+      <p style="font-size:15px; color:#553333; line-height:1.8; text-align:center; max-width:700px; margin:0 auto;">G·D·A 전환은 가속되고, 이를 실행할 인력은 줄어듭니다. <strong>기존 인력의 직무전환·재교육·재배치 없이는 어떤 전환도 실행 불가능합니다.</strong> 이것이 eXployment, 즉 전략적 고용전환이 단순한 HR 이슈가 아니라 기업 생존 전략의 핵심인 이유입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ SECTION 3: 정부지원 컨설팅 ════════════ -->
+<section>
+  <div class="container">    <h2 class="section-title">정부지원 산업일자리전환 컨설팅으로 대응하세요</h2>
+
+    <div class="support-cards">
+      <div class="support-card">
+        <div class="sup-icon" style="background:#E8F5E9; color:var(--green);">📋</div>
+        <h4>기업 진단</h4>
+        <p>FABRIC(씨줄) × G-DAX(날줄) 입체진단으로 기업의 현 위치와 전환 방향을 구조적으로 분석</p>
+      </div>
+      <div class="support-card">
+        <div class="sup-icon" style="background:#E8F0FE; color:var(--digital);">🎯</div>
+        <h4>전환과제 설계</h4>
+        <p>진단 결과 기반 맞춤형 전환과제 도출, 단기·중기·장기 실행 로드맵 수립, KPI 설정</p>
+      </div>
+      <div class="support-card">
+        <div class="sup-icon" style="background:#F3E5F5; color:var(--ai);">🔗</div>
+        <h4>정부지원사업 연계</h4>
+        <p>고용노동부(산업전환 고용안정 지원금, 직무전환 훈련), 중소벤처기업부(스마트공장, 기술혁신), 산업통상자원부(탄소중립, 산업혁신) 등 부처별 최적 지원사업 매칭</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════ SECTION 4: 컨설팅 프로세스 ════════════ -->
+<section>
+  <div class="container">    <h2 class="section-title">컨설팅은 이렇게 진행됩니다</h2>
 
     <div class="process-timeline">
       <style>
@@ -968,10 +982,7 @@
   <div class="container">
     <h2>산업일자리 대전환, 준비되셨습니까?</h2>
     <p>G-DAX 거시환경 분석이 보여주듯, 2026년의 변화는 이미 시작되었습니다. 정부지원 산업일자리전환 컨설팅을 통해 체계적으로 대응하세요.</p>
-    <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
-      <a href="https://gdax-system.pages.dev/survey" class="cta-btn">G-DAX 준비도 무료 진단</a>
-      <a href="https://bjpuqz1k85ih.jp.larksuite.com/docx/KuJqdqRgkoD8vQxP5RSjkE19poZ?from=from_copylink" class="cta-btn">산업일자리전환 사업 소개</a>
-    </div>
+    <a href="https://gdax-system.pages.dev/survey" class="cta-btn">G-DAX 준비도 무료 진단</a>
   </div>
 </div>
 
