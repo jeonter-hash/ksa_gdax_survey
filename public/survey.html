@@ -128,8 +128,10 @@
   .btn-sub:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,.35)}
   .submit-note{font-size:12px;color:var(--g500);margin-top:12px}
 
-  .footer{text-align:center;padding:28px 24px;font-size:12px;color:var(--g500);border-top:1px solid var(--g200);background:#fff;line-height:1.7}
-  .footer strong{color:var(--g700)}
+  .footer{text-align:center;padding:28px 24px;font-size:12px;color:var(--g700);border-top:1px solid var(--g200);background:#fff;line-height:1.7}
+  .footer strong{color:var(--g900)}
+  .footer a{color:var(--digi);text-decoration:none;font-weight:600;transition:opacity 0.2s;}
+  .footer a:hover{opacity:0.7}
 
   /* delay */
   .sec:nth-child(1){animation-delay:.05s} .sec:nth-child(2){animation-delay:.1s} .sec:nth-child(3){animation-delay:.15s}
@@ -416,16 +418,16 @@
 <div class="footer">
   <strong>위탁기관</strong> 고용노동부 &nbsp;|&nbsp; <strong>운영기관</strong> 한국표준협회 산업일자리전환지원센터<br>
   G-DAX 준비도 진단 v2.0 &nbsp;|&nbsp; FABRIC × G-DAX × BTJR 통합 프레임워크<br>
-  <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
-    <a href="/myreport.html" style="color:#fff;text-decoration:none;font-weight:600;opacity:0.9;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+  <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--g200);">
+    <a href="/myreport.html">
       📋 이전 진단 결과 조회
     </a>
     &nbsp;|&nbsp;
-    <a href="/guide.html" style="color:#fff;text-decoration:none;font-weight:600;opacity:0.9;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+    <a href="/guide.html">
       📖 보고서 보는 법 가이드
     </a>
     &nbsp;|&nbsp;
-    <a href="/" style="color:#fff;text-decoration:none;font-weight:600;opacity:0.9;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+    <a href="/">
       🏠 메인으로
     </a>
   </div>
