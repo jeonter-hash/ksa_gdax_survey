@@ -584,10 +584,10 @@ const BTJR_CONFIG = {
    → 업종별 D/A 가중치 차등 적용
    → X(고용전환)는 분류 축이 아닌 "고용전환 강도 조절자" */
 const TYPE_CONFIG = {
-  struct:  { name: '구조전환형', icon: '\u{1F3ED}', desc: 'Green+Digital/AI 동시 전환 + 대규모 인력 재편', condition: '환경압력 高 + 기술압력 高', cssClass: 'tc-struct' },
   process: { name: '공정혁신형', icon: '\u{2699}\u{FE0F}', desc: 'Digital/AI 전환 집중 + 운영 고도화', condition: '환경압력 低 + 기술압력 高', cssClass: 'tc-process' },
-  value:   { name: '가치창출형', icon: '\u{1F331}', desc: 'Green 전환 집중 + 친환경 가치 혁신', condition: '환경압력 高 + 기술압력 低', cssClass: 'tc-value' },
-  strong:  { name: '강소기반형', icon: '\u{1F680}', desc: '선택적 고도화 + 미래 경쟁력 확보', condition: '환경압력 低 + 기술압력 低', cssClass: 'tc-strong' }
+  struct:  { name: '구조전환형', icon: '\u{1F3ED}', desc: 'Green+Digital/AI 동시 전환 + 대규모 인력 재편', condition: '환경압력 高 + 기술압력 高', cssClass: 'tc-struct' },
+  strong:  { name: '강소기반형', icon: '\u{1F680}', desc: '선택적 고도화 + 미래 경쟁력 확보', condition: '환경압력 低 + 기술압력 低', cssClass: 'tc-strong' },
+  value:   { name: '가치창출형', icon: '\u{1F331}', desc: 'Green 전환 집중 + 친환경 가치 혁신', condition: '환경압력 高 + 기술압력 低', cssClass: 'tc-value' }
 };
 
 /* ── 업종별 D/A 가중치 ── */
